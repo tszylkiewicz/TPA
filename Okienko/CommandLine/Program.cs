@@ -10,6 +10,9 @@ namespace CommandLine
     {
         static void Main(string[] args)
         {
+            LogWriter logWriter = new LogWriter("StartProgram_Okienko.exe");
+            logWriter.LogWrite("Main_function");
+
             //FileManager fileManager = new FileManager("C:\\Users\\Marcin\\Downloads\\TP-master\\TP-master\\TPA\\ApplicationArchitecture\\bin\\Debug\\TPA.ApplicationArchitecture.dll");
 
             //string road = "";

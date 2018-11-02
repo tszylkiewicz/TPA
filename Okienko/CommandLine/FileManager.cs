@@ -10,14 +10,14 @@ namespace CommandLine
 {
     public class FileManager
     {
+        LogWriter logWriter;
         public string PathVariable { get; set; }
 
         public Reflector reflector { get; set; }
 
-        private char chosenOne;
-
         public FileManager(Uri uri)
         {
+            logWriter = new LogWriter("FileManager_Class");
             PathVariable = uri.LocalPath;
             Uri = uri;
             reflector = new Reflector();
@@ -31,7 +31,8 @@ namespace CommandLine
         }
 
         public void OpenFile()
-        {        
+        {
+            logWriter.LogWrite("OpenFile_function");
             if (Uri.IsFile)
             {
                 Console.WriteLine("Otwieram\n\n");
@@ -46,6 +47,9 @@ namespace CommandLine
                     return;
                 }
 
+                char chosenOne;
+                TypeMetadata tempType;
+
                 Reflect();
                 Console.WriteLine();
                 Console.WriteLine("What to do (E-Exit, 'Numer' - show property with numer): ");
@@ -56,11 +60,32 @@ namespace CommandLine
                 {
                     if (((Char.GetNumericValue(chosenOne)) >= 0) && ((Char.GetNumericValue(chosenOne)) <= 9))
                     {
-                        more(FindTypeWithNumber(Char.GetNumericValue(chosenOne)), "");
+                        tempType = FindTypeWithNumber(Char.GetNumericValue(chosenOne));
+
+                        if (tempType != null)
+                        {
+                            more(FindTypeWithNumber(Char.GetNumericValue(chosenOne)), "");
+                        }
+                        else
+                        {
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("WRONG NUMBER - ERROR");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine();
+                        }
                     }
                     else
                     {
+                        Console.WriteLine();
+                        Console.WriteLine();
+                        Console.WriteLine();
                         Console.WriteLine("WRONG NUMBER - ERROR");
+                        Console.WriteLine();
+                        Console.WriteLine();
+                        Console.WriteLine();
                     }
 
                     Console.WriteLine();
@@ -80,7 +105,9 @@ namespace CommandLine
 
         public void more(TypeMetadata type, string offset)
         {
+            logWriter.LogWrite("more_function_TypeMetada:_" + type.m_NamespaceName + "_" + type.m_typeName + "_" + type.ToString());
             char anotherChoice;
+            TypeMetadata temp;
             ReflectType(type, offset);
             Console.WriteLine();
             Console.WriteLine("What to do now (B-Back, 'Numer' - show property with numer): ");
@@ -91,25 +118,38 @@ namespace CommandLine
             {
                 if (((Char.GetNumericValue(anotherChoice)) >= 0) && ((Char.GetNumericValue(anotherChoice)) <= 9))
                 {
-                    TypeMetadata temp = FindPropertyWithNumber(Char.GetNumericValue(anotherChoice), type);
-                    more(temp, offset + "\t");
-                    ReflectType(type, offset);
-                    Console.WriteLine();
-                    Console.WriteLine("What to do now (B-Back, 'Numer' - show property with numer): ");
-                    anotherChoice = Console.ReadKey().KeyChar;
-                    Console.WriteLine();
+                    temp = FindPropertyWithNumber(Char.GetNumericValue(anotherChoice), type);
+                    if (temp != null)
+                    {
+                        more(temp, offset + "\t");
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine();
+                        Console.WriteLine();
+                        Console.WriteLine("WRONG NUMBER");
+                        Console.WriteLine();
+                        Console.WriteLine();
+                        Console.WriteLine();
+                    }
                 }
                 else
                 {
                     Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine();
                     Console.WriteLine("WRONG NUMBER");
                     Console.WriteLine();
-                    ReflectType(type, offset);
                     Console.WriteLine();
-                    Console.WriteLine("What to do now (B-Back, 'Numer' - show property with numer): ");
-                    anotherChoice = Console.ReadKey().KeyChar;
                     Console.WriteLine();
                 }
+
+                ReflectType(type, offset);
+                Console.WriteLine();
+                Console.WriteLine("What to do now (B-Back, 'Numer' - show property with numer): ");
+                anotherChoice = Console.ReadKey().KeyChar;
+                Console.WriteLine();
             }
             return;
         }
