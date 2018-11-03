@@ -1,4 +1,4 @@
-﻿using Okienko.Model;
+﻿using Model.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CommandLine
+namespace CommandLine.ViewModel
 {
     public class FileManager
     {

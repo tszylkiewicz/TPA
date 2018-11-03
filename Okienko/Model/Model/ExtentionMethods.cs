@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Okienko.Model
+namespace Model.Model
 {
     internal static class ExtensionMethods
     {

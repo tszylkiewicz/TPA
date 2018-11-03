@@ -1,4 +1,4 @@
-﻿using Okienko.Model;
+﻿using Model.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,15 +6,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Okienko
+namespace Okienko.ViewModel
 {
     public class TreeViewItem
     {
         public TreeViewItem(Reflector reflector)
         {
             Children = new ObservableCollection<TreeViewItem>() { null };
-            TypesAssembly = new ObservableCollection<TypeMetadata>(reflector.m_AssemblyModel.Types);
-            //NamespacesAssembly = new ObservableCollection<NamespaceMetadata>(reflector.m_AssemblyModel.Namespaces);
+            NamespacesAssembly = new ObservableCollection<NamespaceMetadata>(reflector.m_AssemblyModel.Namespaces);
+            this.m_WasBuilt = false;
+        }
+        public TreeViewItem(NamespaceMetadata namespc)
+        {
+            Children = new ObservableCollection<TreeViewItem>() { null };
+            TypesAssembly = new ObservableCollection<TypeMetadata>(namespc.m_Types);
             this.m_WasBuilt = false;
         }
         public TreeViewItem(TypeMetadata type)
@@ -27,7 +32,6 @@ namespace Okienko
         {
             Children = new ObservableCollection<TreeViewItem>() { null };
             TypesAssembly = new ObservableCollection<TypeMetadata>() { prop.m_TypeMetadata };
-            Console.WriteLine(TypesAssembly[0].Properties);
             this.m_WasBuilt = false;
         }
         public TreeViewItem()
@@ -58,17 +62,13 @@ namespace Okienko
         private bool m_IsExpanded;
         private void BuildMyself()
         {
-            /*if(NamespacesAssembly == null)
-            {
-
-            }
-            else
+            if(NamespacesAssembly != null)
             {
                 foreach(NamespaceMetadata namespc in NamespacesAssembly)
                 {
-                    this.Children.Add(new TreeViewItem() { Name = namespc.m_NamespaceName });
+                    this.Children.Add(new TreeViewItem(namespc) { Name = namespc.m_NamespaceName });
                 }
-            }*/
+            }
 
             if (TypesAssembly != null)
             {

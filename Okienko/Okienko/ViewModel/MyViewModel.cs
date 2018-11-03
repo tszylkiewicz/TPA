@@ -1,5 +1,5 @@
 ﻿using Microsoft.Win32;
-using Okienko.Model;
+using Model.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

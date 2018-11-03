@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Okienko
+namespace Okienko.ViewModel
 {
     class RelayCommand : ICommand
     {
