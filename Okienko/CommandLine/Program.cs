@@ -20,7 +20,7 @@ namespace CommandLine
             //Uri uri = new Uri("C:\\Users\\Marcin\\Downloads\\TP - master\\TP - master\\TPA\\ApplicationArchitecture\\bin\\Debug\\TPA.ApplicationArchitecture.dll");
             Console.WriteLine("Podaj sciezke:");
             //String url = Console.ReadLine();
-            Uri uri = new Uri("C:\\Users\\Marcin\\Documents\\TPA.ApplicationArchitecture.dll");
+            Uri uri = new Uri("C:\\Users\\totoszek\\Documents\\TPA.ApplicationArchitecture.dll");
            // Uri uri = new Uri(url);
             FileManager fileManager = new FileManager(uri);
 

@@ -32,9 +32,11 @@ namespace Okienko.Model
         internal static TypeMetadata EmitReference(Type type)
         {
             if (!type.IsGenericType)
-                return new TypeMetadata(type.Name, type.GetNamespace());
+                return new TypeMetadata(type);
+            //return new TypeMetadata(type.Name, type.GetNamespace());
             else
-                return new TypeMetadata(type.Name, type.GetNamespace(), EmitGenericArguments(type.GetGenericArguments()));
+                return new TypeMetadata(type);
+            //return new TypeMetadata(type.Name, type.GetNamespace(), EmitGenericArguments(type.GetGenericArguments()));
         }
         internal static IEnumerable<TypeMetadata> EmitGenericArguments(IEnumerable<Type> arguments)
         {

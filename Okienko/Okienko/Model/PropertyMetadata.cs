@@ -18,7 +18,7 @@ namespace Okienko.Model
 
         #region private
         public string m_Name;
-        private TypeMetadata m_TypeMetadata;
+        public TypeMetadata m_TypeMetadata;
         private PropertyMetadata(string propertyName, TypeMetadata propertyType)
         {
             m_Name = propertyName;

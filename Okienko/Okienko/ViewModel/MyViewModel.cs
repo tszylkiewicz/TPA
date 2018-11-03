@@ -39,7 +39,6 @@ namespace Okienko.ViewModel
         {
             if (PathVariable.Substring(PathVariable.Length - 4) == ".dll")
             {
-                Console.WriteLine("uuuaaa\n\n"+PathVariable+"\n\nuuuaa");
                 reflector.Reflect(PathVariable);
                 TreeViewLoaded();
             }
@@ -48,7 +47,7 @@ namespace Okienko.ViewModel
         {
             TreeViewItem rootItem = new TreeViewItem(reflector) { Name = PathVariable.Substring(PathVariable.LastIndexOf('\\') + 1) };           
             HierarchicalAreas.Add(rootItem);
-            Reflect();
+            //Reflect();
         }
         private void Browse()
         {
