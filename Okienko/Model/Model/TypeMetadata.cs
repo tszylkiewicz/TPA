@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.Singleton;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,10 @@ namespace Model.Model
         internal TypeMetadata(Type type)
         {
             m_typeName = type.Name;
+            if(!SingletonDictionary.Instance.ContainsKey(m_typeName))
+            {
+                SingletonDictionary.Instance.Add(m_typeName, this);
+            }
             m_NamespaceName = type.Namespace;
             m_DeclaringType = EmitDeclaringType(type.DeclaringType);
             //m_Constructors = MethodMetadata.EmitMethods(type.GetConstructors());
@@ -72,10 +77,18 @@ namespace Model.Model
             m_GenericArguments = genericArguments;
         }
 
+        public static void StoreType(Type type)
+        {
+            if (!SingletonDictionary.Instance.ContainsKey(type.Name))
+            {
+                new TypeMetadata(type);
+            }
+        }
         private TypeMetadata EmitDeclaringType(Type declaringType)
         {
             if (declaringType == null)
                 return null;
+            StoreType(declaringType);
             return EmitReference(declaringType);
         }
         private IEnumerable<TypeMetadata> EmitNestedTypes(IEnumerable<Type> nestedTypes)
@@ -121,6 +134,7 @@ namespace Model.Model
         {
             if (baseType == null || baseType == typeof(Object) || baseType == typeof(ValueType) || baseType == typeof(Enum))
                 return null;
+            StoreType(baseType);
             return EmitReference(baseType);
         }
     }

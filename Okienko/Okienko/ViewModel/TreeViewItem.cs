@@ -1,4 +1,5 @@
 ﻿using Model.Model;
+using Model.Singleton;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +11,15 @@ namespace Okienko.ViewModel
 {
     public class TreeViewItem
     {
+        #region Properties
+        public string Name { get; set; }
+        public ObservableCollection<TreeViewItem> Children { get; set; }
+        private bool m_WasBuilt;
+        private bool m_IsExpanded;
+        public ObservableCollection<NamespaceMetadata> NamespacesAssembly { get; set; }
+        public ObservableCollection<TypeMetadata> TypesAssembly { get; set; }
+        public ObservableCollection<PropertyMetadata> PropertiesAssembly { get; set; }
+        #endregion
         public TreeViewItem(Reflector reflector)
         {
             Children = new ObservableCollection<TreeViewItem>() { null };
@@ -34,16 +44,13 @@ namespace Okienko.ViewModel
             TypesAssembly = new ObservableCollection<TypeMetadata>() { prop.m_TypeMetadata };
             this.m_WasBuilt = false;
         }
-        public TreeViewItem()
+        public TreeViewItem(string name)
         {
+            this.Name = name;
             Children = new ObservableCollection<TreeViewItem>() { null };
             this.m_WasBuilt = false;
         }
-        public string Name { get; set; }
-        public ObservableCollection<TreeViewItem> Children { get; set; }
-        public ObservableCollection<NamespaceMetadata> NamespacesAssembly { get; set; }
-        public ObservableCollection<TypeMetadata> TypesAssembly { get; set; }
-        public ObservableCollection<PropertyMetadata> PropertiesAssembly { get; set; }
+        
         public bool IsExpanded
         {
             get { return m_IsExpanded; }
@@ -58,13 +65,13 @@ namespace Okienko.ViewModel
             }
         }
 
-        private bool m_WasBuilt;
-        private bool m_IsExpanded;
+        //public abstract void BuildMyself();
+
         private void BuildMyself()
         {
-            if(NamespacesAssembly != null)
+            if (NamespacesAssembly != null)
             {
-                foreach(NamespaceMetadata namespc in NamespacesAssembly)
+                foreach (NamespaceMetadata namespc in NamespacesAssembly)
                 {
                     this.Children.Add(new TreeViewItem(namespc) { Name = namespc.m_NamespaceName });
                 }
@@ -74,7 +81,7 @@ namespace Okienko.ViewModel
             {
                 foreach (TypeMetadata type in TypesAssembly)
                 {
-                    this.Children.Add(new TreeViewItem(type) { Name = type.m_typeName });
+                    this.Children.Add(new TreeViewItem(SingletonDictionary.Instance.Get(type.m_typeName)) { Name = type.m_typeName });
                 }
             }
 
