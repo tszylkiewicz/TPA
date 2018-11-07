@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Model.Logger
 {
-    class LogWriter
+    public class LogWriter
     {
         static TextWriterTraceListener logsListener = new TextWriterTraceListener("Logs.log", "logsListener");
 

@@ -51,6 +51,8 @@
   <ItemGroup>
     <Compile Include="FileManagerUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReflectorUnitTest.cs" />
+    <Compile Include="SingletonDictionaryUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

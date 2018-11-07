@@ -1,10 +1,12 @@
-﻿using Model.Model;
+﻿using Model.Logger;
+using Model.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace CommandLine.ViewModel
 {
@@ -15,16 +17,6 @@ namespace CommandLine.ViewModel
 
         public Reflector reflector { get; set; }
 
-        public Uri Uri { get; set; }
-
-        public FileManager(Uri uri)
-        {
-            logWriter = new LogWriter("Start: FileManager");
-            PathVariable = uri.LocalPath;
-            Uri = uri;
-            reflector = new Reflector();
-        }     
-
         public FileManager(string path)
         {
             logWriter = new LogWriter("Start: FileManager");
@@ -32,25 +24,14 @@ namespace CommandLine.ViewModel
             reflector = new Reflector();
         }
 
-        public bool CreateUri(string path)
-        {
-            bool check = true;
-            try
-            {
-                Uri = new Uri(path);
-            }
-            catch (UriFormatException error)
-            {
-                Console.WriteLine("ERROR - WRONG PATH : " + error.Message);
-                check = false;
-            }
-            return check;
-        }
-
         public void OpenFile()
         {
             logWriter.LogWrite("Start: FileManger.OpenFile");
-            if (Uri.IsFile)
+
+            char chosenOne;
+            TypeMetadata tempType;
+
+            if (File.Exists(PathVariable))
             {
                 Console.WriteLine("Otwieram\n\n");
    
@@ -62,10 +43,7 @@ namespace CommandLine.ViewModel
                 {
                     Console.WriteLine("URI IS NOT DLL FILE");
                     return;
-                }
-
-                char chosenOne;
-                TypeMetadata tempType;
+                }            
 
                 Reflect();
                 Console.WriteLine();
@@ -118,7 +96,7 @@ namespace CommandLine.ViewModel
             }
             else
             {
-                Console.WriteLine("URI IS NOT FILE");
+                Console.WriteLine("IT IS NOT FILE");
             }
             logWriter.LogWrite("FileManager.OpenFile: Closing");
         }

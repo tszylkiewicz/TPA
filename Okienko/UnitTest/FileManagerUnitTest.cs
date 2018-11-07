@@ -9,43 +9,36 @@ namespace UnitTest
     public class FileManagerUnitTest
     {
         [TestMethod]
-        public void CreateUriTest()
-        {
-            FileManager fileManager = new FileManager("CCC");
-            Assert.IsFalse(fileManager.CreateUri("CCC"));
-        }
-
-        [TestMethod]
         public void FindTypeWithNumberTest()
         {
             FileManager fileManager;
-            Uri uri = new Uri("C:\\Users\\Marcin\\Documents\\TPA.ApplicationArchitecture.dll");
-            fileManager = new FileManager(uri);
-            fileManager.reflector.Reflect(uri.LocalPath);
+            string path = @"..\\..\\..\\DataToTest\\bin\\Debug\\DataToTest.dll";
+            fileManager = new FileManager(path);
+            fileManager.reflector.Reflect(path);
             TypeMetadata metadata = fileManager.FindTypeWithNumber(1);
-            Assert.AreEqual(metadata.m_typeName, "View");
+            Assert.AreEqual(metadata.m_typeName, "ClassA");
         }
 
         [TestMethod]
         public void FindPropertyWithNumberTest()
         {
             FileManager fileManager;
-            Uri uri = new Uri("C:\\Users\\Marcin\\Documents\\TPA.ApplicationArchitecture.dll");
-            fileManager = new FileManager(uri);
-            fileManager.reflector.Reflect(uri.LocalPath);
+            string path = @"..\\..\\..\\DataToTest\\bin\\Debug\\DataToTest.dll";
+            fileManager = new FileManager(path);
+            fileManager.reflector.Reflect(path);
             TypeMetadata metadata = fileManager.FindTypeWithNumber(4);
             TypeMetadata property = fileManager.FindPropertyWithNumber(1, metadata);
-            Assert.AreEqual(property.m_typeName, "ServiceC");
+            Assert.AreEqual(property.m_typeName, "ClassA");
         }
 
         [TestMethod]
         public void ReflectTest()
         {
             FileManager fileManager;
-            Uri uri = new Uri("C:\\Users\\Marcin\\Documents\\TPA.ApplicationArchitecture.dll");
-            fileManager = new FileManager(uri);
-            fileManager.reflector.Reflect(uri.LocalPath);
-            Assert.IsTrue(fileManager.Reflect());           
+            string path = @"..\\..\\..\\DataToTest\\bin\\Debug\\DataToTest.dll";
+            fileManager = new FileManager(path);
+            fileManager.reflector.Reflect(path);
+            Assert.IsTrue(fileManager.Reflect());
         }
     }
 }
