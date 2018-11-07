@@ -9,6 +9,5 @@ namespace DataToTest
     public class ClassA
     {
         public ClassB classB { get; set; }
-        public ClassC classC { get; set; }
     }
 }
