@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace CommandLine.ViewModel
 {
     public class LogWriter
-    {
+    { 
+        static TextWriterTraceListener logsListener = new TextWriterTraceListener("Logs.log", "logsListener");
+
         private string m_exePath = string.Empty;
         public LogWriter(string logMessage)
         {
@@ -17,35 +14,12 @@ namespace CommandLine.ViewModel
         }
         public void LogWrite(string logMessage)
         {
-            m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            try
-            {
-                using (StreamWriter w = File.AppendText(m_exePath + "\\" + "log.txt"))
-                {
-                    Log(logMessage, w);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Unable to open FILE-" + ex.Message);
-            }
-        }
-
-        public void Log(string logMessage, TextWriter txtWriter)
-        {
-            try
-            {
-                txtWriter.Write("\r\nLog Entry : ");
-                txtWriter.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(),
-                    DateTime.Now.ToLongDateString());
-                txtWriter.WriteLine("  :");
-                txtWriter.WriteLine("  :{0}", logMessage);
-                txtWriter.WriteLine("-------------------------------");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Unable to write to FILE-" + ex.Message);
-            }
+            string text = "";
+            text += "\r\nLog Entry : ";
+            text += DateTime.Now.ToLongTimeString() + " " + DateTime.Now.ToLongDateString();
+            text += "  : " + logMessage;
+            logsListener.WriteLine(text);
+            logsListener.Flush();
         }
     }
 }

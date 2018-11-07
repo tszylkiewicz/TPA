@@ -11,26 +11,36 @@ namespace CommandLine
     {
         static void Main(string[] args)
         {
-            LogWriter logWriter = new LogWriter("StartProgram_Okienko.exe");
-            logWriter.LogWrite("Main_function");
+            LogWriter logWriter = new LogWriter("Start: CommandLine.exe");
+            logWriter.LogWrite("Start: Program");
 
-            //FileManager fileManager = new FileManager("C:\\Users\\Marcin\\Downloads\\TP-master\\TP-master\\TPA\\ApplicationArchitecture\\bin\\Debug\\TPA.ApplicationArchitecture.dll");
+            Console.WriteLine("Path:");
+            string url = Console.ReadLine();
+            logWriter.LogWrite("Program: User_Input: " + url);
 
-            //string road = "";
+            FileManager fileManager;
 
-            //Uri uri = new Uri("C:\\Users\\Marcin\\Downloads\\TP - master\\TP - master\\TPA\\ApplicationArchitecture\\bin\\Debug\\TPA.ApplicationArchitecture.dll");
-            Console.WriteLine("Podaj sciezke:");
-            //String url = Console.ReadLine();
-            Uri uri = new Uri("C:\\Users\\totoszek\\Documents\\TPA.ApplicationArchitecture.dll");
-           // Uri uri = new Uri(url);
-            FileManager fileManager = new FileManager(uri);
-
+            if (url.Equals("21"))
+            {
+                Uri uri = new Uri("C:\\Users\\Marcin\\Documents\\GitHub\\TPA\\Okienko\\DataToTest\\bin\\Debug\\DataToTest.dll");
+                //Uri uri = new Uri("C:\\Users\\Marcin\\Documents\\TPA.ApplicationArchitecture.dll");
+                fileManager = new FileManager(uri);
+                logWriter.LogWrite("Program: Fixing_Path: " + "C:\\Users\\Marcin\\Documents\\TPA.ApplicationArchitecture.dll");
+            }
+            else
+            {
+                fileManager = new FileManager(url);
+                if (fileManager.CreateUri(url) == false)
+                {
+                    Console.WriteLine("This path is wrong, closing program");
+                    logWriter.LogWrite("Program: User_Input: Wrong Path");
+                    return;
+                }
+            }
             fileManager.OpenFile();
-
-            //Console.WriteLine(uri.);
-
             Console.WriteLine("END");
             Console.ReadLine();
+            logWriter.LogWrite("Stop: Program");
         }
     }
 }
