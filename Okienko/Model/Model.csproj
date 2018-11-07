@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logger\LogWriter.cs" />
     <Compile Include="Model\AssemblyMetadata.cs" />
     <Compile Include="Model\ExtentionMethods.cs" />
     <Compile Include="Model\NamespaceMetadata.cs" />

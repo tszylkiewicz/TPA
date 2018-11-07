@@ -18,7 +18,7 @@ namespace Okienko.ViewModel
         private bool m_IsExpanded;
         public ObservableCollection<NamespaceMetadata> NamespacesAssembly { get; set; }
         public ObservableCollection<TypeMetadata> TypesAssembly { get; set; }
-        public ObservableCollection<PropertyMetadata> PropertiesAssembly { get; set; }
+        public List<PropertyMetadata> PropertiesAssembly { get; set; }
         #endregion
         public TreeViewItem(Reflector reflector)
         {
@@ -35,7 +35,7 @@ namespace Okienko.ViewModel
         public TreeViewItem(TypeMetadata type)
         {
             Children = new ObservableCollection<TreeViewItem>() { null };
-            PropertiesAssembly = new ObservableCollection<PropertyMetadata>(type.Properties);
+            PropertiesAssembly = type.Properties;
             this.m_WasBuilt = false;
         }
         public TreeViewItem(PropertyMetadata prop)
@@ -65,8 +65,6 @@ namespace Okienko.ViewModel
             }
         }
 
-        //public abstract void BuildMyself();
-
         private void BuildMyself()
         {
             if (NamespacesAssembly != null)
@@ -89,7 +87,7 @@ namespace Okienko.ViewModel
             {
                 foreach (PropertyMetadata type in PropertiesAssembly)
                 {
-                    this.Children.Add(new TreeViewItem(type) { Name = type.m_Name });
+                    this.Children.Add(new TreeViewItem(SingletonDictionary.Instance.Get(type.m_TypeMetadata.m_typeName)) { Name = type.m_Name });
                 }
             }
         }

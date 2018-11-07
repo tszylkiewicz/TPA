@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CommandLine.ViewModel
+namespace Model.Logger
 {
-    public class LogWriter
-    { 
+    class LogWriter
+    {
         static TextWriterTraceListener logsListener = new TextWriterTraceListener("Logs.log", "logsListener");
 
         private string m_exePath = string.Empty;

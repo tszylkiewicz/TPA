@@ -15,6 +15,13 @@ namespace Okienko.ViewModel
 {
     public class MyViewModel : INotifyPropertyChanged
     {
+        public ObservableCollection<TreeViewItem> HierarchicalAreas { get; set; }
+        public string PathVariable { get; set; }
+        public Visibility ChangeControlVisibility { get; set; } = Visibility.Hidden;
+        public ICommand Click_Browse { get; }
+        public ICommand Click_Button { get; }
+        public Reflector reflector { get; set; }
+
         public MyViewModel()
         {
             HierarchicalAreas = new ObservableCollection<TreeViewItem>();
@@ -22,12 +29,6 @@ namespace Okienko.ViewModel
             Click_Browse = new RelayCommand(Browse);
             reflector = new Reflector();
         }
-
-        public ObservableCollection<TreeViewItem> HierarchicalAreas { get; set; }
-        public string PathVariable { get; set; }
-        public Visibility ChangeControlVisibility { get; set; } = Visibility.Hidden;
-        public ICommand Click_Browse { get; }
-        public ICommand Click_Button { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged(string propertyName_)
@@ -47,7 +48,6 @@ namespace Okienko.ViewModel
         {
             TreeViewItem rootItem = new TreeViewItem(reflector) { Name = PathVariable.Substring(PathVariable.LastIndexOf('\\') + 1) };           
             HierarchicalAreas.Add(rootItem);
-            //Reflect();
         }
         private void Browse()
         {
@@ -65,32 +65,6 @@ namespace Okienko.ViewModel
                 RaisePropertyChanged("ChangeControlVisibility");
                 RaisePropertyChanged("PathVariable");
             }
-
-
-            //////////////////
-            //Console.WriteLine(PathVariable);
-            //////////////////
         }
-
-
-        //Reflection
-        public void Reflect()
-        {
-            Assembly assembly = Assembly.LoadFrom(PathVariable);
-            foreach(Type typ in assembly.GetTypes())
-                Console.WriteLine(typ.GetProperties());
-            Console.WriteLine(PathVariable);
-            Console.WriteLine(reflector.m_AssemblyModel.m_Name);
-            foreach (TypeMetadata type in reflector.m_AssemblyModel.Types)
-            {
-                Console.WriteLine(type.m_NamespaceName);
-                Console.WriteLine(type.m_typeName);
-            }
-                //for(int i=0; i< assembly.GetTypes().Count(); i++)
-            //Console.WriteLine(assembly.GetTypes()[i].Namespace);
-        }
-
-        public Reflector reflector { get; set; }
-
     }
 }

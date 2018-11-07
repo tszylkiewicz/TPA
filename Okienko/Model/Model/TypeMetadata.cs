@@ -1,4 +1,5 @@
-﻿using Model.Singleton;
+﻿using Model.Logger;
+using Model.Singleton;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,30 @@ namespace Model.Model
 {
     public class TypeMetadata
     {
+        LogWriter logWriter;
+        public string m_typeName;
+        public string m_NamespaceName;
+        private TypeMetadata m_BaseType;
+        private IEnumerable<TypeMetadata> m_GenericArguments;
+        //private Tuple<AccessLevel, SealedEnum, AbstractENum> m_Modifiers;
+        private TypeKind m_TypeKind;
+        private IEnumerable<Attribute> m_Attributes;
+        private IEnumerable<TypeMetadata> m_ImplementedInterfaces;
+        private IEnumerable<TypeMetadata> m_NestedTypes;
+        private List<PropertyMetadata> m_Properties;
+        private TypeMetadata m_DeclaringType;
+
         internal TypeMetadata(Type type)
         {
             m_typeName = type.Name;
             if(!SingletonDictionary.Instance.ContainsKey(m_typeName))
             {
                 SingletonDictionary.Instance.Add(m_typeName, this);
+                logWriter = new LogWriter("Utworzono obiekt klasy TypeMetadata: " + m_typeName);
+            }
+            else
+            {
+                logWriter = new LogWriter("Odwołano się do obiektu klasy TypeMetadata: " + m_typeName);
             }
             m_NamespaceName = type.Namespace;
             m_DeclaringType = EmitDeclaringType(type.DeclaringType);
@@ -25,48 +44,10 @@ namespace Model.Model
             m_GenericArguments = !type.IsGenericTypeDefinition ? null : TypeMetadata.EmitGenericArguments(type.GetGenericArguments());
             //m_Modifiers = EmitModifiers(type);
             m_BaseType = EmitExtends(type.BaseType);
-            m_Properties = PropertyMetadata.EmitProperties(type.GetProperties());
+            m_Properties = PropertyMetadata.EmitProperties(type.GetProperties()).ToList();
             m_TypeKind = GetTypeKind(type);
             m_Attributes = type.GetCustomAttributes(false).Cast<Attribute>();
         }
-
-        internal enum TypeKind
-        {
-            EnumType, StructType, InterfaceType, ClassType
-        }
-        internal static TypeMetadata EmitReference(Type type)
-        {
-            if (!type.IsGenericType)
-                return new TypeMetadata(type);
-            //return new TypeMetadata(type.Name, type.GetNamespace());
-            else
-                return new TypeMetadata(type);
-            //return new TypeMetadata(type.Name, type.GetNamespace(), EmitGenericArguments(type.GetGenericArguments()));
-        }
-        internal static IEnumerable<TypeMetadata> EmitGenericArguments(IEnumerable<Type> arguments)
-        {
-            return from Type _argument in arguments select EmitReference(_argument);
-        }
-
-        public string m_typeName;
-        public string m_NamespaceName;
-        private TypeMetadata m_BaseType;
-        private IEnumerable<TypeMetadata> m_GenericArguments;
-        //private Tuple<AccessLevel, SealedEnum, AbstractENum> m_Modifiers;
-        private TypeKind m_TypeKind;
-        private IEnumerable<Attribute> m_Attributes;
-        private IEnumerable<TypeMetadata> m_ImplementedInterfaces;
-        private IEnumerable<TypeMetadata> m_NestedTypes;
-        private IEnumerable<PropertyMetadata> m_Properties;
-        private TypeMetadata m_DeclaringType;
-
-        public IEnumerable<PropertyMetadata> Properties { get => m_Properties; set => m_Properties = value; }
-
-        //public IEnumerable<PropertyMetadata> Properties { get => m_Properties; set => m_Properties = value; }
-
-        //private IEnumerable<MethodMetadata> m_Methods;
-        //private IEnumerable<MethodMetadata> m_Constructors;
-
         private TypeMetadata(string typeName, string namespaceName)
         {
             m_typeName = typeName;
@@ -76,6 +57,28 @@ namespace Model.Model
         {
             m_GenericArguments = genericArguments;
         }
+
+        internal enum TypeKind
+        {
+            EnumType, StructType, InterfaceType, ClassType
+        }
+        internal static TypeMetadata EmitReference(Type type)
+        {
+            if (!type.IsGenericType)
+                return new TypeMetadata(type.Name, type.GetNamespace());
+            else
+                return new TypeMetadata(type.Name, type.GetNamespace(), EmitGenericArguments(type.GetGenericArguments()));
+        }
+        internal static IEnumerable<TypeMetadata> EmitGenericArguments(IEnumerable<Type> arguments)
+        {
+            return from Type _argument in arguments select EmitReference(_argument);
+        }
+
+        public List<PropertyMetadata> Properties { get => m_Properties; set => m_Properties = value; }
+
+        //public IEnumerable<PropertyMetadata> Properties { get => m_Properties; set => m_Properties = value; }
+        //private IEnumerable<MethodMetadata> m_Methods;
+        //private IEnumerable<MethodMetadata> m_Constructors;
 
         public static void StoreType(Type type)
         {

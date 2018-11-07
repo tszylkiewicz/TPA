@@ -1,4 +1,5 @@
-﻿using Model.Model;
+﻿using Model.Logger;
+using Model.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace Model.Singleton
 {
     public sealed class SingletonDictionary
     {
+        LogWriter logWriter;
         private static SingletonDictionary m_oInstance = null;
         public static SingletonDictionary Instance
         {
@@ -25,7 +27,7 @@ namespace Model.Singleton
         private Dictionary<string, TypeMetadata> _data = new Dictionary<string, TypeMetadata>();
         private SingletonDictionary()
         {
-            Console.WriteLine("Singleton was created");
+            logWriter = new LogWriter("Singleton was created");
         }
         public void Add(string name, TypeMetadata type)
         {
@@ -41,6 +43,8 @@ namespace Model.Singleton
         {
             TypeMetadata value;
             _data.TryGetValue(name, out value);
+            //if(value != null)
+                //Console.WriteLine("Odwołano się do obiektu");
             return value;
         }
     }
