@@ -8,6 +8,6 @@ namespace DataToTest
 {
     public class ClassC
     {
-        public ClassA ClassA { get; set; }
+        public ClassA classA { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace DataToTest
 {
     public class ClassMcDonald
     {
-        public ClassKFC ClassKFC { get; set; }
-        public ClassBurgerKing ClassBurgerKing { get; set; }
+        public ClassKFC classKFC { get; set; }
+        public ClassBurgerKing classBurgerKing { get; set; }
     }
 }
