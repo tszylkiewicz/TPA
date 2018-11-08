@@ -37,7 +37,15 @@ namespace UnitTest
             Reflector reflector = new Reflector();
             reflector.Reflect(path);
 
-            List<TypeMetadata> types = new List<TypeMetadata>(reflector.m_AssemblyModel.Types);
+            List<TypeMetadata> types = new List<TypeMetadata>();
+
+            foreach (NamespaceMetadata namespaces in reflector.m_AssemblyModel.Namespaces)
+            {
+                foreach (TypeMetadata typeMetadata in namespaces.m_Types)
+                {
+                    types.Add(typeMetadata);
+                }
+            }
 
             Assert.AreEqual(types[0].m_typeName, "ClassA");
             Assert.AreEqual(types[1].m_typeName, "ClassB");
@@ -54,7 +62,16 @@ namespace UnitTest
             Reflector reflector = new Reflector();
             reflector.Reflect(path);
 
-            List<TypeMetadata> types = new List<TypeMetadata>(reflector.m_AssemblyModel.Types);
+            List<TypeMetadata> types = new List<TypeMetadata>();
+
+            foreach (NamespaceMetadata namespaces in reflector.m_AssemblyModel.Namespaces)
+            {
+                foreach (TypeMetadata typeMetadata in namespaces.m_Types)
+                {
+                    types.Add(typeMetadata);
+                }
+            }
+
             List<PropertyMetadata> properties = new List<PropertyMetadata>();
 
             foreach (TypeMetadata type in types)
@@ -67,8 +84,8 @@ namespace UnitTest
 
             Assert.AreEqual(properties[0].m_Name, "classB");
             Assert.AreEqual(properties[1].m_Name, "classC");
-            Assert.AreEqual(properties[2].m_Name, "ClassA");
-            Assert.AreEqual(properties[3].m_Name, "ClassKFC");
+            Assert.AreEqual(properties[2].m_Name, "classA");
+            Assert.AreEqual(properties[3].m_Name, "classKFC");
         }
     }
 }

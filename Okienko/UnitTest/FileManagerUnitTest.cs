@@ -15,6 +15,9 @@ namespace UnitTest
             string path = @"..\\..\\..\\DataToTest\\bin\\Debug\\DataToTest.dll";
             fileManager = new FileManager(path);
             fileManager.reflector.Reflect(path);
+            fileManager.GetTypes();
+
+
             TypeMetadata metadata = fileManager.FindTypeWithNumber(1);
             Assert.AreEqual(metadata.m_typeName, "ClassA");
         }
@@ -26,6 +29,7 @@ namespace UnitTest
             string path = @"..\\..\\..\\DataToTest\\bin\\Debug\\DataToTest.dll";
             fileManager = new FileManager(path);
             fileManager.reflector.Reflect(path);
+            fileManager.GetTypes();
             TypeMetadata metadata = fileManager.FindTypeWithNumber(4);
             TypeMetadata property = fileManager.FindPropertyWithNumber(1, metadata);
             Assert.AreEqual(property.m_typeName, "ClassA");

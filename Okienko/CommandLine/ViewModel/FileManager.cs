@@ -17,11 +17,25 @@ namespace CommandLine.ViewModel
 
         public Reflector reflector { get; set; }
 
+        List<TypeMetadata> TypesList;
+
         public FileManager(string path)
         {
             logWriter = new LogWriter("Start: FileManager");
             PathVariable = path;
             reflector = new Reflector();
+            TypesList = new List<TypeMetadata>();
+        }
+
+        public void GetTypes()
+        {
+            foreach (NamespaceMetadata namespaces in reflector.m_AssemblyModel.Namespaces)
+            {
+                foreach (TypeMetadata typeMetadata in namespaces.m_Types)
+                {
+                    TypesList.Add(typeMetadata);
+                }
+            }
         }
 
         public void OpenFile()
@@ -41,10 +55,12 @@ namespace CommandLine.ViewModel
                 }
                 else
                 {
-                    Console.WriteLine("URI IS NOT DLL FILE");
+                    Console.WriteLine("IT IS NOT DLL FILE");
                     return;
-                }            
+                }
 
+                GetTypes();
+                    
                 Reflect();
                 Console.WriteLine();
                 Console.WriteLine("What to do (E-Exit, 'Number' - show property with number): ");
@@ -101,6 +117,7 @@ namespace CommandLine.ViewModel
             logWriter.LogWrite("FileManager.OpenFile: Closing");
         }
 
+        
         public void More(TypeMetadata type, string offset)
         {
             logWriter.LogWrite("Start: FileManager.More");
@@ -108,6 +125,7 @@ namespace CommandLine.ViewModel
             char anotherChoice;
             TypeMetadata temp;
             ReflectType(type, offset);
+            
             Console.WriteLine();
             Console.WriteLine("What to do now (B-Back, 'Numer' - show property with numer): ");
             anotherChoice = Console.ReadKey().KeyChar;
@@ -160,7 +178,7 @@ namespace CommandLine.ViewModel
         {
             logWriter.LogWrite("Start: FileManager.FindTypeWithNumber");
             int i = 1;
-            foreach (TypeMetadata type in reflector.m_AssemblyModel.Types)
+            foreach (TypeMetadata type in TypesList)
             {
                 if (i++ == Number)
                 {
@@ -175,12 +193,13 @@ namespace CommandLine.ViewModel
         public TypeMetadata FindPropertyWithNumber(double Number, TypeMetadata type)
         {
             logWriter.LogWrite("Start: FileManager.FindPropertyWithNumber");
-            int i = 1;
+            int i = 1;    
+
             foreach (PropertyMetadata property in type.Properties)
             {
                 if (i == Number)
                 {
-                    foreach (TypeMetadata typee in reflector.m_AssemblyModel.Types)
+                    foreach (TypeMetadata typee in TypesList)
                     {
                         if(typee.m_typeName.ToString() == property.m_TypeMetadata.m_typeName.ToString())
                         {
@@ -203,7 +222,7 @@ namespace CommandLine.ViewModel
             Console.WriteLine(reflector.m_AssemblyModel.m_Name);
 
             int i = 1;
-            foreach (TypeMetadata type in reflector.m_AssemblyModel.Types)
+            foreach (TypeMetadata type in TypesList)
             {
                 Console.WriteLine(i++ + ".\t" + type.m_NamespaceName + " : " + type.m_typeName);
             }
