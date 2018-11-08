@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Okienko
+namespace WPF
 {
     /// <summary>
     /// Logika interakcji dla klasy App.xaml
