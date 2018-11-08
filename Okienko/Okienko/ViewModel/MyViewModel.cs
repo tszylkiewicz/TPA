@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace WPF.ViewModel
+namespace Okienko.ViewModel
 {
     public class MyViewModel : INotifyPropertyChanged
     {

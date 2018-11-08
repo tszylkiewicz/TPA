@@ -14,9 +14,7 @@ namespace CommandLine.ViewModel
     {
         LogWriter logWriter;
         public string PathVariable { get; set; }
-
         public Reflector reflector { get; set; }
-
         List<TypeMetadata> TypesList;
 
         public FileManager(string path)
@@ -42,16 +40,17 @@ namespace CommandLine.ViewModel
         {
             logWriter.LogWrite("Start: FileManger.OpenFile");
 
-            char chosenOne;
+            string chosenOne;
+            int chosenOneInt = 0;
             TypeMetadata tempType;
 
             if (File.Exists(PathVariable))
             {
                 Console.WriteLine("Otwieram\n\n");
-   
+
                 if (PathVariable.Substring(PathVariable.Length - 4) == ".dll")
                 {
-                    reflector.Reflect(PathVariable);                    
+                    reflector.Reflect(PathVariable);
                 }
                 else
                 {
@@ -60,23 +59,36 @@ namespace CommandLine.ViewModel
                 }
 
                 GetTypes();
-                    
+
                 Reflect();
                 Console.WriteLine();
                 Console.WriteLine("What to do (E-Exit, 'Number' - show property with number): ");
-                chosenOne = Console.ReadKey().KeyChar;
+                chosenOne = Console.ReadLine();
                 logWriter.LogWrite("FileManager.OpenFile: User_Input: " + chosenOne);
                 Console.WriteLine();
 
-                while ((chosenOne != 'E') && (chosenOne != 'e'))
+                while (!(chosenOne.Equals("E")) && !(chosenOne.Equals("e")))
                 {
-                    if (((Char.GetNumericValue(chosenOne)) >= 0) && ((Char.GetNumericValue(chosenOne)) <= 9))
+                    if (Int32.TryParse(chosenOne, out chosenOneInt))
                     {
-                        tempType = FindTypeWithNumber(Char.GetNumericValue(chosenOne));
-
-                        if (tempType != null)
+                        if ((chosenOneInt >= 0) && ((chosenOneInt <= 99)))                     
                         {
-                            More(FindTypeWithNumber(Char.GetNumericValue(chosenOne)), "");
+                            tempType = FindTypeWithNumber(chosenOneInt);
+
+                            if (tempType != null)
+                            {
+                                More(FindTypeWithNumber(chosenOneInt), "");
+                            }
+                            else
+                            {
+                                Console.WriteLine();
+                                Console.WriteLine();
+                                Console.WriteLine();
+                                Console.WriteLine("WRONG NUMBER - ERROR");
+                                Console.WriteLine();
+                                Console.WriteLine();
+                                Console.WriteLine();
+                            }
                         }
                         else
                         {
@@ -99,15 +111,14 @@ namespace CommandLine.ViewModel
                         Console.WriteLine();
                         Console.WriteLine();
                     }
-
                     Console.WriteLine();
-
                     Reflect();
                     Console.WriteLine();
                     Console.WriteLine("What to do (E-Exit, 'Numer' - show property with numer): ");
-                    chosenOne = Console.ReadKey().KeyChar;
+                    chosenOne = Console.ReadLine();
                     logWriter.LogWrite("FileManager.OpenFile: User_Input: " + chosenOne);
                     Console.WriteLine();
+
                 }
             }
             else
@@ -117,29 +128,42 @@ namespace CommandLine.ViewModel
             logWriter.LogWrite("FileManager.OpenFile: Closing");
         }
 
-        
         public void More(TypeMetadata type, string offset)
         {
             logWriter.LogWrite("Start: FileManager.More");
             logWriter.LogWrite("More: Searched_Type" + type.m_NamespaceName + "_" + type.m_typeName + "_" + type.ToString());
-            char anotherChoice;
+            string anotherChoice;
+            int anotherChoiceInt = 0;
             TypeMetadata temp;
             ReflectType(type, offset);
-            
+
             Console.WriteLine();
             Console.WriteLine("What to do now (B-Back, 'Numer' - show property with numer): ");
-            anotherChoice = Console.ReadKey().KeyChar;
+            anotherChoice = Console.ReadLine();
             logWriter.LogWrite("FileManager.More: User_Input: " + anotherChoice);
             Console.WriteLine();
 
-            while (((anotherChoice != 'B') && (anotherChoice != 'b')))
+            while (((!anotherChoice.Equals("B")) && (!anotherChoice.Equals("b"))))
             {
-                if (((Char.GetNumericValue(anotherChoice)) >= 0) && ((Char.GetNumericValue(anotherChoice)) <= 9))
+                if (Int32.TryParse(anotherChoice, out anotherChoiceInt))
                 {
-                    temp = FindPropertyWithNumber(Char.GetNumericValue(anotherChoice), type);
-                    if (temp != null)
+                    if (((Int32.Parse(anotherChoice)) >= 0) && ((Int32.Parse(anotherChoice)) <= 99))                  
                     {
-                        More(temp, offset + "\t");
+                        temp = FindPropertyWithNumber(Int32.Parse(anotherChoice), type);
+                        if (temp != null)
+                        {
+                            More(temp, offset + "\t");
+                        }
+                        else
+                        {
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine("WRONG NUMBER");
+                            Console.WriteLine();
+                            Console.WriteLine();
+                            Console.WriteLine();
+                        }
                     }
                     else
                     {
@@ -162,11 +186,10 @@ namespace CommandLine.ViewModel
                     Console.WriteLine();
                     Console.WriteLine();
                 }
-
                 ReflectType(type, offset);
                 Console.WriteLine();
                 Console.WriteLine("What to do now (B-Back, 'Numer' - show property with numer): ");
-                anotherChoice = Console.ReadKey().KeyChar;
+                anotherChoice = Console.ReadLine();
                 logWriter.LogWrite("FileManager.More: User_Input: " + anotherChoice);
                 Console.WriteLine();
             }
@@ -193,7 +216,7 @@ namespace CommandLine.ViewModel
         public TypeMetadata FindPropertyWithNumber(double Number, TypeMetadata type)
         {
             logWriter.LogWrite("Start: FileManager.FindPropertyWithNumber");
-            int i = 1;    
+            int i = 1;
 
             foreach (PropertyMetadata property in type.Properties)
             {
@@ -201,7 +224,7 @@ namespace CommandLine.ViewModel
                 {
                     foreach (TypeMetadata typee in TypesList)
                     {
-                        if(typee.m_typeName.ToString() == property.m_TypeMetadata.m_typeName.ToString())
+                        if (typee.m_typeName.ToString() == property.m_TypeMetadata.m_typeName.ToString())
                         {
                             logWriter.LogWrite("Stop: FileManager.FindPropertyWithNumber");
                             return typee;
@@ -238,9 +261,9 @@ namespace CommandLine.ViewModel
             Console.WriteLine(offset + "\t" + type.m_NamespaceName + " : " + type.m_typeName);
             foreach (PropertyMetadata property in type.Properties)
             {
-                Console.WriteLine(offset + "\t" + j++ +  ". " + property.m_Name);
+                Console.WriteLine(offset + "\t" + j++ + ". " + property.m_Name);
             }
             logWriter.LogWrite("Stop: FileManager.Reflect");
-        }     
+        }
     }
 }
