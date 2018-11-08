@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Okienko.Properties
+namespace WPF.Properties
 {
 
 

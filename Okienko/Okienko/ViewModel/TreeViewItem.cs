@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Okienko.ViewModel
+namespace WPF.ViewModel
 {
     public class TreeViewItem
     {

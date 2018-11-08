@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Okienko", "Okienko\Okienko.csproj", "{E40C02B9-9E67-4870-9F44-B250141E8B3D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF", "Okienko\WPF.csproj", "{E40C02B9-9E67-4870-9F44-B250141E8B3D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandLine", "CommandLine\CommandLine.csproj", "{2253B279-BA6B-446F-BA00-D0892DE746B1}"
 EndProject
