@@ -9,14 +9,15 @@ namespace Model.Model
 {
     public class NamespaceMetadata
     {
-        LogWriter logWriter;
-        public string m_NamespaceName;
-        public IEnumerable<TypeMetadata> m_Types;
-        internal NamespaceMetadata(string name, IEnumerable<Type> types)
+        private LogWriter logWriter;
+        public string Name { get; set; }
+        public List<TypeMetadata> Types { get; set; }
+
+        public NamespaceMetadata(string name, List<Type> types)
         {
-            m_NamespaceName = name;
-            m_Types = from type in types orderby type.Name select new TypeMetadata(type);
-            logWriter = new LogWriter("Utworzono obiekt klasy NamespaceMetadata: " + m_NamespaceName);
+            this.Name = name;
+            this.Types = (from type in types orderby type.Name select new TypeMetadata(type)).ToList();
+            this.logWriter = new LogWriter("Utworzono obiekt klasy NamespaceMetadata: " + Name);
         }
     }
 }

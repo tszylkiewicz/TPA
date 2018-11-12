@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using Model.Model;
+using Model.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,6 +22,7 @@ namespace Okienko.ViewModel
         public ICommand Click_Browse { get; }
         public ICommand Click_Button { get; }
         public Reflector reflector { get; set; }
+        private TreeViewAssembly treeViewAssembly;
 
         public MyViewModel()
         {
@@ -41,12 +43,13 @@ namespace Okienko.ViewModel
             if (PathVariable.Substring(PathVariable.Length - 4) == ".dll")
             {
                 reflector.Reflect(PathVariable);
+                treeViewAssembly = new TreeViewAssembly(reflector.AssemblyModel);
                 TreeViewLoaded();
             }
         }
         private void TreeViewLoaded()
         {
-            TreeViewItem rootItem = new TreeViewItem(reflector) { Name = PathVariable.Substring(PathVariable.LastIndexOf('\\') + 1) };           
+            TreeViewItem rootItem = treeViewAssembly;           
             HierarchicalAreas.Add(rootItem);
         }
         private void Browse()

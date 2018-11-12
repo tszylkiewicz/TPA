@@ -11,21 +11,22 @@ namespace Model.Model
     public class PropertyMetadata
     {
         LogWriter logWriter;
-        public string m_Name;
-        public TypeMetadata m_TypeMetadata;
+        public string Name { get; set; }
+        public TypeMetadata PropertyType { get; set; }
 
-        internal static IEnumerable<PropertyMetadata> EmitProperties(IEnumerable<PropertyInfo> props)
+        public PropertyMetadata(string name, TypeMetadata propertyType)
+        {
+            this.Name = name;
+            this.PropertyType = propertyType;
+            logWriter = new LogWriter("Utworzono obiekt klasy PropertyMetadata: " + this.Name);
+        }
+
+        public static IEnumerable<PropertyMetadata> EmitProperties(IEnumerable<PropertyInfo> props)
         {
             return from prop in props
                    where prop.GetGetMethod().GetVisible() || prop.GetSetMethod().GetVisible()
                    select new PropertyMetadata(prop.Name, TypeMetadata.EmitReference(prop.PropertyType));
         }
-
-        private PropertyMetadata(string propertyName, TypeMetadata propertyType)
-        {
-            m_Name = propertyName;
-            m_TypeMetadata = propertyType;
-            logWriter = new LogWriter("Utworzono obiekt klasy PropertyMetadata: " + m_Name);
-        }
+        
     }
 }

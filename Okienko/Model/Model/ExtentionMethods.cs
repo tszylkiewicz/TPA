@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Model.Model
 {
-    internal static class ExtensionMethods
+    public static class ExtensionMethods
     {
         internal static bool GetVisible(this Type type)
         {

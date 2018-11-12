@@ -57,7 +57,6 @@
     </ApplicationDefinition>
     <Compile Include="ViewModel\MyViewModel.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
-    <Compile Include="ViewModel\TreeViewItem.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
