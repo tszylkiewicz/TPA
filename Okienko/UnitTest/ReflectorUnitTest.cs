@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.Model;
+using Model.ViewModel;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace UnitTest
 {
@@ -15,7 +15,7 @@ namespace UnitTest
             Reflector reflector = new Reflector();
             reflector.Reflect(path);
 
-            Assert.AreEqual(reflector.m_AssemblyModel.m_Name, "DataToTest.dll");
+            Assert.AreEqual(reflector.AssemblyModel.Name, "DataToTest.dll");
         }
 
         [TestMethod]
@@ -25,9 +25,9 @@ namespace UnitTest
             Reflector reflector = new Reflector();
             reflector.Reflect(path);
 
-            List<NamespaceMetadata> namespaces = new List<NamespaceMetadata>(reflector.m_AssemblyModel.Namespaces);
+            List<NamespaceMetadata> namespaces = new List<NamespaceMetadata>(reflector.AssemblyModel.Namespaces);
 
-            Assert.AreEqual(namespaces[0].m_NamespaceName, "DataToTest");
+            Assert.AreEqual(namespaces[0].Name, "DataToTest");
         }
 
         [TestMethod]
@@ -39,20 +39,20 @@ namespace UnitTest
 
             List<TypeMetadata> types = new List<TypeMetadata>();
 
-            foreach (NamespaceMetadata namespaces in reflector.m_AssemblyModel.Namespaces)
+            foreach (NamespaceMetadata namespaces in reflector.AssemblyModel.Namespaces)
             {
-                foreach (TypeMetadata typeMetadata in namespaces.m_Types)
+                foreach (TypeMetadata typeMetadata in namespaces.Types)
                 {
                     types.Add(typeMetadata);
                 }
             }
 
-            Assert.AreEqual(types[0].m_typeName, "ClassA");
-            Assert.AreEqual(types[1].m_typeName, "ClassB");
-            Assert.AreEqual(types[2].m_typeName, "ClassBurgerKing");
-            Assert.AreEqual(types[3].m_typeName, "ClassC");
-            Assert.AreEqual(types[4].m_typeName, "ClassKFC");
-            Assert.AreEqual(types[5].m_typeName, "ClassMcDonald");
+            Assert.AreEqual(types[0].Name, "ClassA");
+            Assert.AreEqual(types[1].Name, "ClassB");
+            Assert.AreEqual(types[2].Name, "ClassBurgerKing");
+            Assert.AreEqual(types[3].Name, "ClassC");
+            Assert.AreEqual(types[4].Name, "ClassKFC");
+            Assert.AreEqual(types[5].Name, "ClassMcDonald");
         }
 
         [TestMethod]
@@ -64,9 +64,9 @@ namespace UnitTest
 
             List<TypeMetadata> types = new List<TypeMetadata>();
 
-            foreach (NamespaceMetadata namespaces in reflector.m_AssemblyModel.Namespaces)
+            foreach (NamespaceMetadata namespaces in reflector.AssemblyModel.Namespaces)
             {
-                foreach (TypeMetadata typeMetadata in namespaces.m_Types)
+                foreach (TypeMetadata typeMetadata in namespaces.Types)
                 {
                     types.Add(typeMetadata);
                 }
@@ -82,10 +82,10 @@ namespace UnitTest
                 }
             }
 
-            Assert.AreEqual(properties[0].m_Name, "classB");
-            Assert.AreEqual(properties[1].m_Name, "classC");
-            Assert.AreEqual(properties[2].m_Name, "classA");
-            Assert.AreEqual(properties[3].m_Name, "classKFC");
+            Assert.AreEqual(properties[0].Name, "classB");
+            Assert.AreEqual(properties[1].Name, "classC");
+            Assert.AreEqual(properties[2].Name, "classA");
+            Assert.AreEqual(properties[3].Name, "classKFC");
         }
     }
 }

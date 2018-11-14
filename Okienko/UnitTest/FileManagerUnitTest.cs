@@ -2,6 +2,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CommandLine.ViewModel;
 using Model.Model;
+using System.Collections.ObjectModel;
+using Model.ViewModel;
+using System.Collections.Generic;
 
 namespace UnitTest
 {
@@ -15,11 +18,19 @@ namespace UnitTest
             string path = @"..\\..\\..\\DataToTest\\bin\\Debug\\DataToTest.dll";
             fileManager = new FileManager(path);
             fileManager.reflector.Reflect(path);
-            fileManager.GetTypes();
+            fileManager.treeViewAssembly = new TreeViewAssembly(fileManager.reflector.AssemblyModel);
 
+            TreeViewType testTreeView = null;
 
-            TypeMetadata metadata = fileManager.FindTypeWithNumber(1);
-            Assert.AreEqual(metadata.m_typeName, "ClassA");
+            foreach (TreeViewNamespace treeViewNamespace in fileManager.GetNamespaces())
+            {
+                foreach (TreeViewType treeViewType in fileManager.GetTypes(treeViewNamespace))
+                {
+                    testTreeView = treeViewType;
+                }
+            }
+
+            Assert.AreEqual(testTreeView.Name, "ClassMcDonald");
         }
 
         [TestMethod]
@@ -29,10 +40,18 @@ namespace UnitTest
             string path = @"..\\..\\..\\DataToTest\\bin\\Debug\\DataToTest.dll";
             fileManager = new FileManager(path);
             fileManager.reflector.Reflect(path);
-            fileManager.GetTypes();
-            TypeMetadata metadata = fileManager.FindTypeWithNumber(4);
-            TypeMetadata property = fileManager.FindPropertyWithNumber(1, metadata);
-            Assert.AreEqual(property.m_typeName, "ClassA");
+            fileManager.treeViewAssembly = new TreeViewAssembly(fileManager.reflector.AssemblyModel);
+
+            TreeViewItem testTreeView = null;
+
+            foreach (TreeViewNamespace treeViewNamespace in fileManager.GetNamespaces())
+            {
+                foreach (TreeViewType treeViewType in fileManager.GetTypes(treeViewNamespace))
+                {
+                    testTreeView = fileManager.FindPropertyWithNumber(1, treeViewType);
+                }
+            }
+            Assert.AreEqual(testTreeView.Name, "ClassKFC");
         }
 
         [TestMethod]
@@ -42,7 +61,60 @@ namespace UnitTest
             string path = @"..\\..\\..\\DataToTest\\bin\\Debug\\DataToTest.dll";
             fileManager = new FileManager(path);
             fileManager.reflector.Reflect(path);
+            fileManager.treeViewAssembly = new TreeViewAssembly(fileManager.reflector.AssemblyModel);
             Assert.IsTrue(fileManager.ReflectNamespace());
+        }
+
+        [TestMethod]
+        public void GetNamespacesTest()
+        {
+            FileManager fileManager;
+            string path = @"..\\..\\..\\DataToTest\\bin\\Debug\\DataToTest.dll";
+            fileManager = new FileManager(path);
+            fileManager.reflector.Reflect(path);
+            fileManager.treeViewAssembly = new TreeViewAssembly(fileManager.reflector.AssemblyModel);
+
+            ObservableCollection<TreeViewItem> treeViewItems = fileManager.GetNamespaces();
+            Assert.AreEqual(treeViewItems[0].Name, "DataToTest");
+        }
+        [TestMethod]
+        public void GetTypesTest()
+        {
+            FileManager fileManager;
+            string path = @"..\\..\\..\\DataToTest\\bin\\Debug\\DataToTest.dll";
+            fileManager = new FileManager(path);
+            fileManager.reflector.Reflect(path);
+            fileManager.treeViewAssembly = new TreeViewAssembly(fileManager.reflector.AssemblyModel);
+
+            ObservableCollection<TreeViewItem> treeViewItems = null;
+
+            foreach (TreeViewNamespace treeViewNamespace in fileManager.GetNamespaces())
+            {
+                treeViewItems = fileManager.GetTypes(treeViewNamespace);
+            }
+
+            Assert.AreEqual(treeViewItems[0].Name, "ClassA");
+        }
+        [TestMethod]
+        public void GetPropertyTest()
+        {
+            FileManager fileManager;
+            string path = @"..\\..\\..\\DataToTest\\bin\\Debug\\DataToTest.dll";
+            fileManager = new FileManager(path);
+            fileManager.reflector.Reflect(path);
+            fileManager.treeViewAssembly = new TreeViewAssembly(fileManager.reflector.AssemblyModel);
+
+            ObservableCollection<TreeViewItem> treeViewItems = null;
+
+            foreach (TreeViewNamespace treeViewNamespace in fileManager.GetNamespaces())
+            {
+                foreach (TreeViewType treeViewType in fileManager.GetTypes(treeViewNamespace))
+                {
+                    treeViewItems = fileManager.GetProperty(treeViewType);
+                }
+            }
+
+            Assert.AreEqual(treeViewItems[0].Name, "classKFC");
         }
     }
 }

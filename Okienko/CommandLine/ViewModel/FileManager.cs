@@ -14,8 +14,7 @@ namespace CommandLine.ViewModel
         LogWriter logWriter;
         public string PathVariable { get; set; }
         public Reflector reflector { get; set; }
-
-        private TreeViewAssembly treeViewAssembly;
+        public TreeViewAssembly treeViewAssembly { get; set; }
 
         public FileManager(string path)
         {
@@ -69,35 +68,17 @@ namespace CommandLine.ViewModel
                             }
                             else
                             {
-                                Console.WriteLine();
-                                Console.WriteLine();
-                                Console.WriteLine();
-                                Console.WriteLine("WRONG NUMBER - ERROR");
-                                Console.WriteLine();
-                                Console.WriteLine();
-                                Console.WriteLine();
+                                Console.WriteLine("\n\n\nWRONG NUMBER - ERROR\n\n\n");
                             }
                         }
                         else
                         {
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine("WRONG NUMBER - ERROR");
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine();
+                            Console.WriteLine("\n\n\nWRONG NUMBER - ERROR\n\n\n");
                         }
                     }
                     else
                     {
-                        Console.WriteLine();
-                        Console.WriteLine();
-                        Console.WriteLine();
-                        Console.WriteLine("WRONG NUMBER - ERROR");
-                        Console.WriteLine();
-                        Console.WriteLine();
-                        Console.WriteLine();
+                        Console.WriteLine("\n\n\nWRONG NUMBER - ERROR\n\n\n");
                     }
                     Console.WriteLine();
                     ReflectNamespace();
@@ -108,7 +89,6 @@ namespace CommandLine.ViewModel
                     Console.WriteLine();
 
                 }
-
                 closeNamespace();
             }
             else
@@ -148,35 +128,17 @@ namespace CommandLine.ViewModel
                         }
                         else
                         {
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine("WRONG NUMBER");
-                            Console.WriteLine();
-                            Console.WriteLine();
-                            Console.WriteLine();
+                            Console.WriteLine("\n\n\nWRONG NUMBER - ERROR\n\n\n");
                         }
                     }
                     else
                     {
-                        Console.WriteLine();
-                        Console.WriteLine();
-                        Console.WriteLine();
-                        Console.WriteLine("WRONG NUMBER");
-                        Console.WriteLine();
-                        Console.WriteLine();
-                        Console.WriteLine();
+                        Console.WriteLine("\n\n\nWRONG NUMBER - ERROR\n\n\n");
                     }
                 }
                 else
                 {
-                    Console.WriteLine();
-                    Console.WriteLine();
-                    Console.WriteLine();
-                    Console.WriteLine("WRONG NUMBER");
-                    Console.WriteLine();
-                    Console.WriteLine();
-                    Console.WriteLine();
+                    Console.WriteLine("\n\n\nWRONG NUMBER - ERROR\n\n\n");
                 }
                 ReflectType(type, offset);
                 Console.WriteLine();
