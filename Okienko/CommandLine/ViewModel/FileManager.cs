@@ -1,11 +1,10 @@
 ﻿using Model.Logger;
 using Model.Model;
+using Model.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace CommandLine.ViewModel
@@ -15,25 +14,14 @@ namespace CommandLine.ViewModel
         LogWriter logWriter;
         public string PathVariable { get; set; }
         public Reflector reflector { get; set; }
-        List<TypeMetadata> TypesList;
+
+        private TreeViewAssembly treeViewAssembly;
 
         public FileManager(string path)
         {
             logWriter = new LogWriter("Start: FileManager");
             PathVariable = path;
             reflector = new Reflector();
-            TypesList = new List<TypeMetadata>();
-        }
-
-        public void GetTypes()
-        {
-            foreach (NamespaceMetadata namespaces in reflector.m_AssemblyModel.Namespaces)
-            {
-                foreach (TypeMetadata typeMetadata in namespaces.m_Types)
-                {
-                    TypesList.Add(typeMetadata);
-                }
-            }
         }
 
         public void OpenFile()
@@ -42,7 +30,7 @@ namespace CommandLine.ViewModel
 
             string chosenOne;
             int chosenOneInt = 0;
-            TypeMetadata tempType;
+            TreeViewItem tempTreeViewItem;
 
             if (File.Exists(PathVariable))
             {
@@ -51,6 +39,7 @@ namespace CommandLine.ViewModel
                 if (PathVariable.Substring(PathVariable.Length - 4) == ".dll")
                 {
                     reflector.Reflect(PathVariable);
+                    treeViewAssembly = new TreeViewAssembly(reflector.AssemblyModel);
                 }
                 else
                 {
@@ -58,9 +47,8 @@ namespace CommandLine.ViewModel
                     return;
                 }
 
-                GetTypes();
+                ReflectNamespace();
 
-                Reflect();
                 Console.WriteLine();
                 Console.WriteLine("What to do (E-Exit, 'Number' - show property with number): ");
                 chosenOne = Console.ReadLine();
@@ -71,11 +59,11 @@ namespace CommandLine.ViewModel
                 {
                     if (Int32.TryParse(chosenOne, out chosenOneInt))
                     {
-                        if ((chosenOneInt >= 0) && ((chosenOneInt <= 99)))                     
+                        if ((chosenOneInt >= 0) && ((chosenOneInt <= 99)))
                         {
-                            tempType = FindTypeWithNumber(chosenOneInt);
+                            tempTreeViewItem = FindTypeWithNumber(chosenOneInt);
 
-                            if (tempType != null)
+                            if (tempTreeViewItem != null)
                             {
                                 More(FindTypeWithNumber(chosenOneInt), "");
                             }
@@ -112,7 +100,7 @@ namespace CommandLine.ViewModel
                         Console.WriteLine();
                     }
                     Console.WriteLine();
-                    Reflect();
+                    ReflectNamespace();
                     Console.WriteLine();
                     Console.WriteLine("What to do (E-Exit, 'Numer' - show property with numer): ");
                     chosenOne = Console.ReadLine();
@@ -120,6 +108,8 @@ namespace CommandLine.ViewModel
                     Console.WriteLine();
 
                 }
+
+                closeNamespace();
             }
             else
             {
@@ -128,13 +118,14 @@ namespace CommandLine.ViewModel
             logWriter.LogWrite("FileManager.OpenFile: Closing");
         }
 
-        public void More(TypeMetadata type, string offset)
+        public void More(TreeViewItem type, string offset)
         {
             logWriter.LogWrite("Start: FileManager.More");
-            logWriter.LogWrite("More: Searched_Type" + type.m_NamespaceName + "_" + type.m_typeName + "_" + type.ToString());
+            logWriter.LogWrite("More: Searched_Type" + type.Name + "_" + type.Name + "_" + type.ToString());
             string anotherChoice;
             int anotherChoiceInt = 0;
-            TypeMetadata temp;
+            TreeViewItem tempTreeViewItem;
+
             ReflectType(type, offset);
 
             Console.WriteLine();
@@ -147,12 +138,13 @@ namespace CommandLine.ViewModel
             {
                 if (Int32.TryParse(anotherChoice, out anotherChoiceInt))
                 {
-                    if (((Int32.Parse(anotherChoice)) >= 0) && ((Int32.Parse(anotherChoice)) <= 99))                  
+                    if (((Int32.Parse(anotherChoice)) >= 0) && ((Int32.Parse(anotherChoice)) <= 99))
                     {
-                        temp = FindPropertyWithNumber(Int32.Parse(anotherChoice), type);
-                        if (temp != null)
+                        tempTreeViewItem = FindPropertyWithNumber(Int32.Parse(anotherChoice), type);
+                        if (tempTreeViewItem != null)
                         {
-                            More(temp, offset + "\t");
+                            More(tempTreeViewItem, offset + "\t");
+                            closeProperty(tempTreeViewItem);
                         }
                         else
                         {
@@ -194,74 +186,121 @@ namespace CommandLine.ViewModel
                 Console.WriteLine();
             }
             logWriter.LogWrite("Stop: FileManager.More");
+
+            closeType(type);
+
             return;
         }
 
-        public TypeMetadata FindTypeWithNumber(double Number)
+        public TreeViewItem FindTypeWithNumber(double Number)
         {
             logWriter.LogWrite("Start: FileManager.FindTypeWithNumber");
             int i = 1;
-            foreach (TypeMetadata type in TypesList)
+
+            foreach (TreeViewNamespace treeViewNamespace in GetNamespaces())
             {
-                if (i++ == Number)
+                foreach (TreeViewType treeViewType in GetTypes(treeViewNamespace))
                 {
-                    logWriter.LogWrite("Stop: FileManager.FindTypeWithNumber");
-                    return type;
+                    if (i++ == Number)
+                    {
+                        logWriter.LogWrite("Stop: FileManager.FindTypeWithNumber");
+                        return treeViewType;
+                    }
                 }
             }
             logWriter.LogWrite("Stop: FileManager.FindTypeWithNumber");
             return null;
         }
 
-        public TypeMetadata FindPropertyWithNumber(double Number, TypeMetadata type)
+        public TreeViewItem FindPropertyWithNumber(double Number, TreeViewItem type)
         {
             logWriter.LogWrite("Start: FileManager.FindPropertyWithNumber");
             int i = 1;
 
-            foreach (PropertyMetadata property in type.Properties)
+            foreach (TreeViewProperty property in GetProperty(type))
             {
                 if (i == Number)
                 {
-                    foreach (TypeMetadata typee in TypesList)
+                    foreach (TreeViewNamespace treeViewNamespace in GetNamespaces())
                     {
-                        if (typee.m_typeName.ToString() == property.m_TypeMetadata.m_typeName.ToString())
+                        foreach (TreeViewType treeViewType in GetTypes(treeViewNamespace))
                         {
-                            logWriter.LogWrite("Stop: FileManager.FindPropertyWithNumber");
-                            return typee;
+                            if (treeViewType.Name.ToString() == property.Property.PropertyType.Name.ToString())//property.Name.ToString())// property.PropertyType.Name.ToString())
+                            {
+                                logWriter.LogWrite("Stop: FileManager.FindPropertyWithNumber");
+                                return treeViewType;
+                            }
                         }
                     }
                 }
                 i++;
             }
+
             logWriter.LogWrite("Stop: FileManager.FindPropertyWithNumber");
             return null;
         }
 
-        public bool Reflect()
+        public ObservableCollection<TreeViewItem> GetNamespaces()
+        {
+            treeViewAssembly.IsExpanded = true;
+            return treeViewAssembly.Children;
+        }
+
+        public void closeNamespace()
+        {
+            treeViewAssembly.IsExpanded = false;
+        }
+
+        public ObservableCollection<TreeViewItem> GetTypes(TreeViewItem namespaceTreeView)
+        {
+            namespaceTreeView.IsExpanded = true;
+            return namespaceTreeView.Children;
+        }
+
+        public void closeType(TreeViewItem namespaceTreeView)
+        {
+            namespaceTreeView.IsExpanded = false;
+        }
+
+        public ObservableCollection<TreeViewItem> GetProperty(TreeViewItem typeTreeView)
+        {
+            typeTreeView.IsExpanded = true;
+            return typeTreeView.Children;
+        }
+
+        public void closeProperty(TreeViewItem typeTreeView)
+        {
+            typeTreeView.IsExpanded = false;
+        }
+
+        public bool ReflectNamespace()
         {
             logWriter.LogWrite("Start: FileManager.Reflect");
+
             Console.WriteLine(PathVariable);
             Console.WriteLine();
-            Console.WriteLine(reflector.m_AssemblyModel.m_Name);
 
-            int i = 1;
-            foreach (TypeMetadata type in TypesList)
+            foreach (TreeViewNamespace treeViewNamespace in GetNamespaces())
             {
-                Console.WriteLine(i++ + ".\t" + type.m_NamespaceName + " : " + type.m_typeName);
-            }
-            logWriter.LogWrite("Stop: FileManager.Reflect");
+                Console.WriteLine(treeViewNamespace.Name);
 
+                int i = 1;
+                foreach (TreeViewType treeViewType in GetTypes(treeViewNamespace))
+                {
+                    Console.WriteLine(i++ + ".\t" + treeViewType.Name);
+                }
+            }
             return true;
         }
 
-        public void ReflectType(TypeMetadata type, string offset)
+        public void ReflectType(TreeViewItem type, string offset)
         {
             logWriter.LogWrite("Start: FileManager.ReflectType");
             int j = 1;
-            Console.WriteLine(offset + "\t" + type.m_NamespaceName + " : " + type.m_typeName);
-            foreach (PropertyMetadata property in type.Properties)
+            Console.WriteLine(offset + "\t" + "" + " : " + type.Name);
+            foreach (TreeViewProperty property in GetProperty(type))
             {
-                Console.WriteLine(offset + "\t" + j++ + ". " + property.m_Name);
+                Console.WriteLine(offset + "\t" + j++ + ". " + property.Name);
             }
             logWriter.LogWrite("Stop: FileManager.Reflect");
         }

@@ -42,7 +42,7 @@ namespace UnitTest
             string path = @"..\\..\\..\\DataToTest\\bin\\Debug\\DataToTest.dll";
             fileManager = new FileManager(path);
             fileManager.reflector.Reflect(path);
-            Assert.IsTrue(fileManager.Reflect());
+            Assert.IsTrue(fileManager.ReflectNamespace());
         }
     }
 }
