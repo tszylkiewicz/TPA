@@ -12,15 +12,16 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace WPF.ViewModel
+
+namespace Model.ViewModel
 {
     public class MyViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<TreeViewItem> HierarchicalAreas { get; set; }
         public string PathVariable { get; set; }
-        public Visibility ChangeControlVisibility { get; set; } = Visibility.Hidden;
         public ICommand Click_Browse { get; }
         public ICommand Click_Button { get; }
+        public IBrowseFile BrowseFile { get; set; }
         public Reflector reflector { get; set; }
         private TreeViewAssembly treeViewAssembly;
 
@@ -40,6 +41,7 @@ namespace WPF.ViewModel
 
         private void LoadDLL()
         {
+            
             if (PathVariable.Substring(PathVariable.Length - 4) == ".dll")
             {
                 reflector.Reflect(PathVariable);
@@ -54,20 +56,8 @@ namespace WPF.ViewModel
         }
         private void Browse()
         {
-            OpenFileDialog test = new OpenFileDialog()
-            {
-                Filter = "Dynamic Library File(*.dll)| *.dll"
-            };
-            test.ShowDialog();
-            if (test.FileName.Length == 0)
-                MessageBox.Show("No files selected");
-            else
-            {
-                PathVariable = test.FileName;
-                ChangeControlVisibility = Visibility.Visible;
-                RaisePropertyChanged("ChangeControlVisibility");
-                RaisePropertyChanged("PathVariable");
-            }
+            PathVariable = BrowseFile.ChooseFile();
+            RaisePropertyChanged("PathVariable");
         }
     }
 }

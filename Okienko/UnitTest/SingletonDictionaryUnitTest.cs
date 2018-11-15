@@ -1,4 +1,4 @@
-﻿using CommandLine.ViewModel;
+﻿using CommandLine.View;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.Model;
 using Model.Singleton;

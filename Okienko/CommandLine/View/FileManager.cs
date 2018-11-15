@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 
 
-namespace CommandLine.ViewModel
+namespace CommandLine.View
 {
     public class FileManager
     {

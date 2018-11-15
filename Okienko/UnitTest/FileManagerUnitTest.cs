@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CommandLine.ViewModel;
+using CommandLine.View;
 using Model.Model;
 using System.Collections.ObjectModel;
 using Model.ViewModel;

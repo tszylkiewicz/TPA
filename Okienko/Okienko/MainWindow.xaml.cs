@@ -12,7 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WPF.ViewModel;
+using Model.ViewModel;
+
 
 namespace WPF
 {
@@ -24,7 +25,10 @@ namespace WPF
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MyViewModel();
+            DataContext = new MyViewModel()
+            {
+                BrowseFile = new Okienko.View.BrowseFile()
+            };
         }
     }
 }

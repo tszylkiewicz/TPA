@@ -1,4 +1,4 @@
-﻿using CommandLine.ViewModel;
+﻿using CommandLine.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;

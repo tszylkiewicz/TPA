@@ -56,8 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter.cs" />
-    <Compile Include="ViewModel\MyViewModel.cs" />
-    <Compile Include="ViewModel\RelayCommand.cs" />
+    <Compile Include="View\BrowseFile.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -97,9 +96,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="View\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{3a717d5d-00f3-4f56-a6f3-8a58cc782e61}</Project>
