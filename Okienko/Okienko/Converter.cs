@@ -1,4 +1,5 @@
 ﻿using Model.ViewModel;
+using Model.ViewModel.TreeView;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -19,6 +20,8 @@ namespace WPF
             string typeString = type == typeof(TreeViewAssembly) ? "Assembly":
                 type == typeof(TreeViewNamespace) ? "Namespace" :
                 type == typeof(TreeViewProperty) ? "Property" :
+                type == typeof(TreeViewMethod) ? "Method" :
+                type == typeof(TreeViewParameter) ? "Parameter" :
                 type == typeof(TreeViewType) ? "Type" : "";
             return '[' + typeString + ']';
         }

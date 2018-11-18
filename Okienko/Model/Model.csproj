@@ -61,11 +61,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Singleton\SingletonDictionary.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
-    <Compile Include="ViewModel\TreeViewAssembly.cs" />
-    <Compile Include="ViewModel\TreeViewItem.cs" />
-    <Compile Include="ViewModel\TreeViewNamespace.cs" />
-    <Compile Include="ViewModel\TreeViewProperty.cs" />
-    <Compile Include="ViewModel\TreeViewType.cs" />
+    <Compile Include="ViewModel\TreeView\TreeViewAssembly.cs" />
+    <Compile Include="ViewModel\TreeView\TreeViewItem.cs" />
+    <Compile Include="ViewModel\TreeView\TreeViewMethod.cs" />
+    <Compile Include="ViewModel\TreeView\TreeViewNamespace.cs" />
+    <Compile Include="ViewModel\TreeView\TreeViewParameter.cs" />
+    <Compile Include="ViewModel\TreeView\TreeViewProperty.cs" />
+    <Compile Include="ViewModel\TreeView\TreeViewType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
