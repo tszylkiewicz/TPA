@@ -1,6 +1,8 @@
 ﻿using Model.Logger;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -10,6 +12,9 @@ namespace Model.Model
 {
     public class PropertyMetadata
     {
+        [Key]
+        public int idProperty { get; set; }
+        [NotMapped]
         LogWriter logWriter;
         public string Name { get; set; }
         public TypeMetadata PropertyType { get; set; }

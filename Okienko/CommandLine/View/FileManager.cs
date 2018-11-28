@@ -1,10 +1,12 @@
 ﻿using Model.Logger;
 using Model.Model;
 using Model.ViewModel;
+using Model.ViewModel.TreeView;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using Datas;
 
 
 namespace CommandLine.View
@@ -21,6 +23,70 @@ namespace CommandLine.View
             logWriter = new LogWriter("Start: FileManager");
             PathVariable = path;
             reflector = new Reflector();
+        }
+
+
+        public void SaveToDB()
+        {
+ 
+            if (File.Exists(PathVariable))
+            {
+                Console.WriteLine("Otwieram\n\n");
+
+                if (PathVariable.Substring(PathVariable.Length - 4) == ".dll")
+                {
+                    reflector.Reflect(PathVariable);
+                    treeViewAssembly = new TreeViewAssembly(reflector.AssemblyModel);
+                }
+                else
+                {
+                    Console.WriteLine("IT IS NOT DLL FILE");
+                    return;
+                }
+
+                Console.WriteLine("Zaczynamy");
+                using (DatasDBContext context = new DatasDBContext())
+                {
+                    AssemblyMetadata assembly = reflector.AssemblyModel;
+
+                    List<NamespaceMetadata> listName = treeViewAssembly.Namespaces;
+
+                    List<TypeMetadata> typelist = new List<TypeMetadata>();
+
+                    List<PropertyMetadata> propertylist = new List<PropertyMetadata>();
+
+                    foreach (NamespaceMetadata nm in listName)
+                    {
+                        typelist.AddRange(nm.Types);
+                    }
+
+                    foreach (TypeMetadata tp in typelist)
+                    {
+                        propertylist.AddRange(tp.Properties);
+                    }
+
+                    Console.WriteLine("Zapis do bazy");
+
+                    context.AssemblyMetadatas.Add(assembly);
+
+                    context.NamespaceMetadatas.AddRange(listName);
+
+                    context.TypeMetadatas.AddRange(typelist);
+
+                    context.PropertyMetadatas.AddRange(propertylist);
+
+
+
+                    Console.WriteLine("potwierdz");
+                    // context.SaveChanges();
+                    Console.WriteLine("potwierdzono i zapisano:" + context.SaveChanges());
+
+                    Console.WriteLine("Ilosc: " + assembly.Namespaces.Count);
+
+                }
+
+                Console.WriteLine("Koniec");
+            }
         }
 
         public void OpenFile()
@@ -105,6 +171,7 @@ namespace CommandLine.View
             string anotherChoice;
             int anotherChoiceInt = 0;
             TreeViewItem tempTreeViewItem;
+
 
             ReflectType(type, offset);
 

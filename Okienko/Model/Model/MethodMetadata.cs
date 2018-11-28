@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -11,6 +12,8 @@ namespace Model.Model
     public class MethodMetadata
     {
         #region Properties
+        [Key]
+        public int idProperties { get; set; }
         public string Name { get; set; }
         public List<TypeMetadata> GenericArguments { get; set; }
         public Tuple<AccessLevel, AbstractEnum, StaticEnum, VirtualEnum> Modifiers { get; set; }

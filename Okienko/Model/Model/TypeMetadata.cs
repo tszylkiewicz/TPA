@@ -2,17 +2,24 @@
 using Model.Singleton;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Model.Model
 {
     public class TypeMetadata
     {
         #region Properties
+        [Key]
+        public int idType { get; set; }
         public string Name;
         public string NamespaceName;
+
+        [ForeignKey("NamespaceMetadata")]
+        public int idNamespace { get; set; }
+        public NamespaceMetadata NamespaceMetadata { get; set; }
+
         public TypeMetadata BaseType;
         public List<TypeMetadata> GenericArguments;
         public Tuple<AccessLevel, SealedEnum, AbstractEnum> Modifiers;
@@ -24,6 +31,7 @@ namespace Model.Model
         public TypeMetadata DeclaringType;
         public List<MethodMetadata> Methods;
         public List<MethodMetadata> Constructors;
+        [NotMapped]
         private LogWriter logWriter;
         #endregion
 

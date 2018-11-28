@@ -1,17 +1,24 @@
 ﻿using Model.Logger;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Model.Model
 {
     public class AssemblyMetadata
     {
+        [Key]
+        public int idAssemby { get; set; }
+        [NotMapped]
         private LogWriter logWriter;
         public string Name { get; set; }
+        //[ForeignKey]
         public List<NamespaceMetadata> Namespaces { get; set; }
 
         public AssemblyMetadata(Assembly assembly)
