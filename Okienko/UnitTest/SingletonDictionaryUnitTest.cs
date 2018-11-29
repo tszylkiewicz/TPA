@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.Model;
 using Model.Singleton;
 using Model.ViewModel;
+using Model.ViewModel.TreeView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
