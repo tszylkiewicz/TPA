@@ -4,18 +4,22 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Model.Model
 {
+    [DataContract(IsReference = true)]
     public class NamespaceMetadata
     {
         [Key]
         public int idNamespace { get; set; }
         [NotMapped]
         private LogWriter logWriter;
+        [DataMember]
         public string Name { get; set; }
+        [DataMember]
         public List<TypeMetadata> Types { get; set; }
 
         [ForeignKey("AssemblyMetadata")]

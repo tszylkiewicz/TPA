@@ -23,7 +23,8 @@
                 </Style>
             </TreeView.ItemContainerStyle>
         </TreeView>
-        <Button x:Name="LoadDLL" Content="Show TreeView" Visibility="{Binding ChangeControlVisibility,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"  Command="{Binding Click_Button}" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top" Width="275" Height="42" Background="AliceBlue"/>
+        <Button x:Name="LoadDLL" Content="Show TreeView" Command="{Binding Click_Button}" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top" Width="275" Height="42" Background="AliceBlue" RenderTransformOrigin="0.509,2.762"/>
+        <Button x:Name="Save" Content="Save Model" Command="{Binding Click_Save}" HorizontalAlignment="Left" Margin="10,187,0,0" VerticalAlignment="Top" Width="275" Height="42" Background="AliceBlue" RenderTransformOrigin="0.509,2.762"/>
         <TextBox Text="{Binding Mode=OneWay,Path=PathVariable,UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Height="50" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="275"/>
         <Button x:Name="Browse" Content="Browse" Command="{Binding Click_Browse}" HorizontalAlignment="Left" Margin="210,80,0,0" VerticalAlignment="Top" Width="75" Background="AliceBlue"/>
     </Grid>

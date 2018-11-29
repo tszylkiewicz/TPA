@@ -30,5 +30,22 @@ namespace Okienko.View
             }
             return null;
         }
+
+        public string SavePath()
+        {
+            SaveFileDialog file = new SaveFileDialog
+            {
+                Filter = "XML File(*.xml) | *.xml",
+                RestoreDirectory = true
+            };
+            file.ShowDialog();
+            if (file.FileName.Length == 0)
+            {
+                MessageBox.Show("File has not been saved.", "Warning", MessageBoxButton.OK, MessageBoxImage.Error);
+                return null;
+            }
+
+            return file.FileName;
+        }
     }
 }

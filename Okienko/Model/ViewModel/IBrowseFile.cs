@@ -9,5 +9,6 @@ namespace Model.ViewModel
     public interface IBrowseFile
     {
         string ChooseFile();
+        string SavePath();
     }
 }

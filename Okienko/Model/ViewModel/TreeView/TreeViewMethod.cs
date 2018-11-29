@@ -33,9 +33,8 @@ namespace Model.ViewModel.TreeView
                 }
             }
             if (Method.ReturnType != null)
-            {
-                Console.WriteLine(Method.ReturnType.Name);
-                //children.Add(new TreeViewType(SingletonDictionary.Instance.Get(Method.ReturnType.Name)));
+            {                
+                children.Add(new TreeViewType(SingletonDictionary.Instance.Get(Method.ReturnType.Name)));
             }
         }
     }

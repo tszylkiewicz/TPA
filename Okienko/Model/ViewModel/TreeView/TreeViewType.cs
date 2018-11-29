@@ -1,4 +1,5 @@
 ﻿using Model.Model;
+using Model.Singleton;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -37,6 +38,42 @@ namespace Model.ViewModel.TreeView
                 foreach (MethodMetadata constructor in Type.Constructors)
                 {
                     children.Add(new TreeViewMethod(constructor));
+                }
+            }
+            if (Type.BaseType != null)
+            {
+                children.Add(new TreeViewType(SingletonDictionary.Instance.Get(Type.BaseType.Name)));
+            }
+            if (Type.DeclaringType != null)
+            {
+                children.Add(new TreeViewType(SingletonDictionary.Instance.Get(Type.DeclaringType.Name)));
+            }
+            if (Type.GenericArguments != null)
+            {
+                foreach (TypeMetadata typ in Type.GenericArguments)
+                {
+                    children.Add(new TreeViewType(SingletonDictionary.Instance.Get(typ.Name)));
+                }
+            }
+            if (Type.ImplementedInterfaces != null)
+            {
+                foreach (TypeMetadata typ in Type.ImplementedInterfaces)
+                {
+                    children.Add(new TreeViewType(SingletonDictionary.Instance.Get(typ.Name)));
+                }
+            }
+            if (Type.NestedTypes != null)
+            {
+                foreach (TypeMetadata typ in Type.NestedTypes)
+                {
+                    children.Add(new TreeViewType(SingletonDictionary.Instance.Get(typ.Name)));
+                }
+            }
+            if (Type.Attributes != null)
+            {
+                foreach (ParameterMetadata parameter in Type.Attributes)
+                {
+                    children.Add(new TreeViewParameter(parameter));
                 }
             }
         }

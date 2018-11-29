@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using Model.Model;
+using Model.Serialization;
 using Model.ViewModel;
 using Model.ViewModel.TreeView;
 using System;
@@ -22,15 +23,19 @@ namespace Model.ViewModel
         public string PathVariable { get; set; }
         public ICommand Click_Browse { get; }
         public ICommand Click_Button { get; }
+        public ICommand Click_Save { get; }
         public IBrowseFile BrowseFile { get; set; }
         public Reflector reflector { get; set; }
         private TreeViewAssembly treeViewAssembly;
+        public ISerializer Serializer = new XMLSerializer();
+        public string PathForSerialization { get; set; }
 
         public MyViewModel()
         {
             HierarchicalAreas = new ObservableCollection<TreeViewItem>();
             Click_Button = new RelayCommand(LoadDLL);
             Click_Browse = new RelayCommand(Browse);
+            Click_Save = new RelayCommand(Save);
             reflector = new Reflector();
         }
 
@@ -59,6 +64,14 @@ namespace Model.ViewModel
         {
             PathVariable = BrowseFile.ChooseFile();
             RaisePropertyChanged("PathVariable");
+        }
+        private void Save()
+        {
+            PathForSerialization = BrowseFile.SavePath();
+            if (PathForSerialization != null)
+            {
+                Serializer.Serialize(PathForSerialization, reflector.AssemblyModel);
+            }
         }
     }
 }

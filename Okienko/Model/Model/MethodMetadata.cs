@@ -4,21 +4,27 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace Model.Model
 {
+    [DataContract(IsReference = true)]
     public class MethodMetadata
     {
         #region Properties
         [Key]
         public int idProperties { get; set; }
+        [DataMember]
         public string Name { get; set; }
+        [DataMember]
         public List<TypeMetadata> GenericArguments { get; set; }
+        [DataMember]
         public Tuple<AccessLevel, AbstractEnum, StaticEnum, VirtualEnum> Modifiers { get; set; }
+        [DataMember]
         public TypeMetadata ReturnType { get; set; }
+        [DataMember]
         public bool Extension { get; set; }
+        [DataMember]
         public List<ParameterMetadata> Parameters { get; set; }
         #endregion   
 

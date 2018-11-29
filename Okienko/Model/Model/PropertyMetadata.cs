@@ -5,18 +5,22 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Model.Model
 {
+    [DataContract(IsReference = true)]
     public class PropertyMetadata
     {
         [Key]
         public int idProperty { get; set; }
         [NotMapped]
         LogWriter logWriter;
+        [DataMember]
         public string Name { get; set; }
+        [DataMember]
         public TypeMetadata PropertyType { get; set; }
 
         public PropertyMetadata(string name, TypeMetadata propertyType)

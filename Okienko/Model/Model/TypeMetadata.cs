@@ -6,31 +6,46 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 
 namespace Model.Model
 {
+    [DataContract(IsReference = true)]
     public class TypeMetadata
     {
         #region Properties
         [Key]
         public int idType { get; set; }
+        [DataMember]
         public string Name { get; set; }
+        [DataMember]
         public string NamespaceName { get; set; }
 
         [ForeignKey("NamespaceMetadata")]
         public int idNamespace { get; set; }
         public NamespaceMetadata NamespaceMetadata { get; set; }
 
+        [DataMember]
         public TypeMetadata BaseType { get; set; }
+        [DataMember]
         public List<TypeMetadata> GenericArguments { get; set; }
+        [DataMember]
         public Tuple<AccessLevel, SealedEnum, AbstractEnum, StaticEnum> Modifiers { get; set; }
-        public TypeKind TypeKind { get; set; }        
+        [DataMember]
+        public TypeKind TypeKind { get; set; }
+        [DataMember]
         public List<TypeMetadata> ImplementedInterfaces { get; set; }
+        [DataMember]
         public List<TypeMetadata> NestedTypes { get; set; }
+        [DataMember]
         public List<PropertyMetadata> Properties { get; set; }
+        [DataMember]
         public TypeMetadata DeclaringType { get; set; }
+        [DataMember]
         public List<MethodMetadata> Methods { get; set; }
+        [DataMember]
         public List<MethodMetadata> Constructors { get; set; }
+        [DataMember]
         public List<ParameterMetadata> Attributes { get; set; }
         [NotMapped]
         private LogWriter logWriter;

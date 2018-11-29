@@ -19,7 +19,7 @@ namespace Model.ViewModel.TreeView
 
         public override void Build(ObservableCollection<TreeViewItem> children)
         {
-            if(Property != null)
+            if(Property.PropertyType != null)
             {
                 children.Add(new TreeViewType(SingletonDictionary.Instance.Get(Property.PropertyType.Name)));
             }
