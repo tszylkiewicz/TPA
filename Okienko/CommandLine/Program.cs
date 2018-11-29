@@ -26,9 +26,9 @@ namespace CommandLine
             {
                 fileManager = new FileManager(url);
             }
-            //fileManager.OpenFile();
+            fileManager.OpenFile();
 
-            fileManager.SaveToDB();
+           // fileManager.SaveToDB();
             Console.WriteLine("END");
             Console.ReadLine();
 
