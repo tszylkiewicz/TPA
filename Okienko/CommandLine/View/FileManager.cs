@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using Datas;
+using Model.Serialization;
 
 namespace CommandLine.View
 {
@@ -16,6 +17,9 @@ namespace CommandLine.View
         public string PathVariable { get; set; }
         public Reflector reflector { get; set; }
         public TreeViewAssembly treeViewAssembly { get; set; }
+        public string savePath { get; set; }
+        public ISerializer serializer = new XMLSerializer();
+
 
         public FileManager(string path)
         {
@@ -23,70 +27,6 @@ namespace CommandLine.View
             PathVariable = path;
             reflector = new Reflector();
         }
-
-
-        //public void SaveToDB()
-        //{
- 
-        //    if (File.Exists(PathVariable))
-        //    {
-        //        Console.WriteLine("Otwieram\n\n");
-
-        //        if (PathVariable.Substring(PathVariable.Length - 4) == ".dll")
-        //        {
-        //            reflector.Reflect(PathVariable);
-        //            treeViewAssembly = new TreeViewAssembly(reflector.AssemblyModel);
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("IT IS NOT DLL FILE");
-        //            return;
-        //        }
-
-        //        Console.WriteLine("Zaczynamy");
-        //        using (DatasDBContext context = new DatasDBContext())
-        //        {
-        //            AssemblyMetadata assembly = reflector.AssemblyModel;
-
-        //            List<NamespaceMetadata> listName = treeViewAssembly.Namespaces;
-
-        //            List<TypeMetadata> typelist = new List<TypeMetadata>();
-
-        //            List<PropertyMetadata> propertylist = new List<PropertyMetadata>();
-
-        //            foreach (NamespaceMetadata nm in listName)
-        //            {
-        //                typelist.AddRange(nm.Types);
-        //            }
-
-        //            foreach (TypeMetadata tp in typelist)
-        //            {
-        //                propertylist.AddRange(tp.Properties);
-        //            }
-
-        //            Console.WriteLine("Zapis do bazy");
-
-        //            context.AssemblyMetadatas.Add(assembly);
-
-        //            context.NamespaceMetadatas.AddRange(listName);
-
-        //            context.TypeMetadatas.AddRange(typelist);
-
-        //            context.PropertyMetadatas.AddRange(propertylist);
-
-
-
-        //            Console.WriteLine("potwierdz");
-        //            // context.SaveChanges();
-        //            Console.WriteLine("potwierdzono i zapisano:" + context.SaveChanges());
-
-        //            Console.WriteLine("Ilosc: " + assembly.Namespaces.Count);
-
-        //        }
-
-        //        Console.WriteLine("Koniec");
-        //    }
-        //}
 
         public void OpenFile()
         {
@@ -171,11 +111,17 @@ namespace CommandLine.View
             int anotherChoiceInt = 0;
             TreeViewItem tempTreeViewItem;
 
-
-            ReflectType(type, offset);
+            if (type.GetType() != typeof(TreeViewMethod))
+            {
+                ReflectType(type, offset);
+            }
+            else
+            {
+                ReflectMethod(type, offset);
+            }
 
             Console.WriteLine();
-            Console.WriteLine("What to do now (B-Back, 'Numer' - show property with numer): ");
+            Console.WriteLine("What to do now (B-Back, 'Numer' - show property with numer, S - SAVE to File): ");
             anotherChoice = Console.ReadLine();
             logWriter.LogWrite("FileManager.More: User_Input: " + anotherChoice);
             Console.WriteLine();
@@ -186,15 +132,31 @@ namespace CommandLine.View
                 {
                     if (((Int32.Parse(anotherChoice)) >= 0) && ((Int32.Parse(anotherChoice)) <= 99))
                     {
-                        tempTreeViewItem = FindPropertyWithNumber(Int32.Parse(anotherChoice), type);
-                        if (tempTreeViewItem != null)
+                        if (type.GetType() != typeof(TreeViewMethod))
                         {
-                            More(tempTreeViewItem, offset + "\t");
-                            closeProperty(tempTreeViewItem);
+                            tempTreeViewItem = FindPropertyWithNumber(Int32.Parse(anotherChoice), type);
+                            if (tempTreeViewItem != null)
+                            {
+                                More(tempTreeViewItem, offset + "\t");
+                                closeProperty(tempTreeViewItem);
+                            }
+                            else
+                            {
+                                Console.WriteLine("\n\n\nWRONG NUMBER - ERROR\n\n\n");
+                            }
                         }
-                        else
+                        else if (type.GetType() == typeof(TreeViewMethod))
                         {
-                            Console.WriteLine("\n\n\nWRONG NUMBER - ERROR\n\n\n");
+                            tempTreeViewItem = FindMethodObjectWithNumber(Int32.Parse(anotherChoice), type);
+                            if (tempTreeViewItem != null)
+                            {
+                                    More(tempTreeViewItem, offset + "\t");
+                                    closeProperty(tempTreeViewItem);
+                            }
+                            else
+                            {
+                                Console.WriteLine("\n\n\nWRONG NUMBER - ERROR\n\n\n");
+                            }
                         }
                     }
                     else
@@ -202,13 +164,38 @@ namespace CommandLine.View
                         Console.WriteLine("\n\n\nWRONG NUMBER - ERROR\n\n\n");
                     }
                 }
+                else if (anotherChoice.Equals("S") || anotherChoice.Equals("s"))
+                {
+                    Console.WriteLine("\n\n\nInsert path to save file: ");
+                    savePath = Console.ReadLine();
+                    if (savePath != "")
+                    {
+                        savePath += ".xml";
+                        serializer.Serialize(savePath, reflector.AssemblyModel);
+                        Console.WriteLine("XML file has been saved\n\n\n");
+                    }
+                    else
+                    {
+                        Console.WriteLine("WRONG PATH - ERROR\n\n\n");
+                    }
+                }
                 else
                 {
                     Console.WriteLine("\n\n\nWRONG NUMBER - ERROR\n\n\n");
                 }
-                ReflectType(type, offset);
+
+                if (type.GetType() != typeof(TreeViewMethod))
+                {
+                    ReflectType(type, offset);
+                }
+                else
+                {
+                    ReflectMethod(type, offset);
+                }
+
+
                 Console.WriteLine();
-                Console.WriteLine("What to do now (B-Back, 'Numer' - show property with numer): ");
+                Console.WriteLine("What to do now (B-Back, 'Numer' - show property with numer, S - SAVE to File): ");
                 anotherChoice = Console.ReadLine();
                 logWriter.LogWrite("FileManager.More: User_Input: " + anotherChoice);
                 Console.WriteLine();
@@ -240,34 +227,6 @@ namespace CommandLine.View
             return null;
         }
 
-        //public TreeViewItem FindPropertyWithNumber(double Number, TreeViewItem type)
-        //{
-        //    logWriter.LogWrite("Start: FileManager.FindPropertyWithNumber");
-        //    int i = 1;
-
-        //    foreach (TreeViewProperty property in GetProperty(type))
-        //    {
-        //        if (i == Number)
-        //        {
-        //            foreach (TreeViewNamespace treeViewNamespace in GetNamespaces())
-        //            {
-        //                foreach (TreeViewType treeViewType in GetTypes(treeViewNamespace))
-        //                {
-        //                    if (treeViewType.Name.ToString() == property.Property.PropertyType.Name.ToString())//property.Name.ToString())// property.PropertyType.Name.ToString())
-        //                    {
-        //                        logWriter.LogWrite("Stop: FileManager.FindPropertyWithNumber");
-        //                        return treeViewType;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        i++;
-        //    }
-
-        //    logWriter.LogWrite("Stop: FileManager.FindPropertyWithNumber");
-        //    return null;
-        //}
-
         public TreeViewItem FindPropertyWithNumber(double Number, TreeViewItem type)
         {
             logWriter.LogWrite("Start: FileManager.FindPropertyWithNumber");
@@ -279,35 +238,12 @@ namespace CommandLine.View
                 {
                     if (meta.GetType() == typeof(TreeViewProperty))
                     {
-                        //Console.WriteLine(meta.Name.ToString());
-                        //  Console.WriteLine();
-                        //foreach (TreeViewNamespace treeViewNamespace in GetNamespaces())
-                        //{
-                        //    foreach (TreeViewType treeViewType in GetTypes(treeViewNamespace))
-                        //    {
-                        //        //if (treeViewType.Name.ToString() == meta.Name.ToString())
-                        //        //{
-                        //        //    logWriter.LogWrite("Stop: FileManager.FindPropertyWithNumber");
-                        //        //    return treeViewType;
-                        //        //}
-
-                        //        Console.WriteLine("treeViewType: " + treeViewType.Name.ToString());
-                        //        Console.WriteLine("meta: " + meta.Name.ToString());
-
-                        //        if (treeViewType == meta)
-                        //        {
-                        //            Console.WriteLine("AAAAAAAAAAA");
-                        //            logWriter.LogWrite("Stop: FileManager.FindPropertyWithNumber");
-                        //            return treeViewType;
-                        //        }
-                        //    }
-                        //}
-
                         logWriter.LogWrite("Stop: FileManager.FindPropertyWithNumber");
-                        Console.WriteLine("ABBAAA");
-                        Console.WriteLine(meta.Children.Count);
-                        Console.WriteLine(meta.Children[0].Name);
-                        return meta.Children[0];
+                        return GetProperty(meta)[0];
+                    }
+                    else if (meta.GetType() == typeof(TreeViewMethod))
+                    {
+                        return meta;
                     }
                 }
                 i++;
@@ -316,6 +252,37 @@ namespace CommandLine.View
             logWriter.LogWrite("Stop: FileManager.FindPropertyWithNumber");
             return null;
         }
+
+        public TreeViewItem FindMethodObjectWithNumber(double Number, TreeViewItem type)
+        {
+            logWriter.LogWrite("Start: FileManager.FindMethodObjectWithNumber");
+            int i = 1;
+
+            foreach (TreeViewItem meta in GetProperty(type))
+            {
+                Console.WriteLine("COUTN: " + GetProperty(meta).Count);
+                if (i == Number)
+                {
+                    // 
+                    if (GetProperty(meta).Count > 0)
+                    {
+                        if (GetProperty(meta)[i - 1].GetType() != typeof(void))
+                        {
+                            return GetProperty(meta)[i - 1];
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+                i++;
+            }
+
+            logWriter.LogWrite("Stop: FileManager.FindPropertyWithNumber");
+            return null;
+        }
+
 
         public ObservableCollection<TreeViewItem> GetNamespaces()
         {
@@ -370,18 +337,6 @@ namespace CommandLine.View
             return true;
         }
 
-        //public void ReflectType(TreeViewItem type, string offset)
-        //{
-        //    logWriter.LogWrite("Start: FileManager.ReflectType");
-        //    int j = 1;
-        //    Console.WriteLine(offset + "\t" + "" + " : " + type.Name);
-        //    foreach (TreeViewProperty property in GetProperty(type))
-        //    {
-        //        Console.WriteLine(offset + "\t" + j++ + ". " + property.Name);
-        //    }
-        //    logWriter.LogWrite("Stop: FileManager.Reflect");
-        //}
-
         public void ReflectType(TreeViewItem type, string offset)
         {
             logWriter.LogWrite("Start: FileManager.ReflectType");
@@ -389,7 +344,6 @@ namespace CommandLine.View
             Console.WriteLine(offset + "\t" + "" + " : " + type.Name);
             foreach (TreeViewItem meta in GetProperty(type))
             {
-                //Console.WriteLine(meta.GetType());
                 if (meta.GetType() == typeof(TreeViewProperty))
                 {
                     Console.WriteLine(offset + "\t" + j++ + ". P " + meta.Name);
@@ -398,7 +352,26 @@ namespace CommandLine.View
                 {
                     Console.WriteLine(offset + "\t" + j++ + ". M " + meta.Name);
                 }
-                // Console.WriteLine(offset + "\t" + j++ + ". " + property.Name);
+            }
+            logWriter.LogWrite("Stop: FileManager.Reflect");
+        }
+
+        public void ReflectMethod(TreeViewItem type, string offset)
+        {
+            logWriter.LogWrite("Start: FileManager.ReflectMethod");
+            int j = 1;
+            Console.WriteLine(offset + "\t" + "" + " : " + type.Name);
+            foreach (TreeViewItem meta in GetProperty(type))
+            {
+                if (meta.GetType() == typeof(TreeViewParameter))
+                {
+                    TreeViewParameter temp = (TreeViewParameter)meta;
+                    Console.WriteLine(offset + "\t" + j++ + ". MP " + temp.Parameter.Type.Name);
+                }
+                if (meta.GetType() == typeof(TreeViewType))
+                {
+                    Console.WriteLine(offset + "\t" + j++ + ". RT " + meta.Name);
+                }
             }
             logWriter.LogWrite("Stop: FileManager.Reflect");
         }
