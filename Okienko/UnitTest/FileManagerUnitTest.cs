@@ -5,6 +5,7 @@ using Model.Model;
 using System.Collections.ObjectModel;
 using Model.ViewModel;
 using System.Collections.Generic;
+using Model.ViewModel.TreeView;
 
 namespace UnitTest
 {

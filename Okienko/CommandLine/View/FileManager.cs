@@ -260,10 +260,9 @@ namespace CommandLine.View
 
             foreach (TreeViewItem meta in GetProperty(type))
             {
-                Console.WriteLine("COUTN: " + GetProperty(meta).Count);
+               // Console.WriteLine("COUTN: " + GetProperty(meta).Count);
                 if (i == Number)
                 {
-                    // 
                     if (GetProperty(meta).Count > 0)
                     {
                         if (GetProperty(meta)[i - 1].GetType() != typeof(void))
