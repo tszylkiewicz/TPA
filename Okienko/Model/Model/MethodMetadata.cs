@@ -25,54 +25,55 @@ namespace Model.Model
         public MethodMetadata(MethodBase method)
         {
             Name = method.Name;
-            GenericArguments = !method.IsGenericMethodDefinition ? null : TypeMetadata.EmitGenericArguments(method.GetGenericArguments()).ToList();
+            GenericArguments = !method.IsGenericMethodDefinition ? null : EmitGenericArguments(method);
             ReturnType = EmitReturnType(method);
-            Parameters = EmitParameters(method.GetParameters()).ToList();
+            Parameters = EmitParameters(method);
             Modifiers = EmitModifiers(method);
             Extension = EmitExtension(method);
         }
 
-        internal static IEnumerable<MethodMetadata> EmitMethods(IEnumerable<MethodBase> methods)
+        private List<TypeMetadata> EmitGenericArguments(MethodBase method)
         {
-            return from MethodBase _currentMethod in methods
-                   where _currentMethod.GetVisible()
-                   select new MethodMetadata(_currentMethod);
+            return method.GetGenericArguments().Select(t => new TypeMetadata(t)).ToList();
         }
-        private static IEnumerable<ParameterMetadata> EmitParameters(IEnumerable<ParameterInfo> parms)
+        private static bool EmitExtension(MethodBase method)
         {
-            return from parm in parms
-                   select new ParameterMetadata(parm.Name, TypeMetadata.EmitReference(parm.ParameterType));
+            return method.IsDefined(typeof(ExtensionAttribute), true);
+        }
+        public static List<MethodMetadata> EmitConstructors(Type type)
+        {
+            return type.GetConstructors().Select(t => new MethodMetadata(t)).ToList();
+        }
+        internal static List<MethodMetadata> EmitMethods(Type type)
+        {
+            return type.GetMethods(BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.Public |
+                                   BindingFlags.Static | BindingFlags.Instance).Select(t => new MethodMetadata(t)).ToList();
+        }
+        private static List<ParameterMetadata> EmitParameters(MethodBase method)
+        {
+            return method.GetParameters().Select(t => new ParameterMetadata(t.Name, TypeMetadata.EmitReference(t.ParameterType))).ToList();
         }
         private static TypeMetadata EmitReturnType(MethodBase method)
         {
             MethodInfo methodInfo = method as MethodInfo;
             if (methodInfo == null)
                 return null;
+            TypeMetadata.StoreType(methodInfo.ReturnType);
             return TypeMetadata.EmitReference(methodInfo.ReturnType);
-        }
-        private static bool EmitExtension(MethodBase method)
-        {
-            return method.IsDefined(typeof(ExtensionAttribute), true);
-        }
+        }       
         private static Tuple<AccessLevel, AbstractEnum, StaticEnum, VirtualEnum> EmitModifiers(MethodBase method)
         {
-            AccessLevel _access = AccessLevel.Private;
-            if (method.IsPublic)
-                _access = AccessLevel.Public;
-            else if (method.IsFamily)
-                _access = AccessLevel.Protected;
-            else if (method.IsFamilyAndAssembly)
-                _access = AccessLevel.Internal;
-            AbstractEnum _abstract = AbstractEnum.NotAbstract;
-            if (method.IsAbstract)
-                _abstract = AbstractEnum.Abstract;
-            StaticEnum _static = StaticEnum.NotStatic;
-            if (method.IsStatic)
-                _static = StaticEnum.Static;
-            VirtualEnum _virtual = VirtualEnum.NotVirtual;
-            if (method.IsVirtual)
-                _virtual = VirtualEnum.Virtual;
-            return new Tuple<AccessLevel, AbstractEnum, StaticEnum, VirtualEnum>(_access, _abstract, _static, _virtual);
+            AccessLevel access = method.IsPublic ? AccessLevel.Public :
+                method.IsFamily ? AccessLevel.Protected :
+                method.IsAssembly ? AccessLevel.Internal : AccessLevel.Private;
+
+            AbstractEnum _abstract = method.IsAbstract ? AbstractEnum.Abstract : AbstractEnum.NotAbstract;
+
+            StaticEnum _static = method.IsStatic ? StaticEnum.Static : StaticEnum.NotStatic;
+
+            VirtualEnum _virtual = method.IsVirtual ? VirtualEnum.Virtual : VirtualEnum.NotVirtual;
+
+            return new Tuple<AccessLevel, AbstractEnum, StaticEnum, VirtualEnum>(access, _abstract, _static, _virtual);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Model.Model
         internal static string GetNamespace(this Type type)
         {
             string ns = type.Namespace;
-            return ns != null ? ns : string.Empty;
+            return ns ?? string.Empty;
         }
     }
 }
