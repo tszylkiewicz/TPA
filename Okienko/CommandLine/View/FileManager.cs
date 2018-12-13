@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using Datas;
-using Model.Serialization;
+using Serialization;
 
 namespace CommandLine.View
 {
