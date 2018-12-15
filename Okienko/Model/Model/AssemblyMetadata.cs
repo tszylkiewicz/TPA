@@ -22,7 +22,6 @@ namespace Model.Model
                            group _type by _type.GetNamespace() into _group
                            orderby _group.Key
                            select new NamespaceMetadata(_group.Key, _group.ToList())).ToList();
-
             this.logWriter = new LogWriter("Utworzono obiekt klasy AssemblyMetadata: " + Name);
         }
     }
