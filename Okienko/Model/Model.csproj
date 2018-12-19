@@ -69,6 +69,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Singleton\SingletonDictionary.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
+    <Compile Include="ViewModel\SerializeMangager.cs" />
     <Compile Include="ViewModel\TreeView\TreeViewAssembly.cs" />
     <Compile Include="ViewModel\TreeView\TreeViewItem.cs" />
     <Compile Include="ViewModel\TreeView\TreeViewMethod.cs" />

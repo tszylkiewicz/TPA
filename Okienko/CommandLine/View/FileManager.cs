@@ -18,8 +18,8 @@ namespace CommandLine.View
         public Reflector reflector { get; set; }
         public TreeViewAssembly treeViewAssembly { get; set; }
         public string savePath { get; set; }
-        public ISerializer serializer = new XMLSerializer();
-
+        // public ISerializer serializer = new XMLSerializer();
+        public SerializeMangager serializeMangager = new SerializeMangager(new XMLSerializer());
 
         public FileManager(string path)
         {
@@ -171,7 +171,9 @@ namespace CommandLine.View
                     if (savePath != "")
                     {
                         savePath += ".xml";
-                        serializer.Serialize(savePath, reflector.AssemblyModel);
+                        //serializer.Serialize(savePath, reflector.AssemblyModel);
+                        serializeMangager.SaveToXml(savePath, reflector.AssemblyModel);
+
                         Console.WriteLine("XML file has been saved\n\n\n");
                     }
                     else
