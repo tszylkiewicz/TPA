@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using Datas;
-using Serialization;
 
 namespace CommandLine.View
 {
@@ -18,8 +17,7 @@ namespace CommandLine.View
         public Reflector reflector { get; set; }
         public TreeViewAssembly treeViewAssembly { get; set; }
         public string savePath { get; set; }
-        // public ISerializer serializer = new XMLSerializer();
-        public SerializeMangager serializeMangager = new SerializeMangager(new XMLSerializer());
+        public MyViewModel MyViewModel = new MyViewModel();
 
         public FileManager(string path)
         {
@@ -171,8 +169,8 @@ namespace CommandLine.View
                     if (savePath != "")
                     {
                         savePath += ".xml";
-                        //serializer.Serialize(savePath, reflector.AssemblyModel);
-                        serializeMangager.SaveToXml(savePath, reflector.AssemblyModel);
+                        MyViewModel.PathForSerialization = savePath;
+                        MyViewModel.Save();
 
                         Console.WriteLine("XML file has been saved\n\n\n");
                     }

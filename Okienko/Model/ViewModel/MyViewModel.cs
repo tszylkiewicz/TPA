@@ -55,9 +55,12 @@ namespace Model.ViewModel
             PathVariable = BrowseFile.ChooseFile();
             RaisePropertyChanged("PathVariable");
         }
-        private void Save()
+        public void Save()
         {
-            PathForSerialization = BrowseFile.SavePath();
+            if (BrowseFile != null)
+            {
+                PathForSerialization = BrowseFile.SavePath();
+            }
             if (PathForSerialization != null)
             {
                 Serializer.Serialize(PathForSerialization, reflector.AssemblyModel);
