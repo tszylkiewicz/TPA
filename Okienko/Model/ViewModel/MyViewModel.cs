@@ -16,7 +16,7 @@ namespace Model.ViewModel
         public ICommand Click_Save { get; }
         public IBrowseFile BrowseFile { get; set; }
         public Reflector reflector { get; set; }
-        private TreeViewAssembly treeViewAssembly;
+        public TreeViewAssembly treeViewAssembly;
         public ISerializer Serializer = new XMLSerializer();
         public string PathForSerialization { get; set; }
 
@@ -35,7 +35,7 @@ namespace Model.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName_));
         }
 
-        private void LoadDLL()
+        public void LoadDLL()
         {
 
             if (PathVariable.Substring(PathVariable.Length - 4) == ".dll")

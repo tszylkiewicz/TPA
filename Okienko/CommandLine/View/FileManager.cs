@@ -1,5 +1,4 @@
 ﻿using Model.Logger;
-using Model.Model;
 using Model.ViewModel;
 using Model.ViewModel.TreeView;
 using System;
@@ -25,7 +24,7 @@ namespace CommandLine.View
             reflector = new Reflector();
         }
 
-        public void OpenFile()
+        public bool OpenFile()
         {
             logWriter.LogWrite("Start: FileManger.OpenFile");
 
@@ -45,7 +44,7 @@ namespace CommandLine.View
                 else
                 {
                     Console.WriteLine("IT IS NOT DLL FILE");
-                    return;
+                    return false;
                 }
 
                 ReflectNamespace();
@@ -96,8 +95,10 @@ namespace CommandLine.View
             else
             {
                 Console.WriteLine("IT IS NOT FILE");
+                return false;
             }
             logWriter.LogWrite("FileManager.OpenFile: Closing");
+            return true;
         }
 
         public void More(TreeViewItem type, string offset)
