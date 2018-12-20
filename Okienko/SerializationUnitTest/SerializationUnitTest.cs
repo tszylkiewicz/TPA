@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Model.ViewModel;
 using Serialization;
 using System.IO;
 
@@ -13,9 +12,7 @@ namespace UnitTest
         {
             ISerializer Serializer = new XMLSerializer();
             string path = @"..\\..\\..\\DataToTest\\bin\\Debug\\DataToTest.dll";
-            Reflector reflector = new Reflector();
-            reflector.Reflect(path);
-            Serializer.Serialize("test.xml", reflector.AssemblyModel);
+            Serializer.Serialize("test.xml", path);
             Assert.IsTrue(File.Exists("test.xml"));
         }
     }
