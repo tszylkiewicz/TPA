@@ -37,7 +37,7 @@ namespace Model.ViewModel
 
         private void LoadDLL()
         {
-            
+
             if (PathVariable.Substring(PathVariable.Length - 4) == ".dll")
             {
                 reflector.Reflect(PathVariable);
@@ -47,7 +47,7 @@ namespace Model.ViewModel
         }
         private void TreeViewLoaded()
         {
-            TreeViewItem rootItem = treeViewAssembly;           
+            TreeViewItem rootItem = treeViewAssembly;
             HierarchicalAreas.Add(rootItem);
         }
         private void Browse()
@@ -64,6 +64,17 @@ namespace Model.ViewModel
             if (PathForSerialization != null)
             {
                 Serializer.Serialize(PathForSerialization, reflector.AssemblyModel);
+            }
+        }
+        public void saveAssemblyToXml(Reflector reflectorTemp = null)
+        {
+            if (reflectorTemp == null)
+            {
+                Save();
+            }
+            else
+            {
+                Serializer.Serialize(PathForSerialization, reflectorTemp.AssemblyModel);
             }
         }
     }

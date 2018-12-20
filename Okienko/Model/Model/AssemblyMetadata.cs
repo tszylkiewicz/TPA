@@ -15,13 +15,9 @@ namespace Model.Model
     [DataContract]
     public class AssemblyMetadata
     {
-        [Key]
-        public int idAssemby { get; set; }
-        [NotMapped]
         private LogWriter logWriter;
         [DataMember]
         public string Name { get; set; }
-        //[ForeignKey]
         [DataMember]
         public List<NamespaceMetadata> Namespaces { get; set; }
 

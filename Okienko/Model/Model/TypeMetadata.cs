@@ -14,16 +14,11 @@ namespace Model.Model
     public class TypeMetadata
     {
         #region Properties
-        [Key]
-        public int idType { get; set; }
         [DataMember]
         public string Name { get; set; }
         [DataMember]
         public string NamespaceName { get; set; }
 
-        [ForeignKey("NamespaceMetadata")]
-        public int idNamespace { get; set; }
-        public NamespaceMetadata NamespaceMetadata { get; set; }
 
         [DataMember]
         public TypeMetadata BaseType { get; set; }
@@ -47,7 +42,7 @@ namespace Model.Model
         public List<MethodMetadata> Constructors { get; set; }
         [DataMember]
         public List<ParameterMetadata> Attributes { get; set; }
-        [NotMapped]
+
         private LogWriter logWriter;
         #endregion
 

@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using Datas;
 
 namespace CommandLine.View
 {
@@ -170,7 +169,7 @@ namespace CommandLine.View
                     {
                         savePath += ".xml";
                         MyViewModel.PathForSerialization = savePath;
-                        MyViewModel.Save();
+                        MyViewModel.saveAssemblyToXml(reflector);
 
                         Console.WriteLine("XML file has been saved\n\n\n");
                     }

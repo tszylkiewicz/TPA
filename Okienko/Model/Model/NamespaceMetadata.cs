@@ -13,18 +13,11 @@ namespace Model.Model
     [DataContract(IsReference = true)]
     public class NamespaceMetadata
     {
-        [Key]
-        public int idNamespace { get; set; }
-        [NotMapped]
         private LogWriter logWriter;
         [DataMember]
         public string Name { get; set; }
         [DataMember]
         public List<TypeMetadata> Types { get; set; }
-
-        [ForeignKey("AssemblyMetadata")]
-        public int idAssemby { get; set; }
-        public AssemblyMetadata AssemblyMetadata { get; set; }
 
         public NamespaceMetadata(string name, List<Type> types)
         {

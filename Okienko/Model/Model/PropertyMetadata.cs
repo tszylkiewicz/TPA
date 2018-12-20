@@ -14,9 +14,6 @@ namespace Model.Model
     [DataContract(IsReference = true)]
     public class PropertyMetadata
     {
-        [Key]
-        public int idProperty { get; set; }
-        [NotMapped]
         LogWriter logWriter;
         [DataMember]
         public string Name { get; set; }

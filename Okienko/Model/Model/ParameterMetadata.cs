@@ -11,8 +11,6 @@ namespace Model.Model
     [DataContract(IsReference = true)]
     public class ParameterMetadata
     {
-        [Key]
-        public int idParameter { get; set; }
         [DataMember]
         public string Name { get; set; }
         [DataMember]

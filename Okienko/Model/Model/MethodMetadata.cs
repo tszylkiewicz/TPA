@@ -12,8 +12,6 @@ namespace Model.Model
     public class MethodMetadata
     {
         #region Properties
-        [Key]
-        public int idProperties { get; set; }
         [DataMember]
         public string Name { get; set; }
         [DataMember]
