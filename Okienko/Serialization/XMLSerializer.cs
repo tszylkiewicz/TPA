@@ -7,16 +7,17 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using XMLModel;
 
 namespace XMLSerializer
 {
-    [Export(typeof(ISerializer))]
-    public class XMLSerializer : ISerializer
+    [Export(typeof(ISerializer<XMLAssembly>))]
+    public class XMLSerializer : ISerializer<XMLAssembly>
     {
-        public void Serialize<T>(string path, T obj)
+        public void Serialize(string path, XMLAssembly obj)
         {
             DataContractSerializer dcs =
-                new DataContractSerializer(typeof(T));
+                new DataContractSerializer(typeof(XMLAssembly));
 
             using (FileStream fileStream = new FileStream(path, FileMode.Create))
             {
@@ -24,12 +25,12 @@ namespace XMLSerializer
             }
         }
 
-        public T Deserialize<T>(string path)
+        public XMLAssembly Deserialize(string path)
         {
-            DataContractSerializer dataContractSerializer = new DataContractSerializer(typeof(T));
+            DataContractSerializer dataContractSerializer = new DataContractSerializer(typeof(XMLAssembly));
             using (FileStream fileStream = new FileStream(path, FileMode.Open))
             {
-                return (T)dataContractSerializer.ReadObject(fileStream);
+                return (XMLAssembly)dataContractSerializer.ReadObject(fileStream);               
             }
         }
     }

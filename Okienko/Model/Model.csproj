@@ -95,9 +95,17 @@
       <Project>{F724E543-577F-4996-AD08-C969F96AE22B}</Project>
       <Name>BaseModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MEF\MEF.csproj">
+      <Project>{78bb15b7-f83e-4ed1-9e14-09662042210b}</Project>
+      <Name>MEF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Serialization\XMLSerializer.csproj">
       <Project>{8b8e9f03-eeb2-4430-8f23-9760fbb4a8b1}</Project>
       <Name>XMLSerializer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XMLModel\XMLModel.csproj">
+      <Project>{045AB98F-C16A-4DAD-AE09-5978BB35FFD6}</Project>
+      <Name>XMLModel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

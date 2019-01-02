@@ -8,20 +8,21 @@ using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XMLModel;
 
 namespace Model
 {
     public class Logic
     {
-        [Import(typeof(ISerializer))]
-        public ISerializer Serializer { get; set; }
+        [Import(typeof(ISerializer<BaseAssembly>))]
+        public ISerializer<BaseAssembly> Serializer { get; set; }
 
         [Import(typeof(BaseAssembly))]
         public BaseAssembly AssemblyMetadata { get; set; }
 
         private string _compositionPath = "../../../plugins";
 
-        public Logic(ISerializer serializer, BaseAssembly dataLayer)
+        public Logic(ISerializer<BaseAssembly> serializer, BaseAssembly dataLayer)
         {
             this.Serializer = serializer;
             this.AssemblyMetadata = dataLayer;
@@ -29,7 +30,7 @@ namespace Model
 
         public Logic()
         {
-            Compose();
+            //Compose();
         }
 
         public Logic(string CompositionPath)
@@ -53,12 +54,26 @@ namespace Model
 
         public void Save(AssemblyMetadata model, string path)
         {
-            Serializer.Serialize<BaseAssembly>(path, MapperAssembly.MapDown(model, AssemblyMetadata.GetType()));
+            ISerializer<XMLAssembly> SerializerTemp = new XMLSerializer.XMLSerializer();
+            XMLAssembly ass = new XMLAssembly();
+            BaseAssembly temp = MapperAssembly.MapDown(model, ass.GetType());
+            XMLAssembly temp2 = (XMLAssembly)temp;
+            SerializerTemp.Serialize(path, temp2);
+            Console.WriteLine(model.Name);
+            foreach(NamespaceMetadata obj in model.Namespaces)
+            {
+                Console.WriteLine(obj.Name);
+            }
+            Console.WriteLine(temp.Name);
+            foreach(XMLNamespace obj in temp.Namespaces)
+            {
+                Console.WriteLine(obj.Name);
+            }
         }
 
         public AssemblyMetadata Load(string path)
         {
-            return MapperAssembly.MapUp(Serializer.Deserialize<BaseAssembly>(path));
+            return MapperAssembly.MapUp(Serializer.Deserialize(path));
         }
     }
 }

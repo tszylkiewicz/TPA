@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BaseModel
 {
-    public interface ISerializer
+    public interface ISerializer<T>
     {
-        void Serialize<T>(string path, T obj);
-        T Deserialize<T>(string path);
+        void Serialize(string path, T obj);
+        T Deserialize(string path);
     }
 }
