@@ -53,22 +53,8 @@ namespace Model
         }
 
         public void Save(AssemblyMetadata model, string path)
-        {
-            ISerializer<XMLAssembly> SerializerTemp = new XMLSerializer.XMLSerializer();
-            XMLAssembly ass = new XMLAssembly();
-            BaseAssembly temp = MapperAssembly.MapDown(model, ass.GetType());
-            XMLAssembly temp2 = (XMLAssembly)temp;
-            SerializerTemp.Serialize(path, temp2);
-            Console.WriteLine(model.Name);
-            foreach(NamespaceMetadata obj in model.Namespaces)
-            {
-                Console.WriteLine(obj.Name);
-            }
-            Console.WriteLine(temp.Name);
-            foreach(XMLNamespace obj in temp.Namespaces)
-            {
-                Console.WriteLine(obj.Name);
-            }
+        {            
+            Serializer.Serialize(path, MapperAssembly.MapDown(model, AssemblyMetadata.GetType()));
         }
 
         public AssemblyMetadata Load(string path)
