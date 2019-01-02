@@ -54,6 +54,13 @@
     <Compile Include="Model\AccessLevel.cs" />
     <Compile Include="Model\AssemblyMetadata.cs" />
     <Compile Include="Model\ExtentionMethods.cs" />
+    <Compile Include="Model\Mappers\Converter.cs" />
+    <Compile Include="Model\Mappers\MapperAssembly.cs" />
+    <Compile Include="Model\Mappers\MapperMethod.cs" />
+    <Compile Include="Model\Mappers\MapperNamespace.cs" />
+    <Compile Include="Model\Mappers\MapperParameter.cs" />
+    <Compile Include="Model\Mappers\MapperProperty.cs" />
+    <Compile Include="Model\Mappers\MapperType.cs" />
     <Compile Include="Model\MethodMetadata.cs" />
     <Compile Include="Model\NamespaceMetadata.cs" />
     <Compile Include="Model\ParameterMetadata.cs" />
@@ -82,6 +89,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BaseModel\BaseModel.csproj">
+      <Project>{F724E543-577F-4996-AD08-C969F96AE22B}</Project>
+      <Name>BaseModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Serialization\XMLSerializer.csproj">
       <Project>{8b8e9f03-eeb2-4430-8f23-9760fbb4a8b1}</Project>
       <Name>XMLSerializer</Name>

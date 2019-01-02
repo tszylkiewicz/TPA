@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Serialization
+namespace XMLSerializer
 {
+    [Export(typeof(ISerializer))]
     public class XMLSerializer : ISerializer
     {
         public void Serialize<T>(string path, T obj)

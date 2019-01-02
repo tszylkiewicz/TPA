@@ -27,6 +27,8 @@ namespace Model.Model
             logWriter = new LogWriter("Utworzono obiekt klasy PropertyMetadata: " + this.Name);
         }
 
+        public PropertyMetadata() { }
+
         public static List<PropertyMetadata> EmitProperties(Type type)
         {
             List<PropertyInfo> props = type

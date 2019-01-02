@@ -36,6 +36,8 @@ namespace Model.Model
             Extension = EmitExtension(method);
         }
 
+        public MethodMetadata() { }
+
         private List<TypeMetadata> EmitGenericArguments(MethodBase method)
         {
             return method.GetGenericArguments().Select(t => new TypeMetadata(t)).ToList();

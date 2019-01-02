@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace BaseModel
 {
+    [DataContract (IsReference = true)]
     public abstract class BaseAssembly
     {
-        public virtual string Name { get; set; }
+        [DataMember] public virtual string Name { get; set; }
         public virtual List<BaseNamespace> Namespaces { get; set; }
     }
 }

@@ -25,5 +25,7 @@ namespace Model.Model
             this.Types = (from type in types orderby type.Name select new TypeMetadata(type)).ToList();
             this.logWriter = new LogWriter("Utworzono obiekt klasy NamespaceMetadata: " + Name);
         }
+
+        public NamespaceMetadata() { }
     }
 }

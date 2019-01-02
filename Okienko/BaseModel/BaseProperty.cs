@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace BaseModel
 {
+    [DataContract (IsReference = true)]
     public abstract class BaseProperty
     {
-        public virtual string Name { get; set; }
+        [DataMember] public virtual string Name { get; set; }
         public virtual BaseType PropertyType { get; set; }
     }
 }

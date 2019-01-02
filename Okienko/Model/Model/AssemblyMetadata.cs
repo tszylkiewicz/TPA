@@ -31,5 +31,7 @@ namespace Model.Model
                            select new NamespaceMetadata(_group.Key, _group.ToList())).ToList();
             this.logWriter = new LogWriter("Utworzono obiekt klasy AssemblyMetadata: " + Name);
         }
+
+        public AssemblyMetadata() { }
     }
 }

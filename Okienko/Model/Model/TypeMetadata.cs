@@ -71,6 +71,9 @@ namespace Model.Model
             this.TypeKind = GetTypeKind(type);
             this.Attributes = EmitAttributes(type);
         }
+
+        public TypeMetadata() { }
+
         public TypeMetadata(string typeName, string namespaceName)
         {
             this.Name = typeName;

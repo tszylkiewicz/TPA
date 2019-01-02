@@ -1,5 +1,5 @@
 ﻿using Model.ViewModel.TreeView;
-using Serialization;
+using XMLSerializer;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
@@ -17,7 +17,7 @@ namespace Model.ViewModel
         public IBrowseFile BrowseFile { get; set; }
         public Reflector reflector { get; set; }
         public TreeViewAssembly treeViewAssembly;
-        public ISerializer Serializer = new XMLSerializer();
+        public ISerializer Serializer = new XMLSerializer.XMLSerializer();
         public string PathForSerialization { get; set; }
 
         public MyViewModel()
