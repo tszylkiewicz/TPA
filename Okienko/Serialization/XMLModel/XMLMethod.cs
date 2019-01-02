@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace XMLModel
+namespace XMLSerializer.XMLModel
 {
     [DataContract(IsReference = true)]
     public class XMLMethod : BaseMethod

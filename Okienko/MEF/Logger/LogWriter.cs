@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MEF.Logger
+namespace Composition.Logger
 {
     public class LogWriter
     {

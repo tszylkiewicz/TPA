@@ -1,4 +1,5 @@
 ﻿using BaseModel;
+using Model.Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model.Model.Mappers
+namespace Model.Mappers
 {
     public class MapperNamespace
     {

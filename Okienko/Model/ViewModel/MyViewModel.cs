@@ -5,12 +5,12 @@ using System.ComponentModel;
 using System.Windows.Input;
 using BaseModel;
 using System.ComponentModel.Composition;
-using MEF;
+using Composition;
 using System.Collections.Generic;
 using System.ComponentModel.Composition.Hosting;
 using System;
 using Model.Model;
-using XMLModel;
+using System.Linq;
 
 namespace Model.ViewModel
 {
@@ -24,14 +24,12 @@ namespace Model.ViewModel
         public IBrowseFile BrowseFile { get; set; }
         public Reflector reflector { get; set; }
         public TreeViewAssembly treeViewAssembly;
-        //public ISerializer<XMLAssembly> Serializer = new XMLSerializer.XMLSerializer();
         public string PathForSerialization { get; set; }
 
         [Import(typeof(ILogWriter))]
         public ILogWriter logger;
-        public IEnumerable<Logic> logicService { get; set; }
-        public Logic logic { get; set; }
-        private string compositionPath = "../../../plugins";
+        //[ImportMany(typeof(Logic))]
+        public Logic LogicService { get; set; } = new Logic();
 
         public MyViewModel()
         {
@@ -40,8 +38,6 @@ namespace Model.ViewModel
             Click_Browse = new RelayCommand(Browse);
             Click_Save = new RelayCommand(Save);
             reflector = new Reflector();
-            //Compose();
-            logic = new Logic();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -81,7 +77,8 @@ namespace Model.ViewModel
                 //Serializer.Serialize(PathForSerialization, reflector.AssemblyModel);
                 try
                 {
-                    logic.Save(reflector.AssemblyModel, PathForSerialization);
+                    Console.WriteLine("przed serializacją");
+                    LogicService.Save(reflector.AssemblyModel, PathForSerialization);
                 }
                 catch(Exception)
                 {
@@ -98,20 +95,6 @@ namespace Model.ViewModel
             else
             {
                 //Serializer.Serialize(PathForSerialization, reflectorTemp.AssemblyModel);
-            }
-        }
-
-        private void Compose()
-        {
-            AggregateCatalog catalog = new AggregateCatalog(new DirectoryCatalog(compositionPath));
-            CompositionContainer _container = new CompositionContainer(catalog);
-            try
-            {
-                _container.ComposeParts(this);
-            }
-            catch(CompositionException compositionException)
-            {
-                throw compositionException;
             }
         }
     }

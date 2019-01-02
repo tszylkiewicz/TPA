@@ -6,12 +6,12 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XMLModel
+namespace XMLSerializer.XMLModel
 {
     [DataContract(IsReference = true)]
-    public class XMLParameter : BaseParameter
+    public class XMLNamespace : BaseNamespace
     {
         [DataMember] public override string Name { get; set; }
-        [DataMember] public new XMLType Type { get; set; }
+        [DataMember] public new List<XMLType> Types { get; set; }
     }
 }

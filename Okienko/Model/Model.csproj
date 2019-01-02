@@ -37,6 +37,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -56,13 +59,13 @@
     <Compile Include="Model\AccessLevel.cs" />
     <Compile Include="Model\AssemblyMetadata.cs" />
     <Compile Include="Model\ExtentionMethods.cs" />
-    <Compile Include="Model\Mappers\Converter.cs" />
-    <Compile Include="Model\Mappers\MapperAssembly.cs" />
-    <Compile Include="Model\Mappers\MapperMethod.cs" />
-    <Compile Include="Model\Mappers\MapperNamespace.cs" />
-    <Compile Include="Model\Mappers\MapperParameter.cs" />
-    <Compile Include="Model\Mappers\MapperProperty.cs" />
-    <Compile Include="Model\Mappers\MapperType.cs" />
+    <Compile Include="Mappers\Converter.cs" />
+    <Compile Include="Mappers\MapperAssembly.cs" />
+    <Compile Include="Mappers\MapperMethod.cs" />
+    <Compile Include="Mappers\MapperNamespace.cs" />
+    <Compile Include="Mappers\MapperParameter.cs" />
+    <Compile Include="Mappers\MapperProperty.cs" />
+    <Compile Include="Mappers\MapperType.cs" />
     <Compile Include="Model\MethodMetadata.cs" />
     <Compile Include="Model\NamespaceMetadata.cs" />
     <Compile Include="Model\ParameterMetadata.cs" />
@@ -95,6 +98,10 @@
       <Project>{F724E543-577F-4996-AD08-C969F96AE22B}</Project>
       <Name>BaseModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Composition\Composition.csproj">
+      <Project>{88a474d6-252c-4703-bebf-f80590027fe5}</Project>
+      <Name>Composition</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MEF\MEF.csproj">
       <Project>{78bb15b7-f83e-4ed1-9e14-09662042210b}</Project>
       <Name>MEF</Name>
@@ -102,10 +109,6 @@
     <ProjectReference Include="..\Serialization\XMLSerializer.csproj">
       <Project>{8b8e9f03-eeb2-4430-8f23-9760fbb4a8b1}</Project>
       <Name>XMLSerializer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XMLModel\XMLModel.csproj">
-      <Project>{045AB98F-C16A-4DAD-AE09-5978BB35FFD6}</Project>
-      <Name>XMLModel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.ComponentModel.Composition;
 
-namespace XMLModel
+namespace XMLSerializer.XMLModel
 {
     [DataContract(IsReference = true)]
     [Export(typeof(BaseAssembly))]
