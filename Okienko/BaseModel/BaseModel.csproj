@@ -54,6 +54,7 @@
     <Compile Include="Enums\BaseSealedEnum.cs" />
     <Compile Include="Enums\BaseAccessLevel.cs" />
     <Compile Include="Enums\BaseAbstractEnum.cs" />
+    <Compile Include="ISerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

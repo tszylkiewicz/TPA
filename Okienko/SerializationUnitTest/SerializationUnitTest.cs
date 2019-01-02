@@ -1,5 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Serialization;
+﻿using BaseModel;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using System.IO;
 
 namespace UnitTest
@@ -10,7 +11,7 @@ namespace UnitTest
         [TestMethod]
         public void SerializationTest()
         {
-            ISerializer Serializer = new XMLSerializer();
+            ISerializer Serializer = new XMLSerializer.XMLSerializer();
             string path = @"..\\..\\..\\DataToTest\\bin\\Debug\\DataToTest.dll";
             Serializer.Serialize("test.xml", path);
             Assert.IsTrue(File.Exists("test.xml"));

@@ -56,6 +56,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BaseModel\BaseModel.csproj">
+      <Project>{f724e543-577f-4996-ad08-c969f96ae22b}</Project>
+      <Name>BaseModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Serialization\XMLSerializer.csproj">
       <Project>{8b8e9f03-eeb2-4430-8f23-9760fbb4a8b1}</Project>
       <Name>XMLSerializer</Name>
