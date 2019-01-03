@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace XMLSerializer.XMLModel
 {
-    [DataContract(IsReference = true)]
-    public partial class XMLParameter : BaseParameter
+    //[DataContract(IsReference = true)]
+    public class XMLParameter : BaseParameter
     {
         [DataMember] public override string Name { get; set; }
         [DataMember] public new XMLType Type { get; set; }

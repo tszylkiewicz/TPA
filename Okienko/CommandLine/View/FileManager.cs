@@ -1,5 +1,4 @@
-﻿using Model.Logger;
-using Model.ViewModel;
+﻿using Model.ViewModel;
 using Model.ViewModel.TreeView;
 using System;
 using System.Collections.Generic;
@@ -10,36 +9,27 @@ namespace CommandLine.View
 {
     public class FileManager
     {
-        LogWriter logWriter;
-        public string PathVariable { get; set; }
-        public Reflector reflector { get; set; }
-        public TreeViewAssembly treeViewAssembly { get; set; }
-        public string savePath { get; set; }
         public MyViewModel MyViewModel = new MyViewModel();
 
         public FileManager(string path)
         {
-            logWriter = new LogWriter("Start: FileManager");
-            PathVariable = path;
-            reflector = new Reflector();
+            MyViewModel.PathVariable = path;
         }
 
         public bool OpenFile()
         {
-            logWriter.LogWrite("Start: FileManger.OpenFile");
-
             string chosenOne;
             int chosenOneInt = 0;
             TreeViewItem tempTreeViewItem;
 
-            if (File.Exists(PathVariable))
+            if (File.Exists(MyViewModel.PathVariable))
             {
                 Console.WriteLine("Otwieram\n\n");
 
-                if (PathVariable.Substring(PathVariable.Length - 4) == ".dll")
+                if (MyViewModel.PathVariable.Substring(MyViewModel.PathVariable.Length - 4) == ".dll")
                 {
-                    reflector.Reflect(PathVariable);
-                    treeViewAssembly = new TreeViewAssembly(reflector.AssemblyModel);
+                    MyViewModel.reflector.Reflect(MyViewModel.PathVariable);
+                    MyViewModel.treeViewAssembly = new TreeViewAssembly(MyViewModel.reflector.AssemblyModel);
                 }
                 else
                 {
@@ -52,7 +42,6 @@ namespace CommandLine.View
                 Console.WriteLine();
                 Console.WriteLine("What to do (E-Exit, 'Number' - show property with number): ");
                 chosenOne = Console.ReadLine();
-                logWriter.LogWrite("FileManager.OpenFile: User_Input: " + chosenOne);
                 Console.WriteLine();
 
                 while (!(chosenOne.Equals("E")) && !(chosenOne.Equals("e")))
@@ -86,7 +75,6 @@ namespace CommandLine.View
                     Console.WriteLine();
                     Console.WriteLine("What to do (E-Exit, 'Numer' - show property with numer): ");
                     chosenOne = Console.ReadLine();
-                    logWriter.LogWrite("FileManager.OpenFile: User_Input: " + chosenOne);
                     Console.WriteLine();
 
                 }
@@ -97,14 +85,11 @@ namespace CommandLine.View
                 Console.WriteLine("IT IS NOT FILE");
                 return false;
             }
-            logWriter.LogWrite("FileManager.OpenFile: Closing");
             return true;
         }
 
         public void More(TreeViewItem type, string offset)
         {
-            logWriter.LogWrite("Start: FileManager.More");
-            logWriter.LogWrite("More: Searched_Type" + type.Name + "_" + type.Name + "_" + type.ToString());
             string anotherChoice;
             int anotherChoiceInt = 0;
             TreeViewItem tempTreeViewItem;
@@ -121,7 +106,6 @@ namespace CommandLine.View
             Console.WriteLine();
             Console.WriteLine("What to do now (B-Back, 'Numer' - show property with numer, S - SAVE to File): ");
             anotherChoice = Console.ReadLine();
-            logWriter.LogWrite("FileManager.More: User_Input: " + anotherChoice);
             Console.WriteLine();
 
             while (((!anotherChoice.Equals("B")) && (!anotherChoice.Equals("b"))))
@@ -165,12 +149,11 @@ namespace CommandLine.View
                 else if (anotherChoice.Equals("S") || anotherChoice.Equals("s"))
                 {
                     Console.WriteLine("\n\n\nInsert path to save file: ");
-                    savePath = Console.ReadLine();
-                    if (savePath != "")
+                    MyViewModel.PathForSerialization = Console.ReadLine();
+                    if (MyViewModel.PathForSerialization != "")
                     {
-                        savePath += ".xml";
-                        MyViewModel.PathForSerialization = savePath;
-                        MyViewModel.saveAssemblyToXml(reflector);
+                        MyViewModel.PathForSerialization += ".xml";
+                        MyViewModel.Save();
 
                         Console.WriteLine("XML file has been saved\n\n\n");
                     }
@@ -197,10 +180,8 @@ namespace CommandLine.View
                 Console.WriteLine();
                 Console.WriteLine("What to do now (B-Back, 'Numer' - show property with numer, S - SAVE to File): ");
                 anotherChoice = Console.ReadLine();
-                logWriter.LogWrite("FileManager.More: User_Input: " + anotherChoice);
                 Console.WriteLine();
             }
-            logWriter.LogWrite("Stop: FileManager.More");
 
             closeType(type);
 
@@ -209,7 +190,6 @@ namespace CommandLine.View
 
         public TreeViewItem FindTypeWithNumber(double Number)
         {
-            logWriter.LogWrite("Start: FileManager.FindTypeWithNumber");
             int i = 1;
 
             foreach (TreeViewNamespace treeViewNamespace in GetNamespaces())
@@ -218,18 +198,15 @@ namespace CommandLine.View
                 {
                     if (i++ == Number)
                     {
-                        logWriter.LogWrite("Stop: FileManager.FindTypeWithNumber");
                         return treeViewType;
                     }
                 }
             }
-            logWriter.LogWrite("Stop: FileManager.FindTypeWithNumber");
             return null;
         }
 
         public TreeViewItem FindPropertyWithNumber(double Number, TreeViewItem type)
         {
-            logWriter.LogWrite("Start: FileManager.FindPropertyWithNumber");
             int i = 1;
 
             foreach (TreeViewItem meta in GetProperty(type))
@@ -238,7 +215,6 @@ namespace CommandLine.View
                 {
                     if (meta.GetType() == typeof(TreeViewProperty))
                     {
-                        logWriter.LogWrite("Stop: FileManager.FindPropertyWithNumber");
                         return GetProperty(meta)[0];
                     }
                     else if (meta.GetType() == typeof(TreeViewMethod))
@@ -248,19 +224,15 @@ namespace CommandLine.View
                 }
                 i++;
             }
-
-            logWriter.LogWrite("Stop: FileManager.FindPropertyWithNumber");
             return null;
         }
 
         public TreeViewItem FindMethodObjectWithNumber(double Number, TreeViewItem type)
         {
-            logWriter.LogWrite("Start: FileManager.FindMethodObjectWithNumber");
             int i = 1;
 
             foreach (TreeViewItem meta in GetProperty(type))
             {
-               // Console.WriteLine("COUTN: " + GetProperty(meta).Count);
                 if (i == Number)
                 {
                     if (GetProperty(meta).Count > 0)
@@ -277,21 +249,19 @@ namespace CommandLine.View
                 }
                 i++;
             }
-
-            logWriter.LogWrite("Stop: FileManager.FindPropertyWithNumber");
             return null;
         }
 
 
         public ObservableCollection<TreeViewItem> GetNamespaces()
         {
-            treeViewAssembly.IsExpanded = true;
-            return treeViewAssembly.Children;
+            MyViewModel.treeViewAssembly.IsExpanded = true;
+            return MyViewModel.treeViewAssembly.Children;
         }
 
         public void closeNamespace()
         {
-            treeViewAssembly.IsExpanded = false;
+            MyViewModel.treeViewAssembly.IsExpanded = false;
         }
 
         public ObservableCollection<TreeViewItem> GetTypes(TreeViewItem namespaceTreeView)
@@ -318,9 +288,8 @@ namespace CommandLine.View
 
         public bool ReflectNamespace()
         {
-            logWriter.LogWrite("Start: FileManager.Reflect");
 
-            Console.WriteLine(PathVariable);
+            Console.WriteLine(MyViewModel.PathVariable);
             Console.WriteLine();
 
             foreach (TreeViewNamespace treeViewNamespace in GetNamespaces())
@@ -338,7 +307,6 @@ namespace CommandLine.View
 
         public void ReflectType(TreeViewItem type, string offset)
         {
-            logWriter.LogWrite("Start: FileManager.ReflectType");
             int j = 1;
             Console.WriteLine(offset + "\t" + "" + " : " + type.Name);
             foreach (TreeViewItem meta in GetProperty(type))
@@ -352,12 +320,10 @@ namespace CommandLine.View
                     Console.WriteLine(offset + "\t" + j++ + ". M " + meta.Name);
                 }
             }
-            logWriter.LogWrite("Stop: FileManager.Reflect");
         }
 
         public void ReflectMethod(TreeViewItem type, string offset)
         {
-            logWriter.LogWrite("Start: FileManager.ReflectMethod");
             int j = 1;
             Console.WriteLine(offset + "\t" + "" + " : " + type.Name);
             foreach (TreeViewItem meta in GetProperty(type))
@@ -372,7 +338,6 @@ namespace CommandLine.View
                     Console.WriteLine(offset + "\t" + j++ + ". RT " + meta.Name);
                 }
             }
-            logWriter.LogWrite("Stop: FileManager.Reflect");
         }
     }
 }

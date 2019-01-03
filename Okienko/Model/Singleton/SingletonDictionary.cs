@@ -1,4 +1,4 @@
-﻿using Composition.Logger;
+﻿
 using Model.Model;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace Model.Singleton
 {
     public sealed class SingletonDictionary
     {
-        LogWriter logWriter;
+        //LogWriter logWriter;
         private static SingletonDictionary m_oInstance = null;
         public static SingletonDictionary Instance
         {
@@ -27,7 +27,7 @@ namespace Model.Singleton
         private Dictionary<string, TypeMetadata> _data = new Dictionary<string, TypeMetadata>();
         private SingletonDictionary()
         {
-            logWriter = new LogWriter("Singleton was created");
+            //logWriter = new LogWriter("Singleton was created");
         }
         public void Add(string name, TypeMetadata type)
         {

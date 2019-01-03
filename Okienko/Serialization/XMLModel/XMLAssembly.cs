@@ -5,9 +5,9 @@ using System.ComponentModel.Composition;
 
 namespace XMLSerializer.XMLModel
 {
-    [DataContract(IsReference = true)]
+    //[DataContract(IsReference = true)]
     [Export(typeof(BaseAssembly))]
-    public partial class XMLAssembly : BaseAssembly
+    public class XMLAssembly : BaseAssembly
     {
         [DataMember] public override string Name { get; set; }
         [DataMember] public new List<XMLNamespace> Namespaces { get; set; }

@@ -1,4 +1,4 @@
-﻿using Composition.Logger;
+﻿using Composition;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,13 +12,9 @@ using System.Threading.Tasks;
 
 namespace Model.Model
 {
-    [DataContract]
     public class AssemblyMetadata
     {
-        private LogWriter logWriter;
-        [DataMember]
         public string Name { get; set; }
-        [DataMember]
         public List<NamespaceMetadata> Namespaces { get; set; }
 
         public AssemblyMetadata(Assembly assembly)
@@ -29,7 +25,6 @@ namespace Model.Model
                            group _type by _type.GetNamespace() into _group
                            orderby _group.Key
                            select new NamespaceMetadata(_group.Key, _group.ToList())).ToList();
-            this.logWriter = new LogWriter("Utworzono obiekt klasy AssemblyMetadata: " + Name);
         }
 
         public AssemblyMetadata() { }

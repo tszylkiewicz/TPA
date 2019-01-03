@@ -24,7 +24,8 @@ namespace UnitTest
             FileManager fileManager;
             string path = @"..\..\..\DataToTest\bin\Debug\DataToTest.dll";
             fileManager = new FileManager(path);
-            Assert.AreEqual(fileManager.PathVariable, path);
+            //Assert.AreEqual(fileManager.PathVariable, path);      // tymczasowo
+            Assert.AreEqual("aaa", path);
         }
     }
 }

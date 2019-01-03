@@ -1,5 +1,4 @@
-﻿using Composition.Logger;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,20 +10,15 @@ using System.Threading.Tasks;
 
 namespace Model.Model
 {
-    [DataContract(IsReference = true)]
     public class PropertyMetadata
     {
-        LogWriter logWriter;
-        [DataMember]
         public string Name { get; set; }
-        [DataMember]
         public TypeMetadata PropertyType { get; set; }
 
         public PropertyMetadata(string name, TypeMetadata propertyType)
         {
             this.Name = name;
             this.PropertyType = propertyType;
-            logWriter = new LogWriter("Utworzono obiekt klasy PropertyMetadata: " + this.Name);
         }
 
         public PropertyMetadata() { }

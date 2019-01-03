@@ -1,4 +1,4 @@
-﻿using Composition.Logger;
+﻿
 using Model.Model;
 using System;
 using System.Collections.Generic;
@@ -11,21 +11,21 @@ namespace Model.ViewModel
 {
     public class Reflector
     {
-        LogWriter logWriter;
+        //LogWriter logWriter;
         public AssemblyMetadata AssemblyModel { get; private set; }
 
         public void Reflect(string assemblyFile)
         {
             Assembly assembly = Assembly.LoadFrom(assemblyFile);
             AssemblyModel = new AssemblyMetadata(assembly);
-            logWriter = new LogWriter("Utworzono obiekt klasy Reflektor");
+            //logWriter = new LogWriter("Utworzono obiekt klasy Reflektor");
 
         }
 
         public void Reflect(Assembly assembly)
         {
             AssemblyModel = new AssemblyMetadata(assembly);
-            logWriter = new LogWriter("Utworzono obiekt klasy Reflektor");
+            //logWriter = new LogWriter("Utworzono obiekt klasy Reflektor");
         }
     }
 }

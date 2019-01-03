@@ -5,25 +5,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Composition.Logger
+namespace MEF
 {
     public class LogWriter
     {
-        static TextWriterTraceListener logsListener = new TextWriterTraceListener("Logs.log", "logsListener");
+        //static TextWriterTraceListener logsListener = new TextWriterTraceListener("Logs.log", "logsListener");
 
-        private string m_exePath = string.Empty;
+        // private string m_exePath = string.Empty;
+
+        public string Text;
+
         public LogWriter(string logMessage)
         {
-            LogWrite(logMessage);
+            Text = "";
+            LogWrite(logMessage);           
         }
+
+        //public LogWriter()
+        //{
+        //    Text = "";
+        //}
+
         public void LogWrite(string logMessage)
         {
             string text = "";
             text += "\r\nLog Entry : ";
             text += DateTime.Now.ToLongTimeString() + " " + DateTime.Now.ToLongDateString();
             text += "  : " + logMessage;
-            logsListener.WriteLine(text);
-            logsListener.Flush();
+
+            Text += text;
+
+            //logsListener.WriteLine(text);
+            //logsListener.Flush();
         }
     }
 }

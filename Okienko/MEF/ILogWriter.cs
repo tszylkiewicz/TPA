@@ -1,16 +1,9 @@
-﻿using Composition.Logger;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MEF;
 
 namespace Composition
 {
-    [Export(typeof(ILogWriter))]
-    public abstract class ILogWriter 
+    public interface ILogWriter
     {
-        public abstract void LogIt(LogWriter log);
+        void LogIt(LogWriter logW);
     }
 }

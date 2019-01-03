@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace XMLSerializer.XMLModel
 {
-    public partial class XMLType : BaseType
+    public  class XMLType : BaseType
     {
         [DataMember] public override string Name { get; set; }
         [DataMember] public override string NamespaceName { get; set; }

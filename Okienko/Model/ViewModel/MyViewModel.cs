@@ -11,6 +11,7 @@ using System.ComponentModel.Composition.Hosting;
 using System;
 using Model.Model;
 using System.Linq;
+using MEF;
 
 namespace Model.ViewModel
 {
@@ -27,9 +28,13 @@ namespace Model.ViewModel
         public string PathForSerialization { get; set; }
 
         //[Import(typeof(ILogWriter))]
-        public ILogWriter logger;
+        //public ILogWriter logger { get; set; }
         public Logic LogicService { get; set; }
         private string _compositionPath = @"..\\..\\..\\Serialization\\bin\\Debug";
+
+
+        [Import(typeof(ILogWriter))]
+        public ILogWriter Logger { get; set; }
 
         public MyViewModel()
         {
@@ -40,6 +45,7 @@ namespace Model.ViewModel
             reflector = new Reflector();
             Compose();
             LogicService = new Logic();
+            //Logger = new FileLogger();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -70,6 +76,8 @@ namespace Model.ViewModel
         }
         public void Save()
         {
+            Logger.LogIt(new LogWriter("SavingToFile"));
+
             if (BrowseFile != null)
             {
                 PathForSerialization = BrowseFile.SavePath();
@@ -82,24 +90,15 @@ namespace Model.ViewModel
                 }
                 catch(Exception)
                 {
-
+                    Logger.LogIt(new LogWriter("Error"));
                 }
             }
         }
-        public void saveAssemblyToXml(Reflector reflectorTemp = null)
-        {
-            if (reflectorTemp == null)
-            {
-                Save();
-            }
-            else
-            {
-                //Serializer.Serialize(PathForSerialization, reflectorTemp.AssemblyModel);
-            }
-        }
+
 
         private void Compose()
         {
+            
             var catalog = new AggregateCatalog(new DirectoryCatalog(_compositionPath));
             var _container = new CompositionContainer(catalog);
             try
@@ -111,6 +110,7 @@ namespace Model.ViewModel
                 //throw compositionException;
                 Console.WriteLine(compositionException);
             }
+            Logger.LogIt(new LogWriter("Compose"));
         }
     }
 }

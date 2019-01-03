@@ -1,4 +1,4 @@
-﻿using Composition.Logger;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,20 +10,15 @@ using System.Threading.Tasks;
 
 namespace Model.Model
 {
-    [DataContract(IsReference = true)]
     public class NamespaceMetadata
     {
-        private LogWriter logWriter;
-        [DataMember]
         public string Name { get; set; }
-        [DataMember]
         public List<TypeMetadata> Types { get; set; }
 
         public NamespaceMetadata(string name, List<Type> types)
         {
             this.Name = name;
             this.Types = (from type in types orderby type.Name select new TypeMetadata(type)).ToList();
-            this.logWriter = new LogWriter("Utworzono obiekt klasy NamespaceMetadata: " + Name);
         }
 
         public NamespaceMetadata() { }

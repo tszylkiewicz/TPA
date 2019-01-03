@@ -21,32 +21,34 @@ namespace XMLSerializer
     {
         public void Serialize(string path, BaseAssembly obj)
         {
-            //path = "D:\\Repository\\TPA\\Okienko\\DataToTest\\bin\\Debug\\asd.json";
+            //string pathjas = "C:\\Users\\Marcin\\Documents\\GitHub\\asd.json";
             //if (File.Exists(path)) File.Delete(path);
-            XMLAssembly assembly = (XMLAssembly)obj;
-            DataContractSerializer dcs = new DataContractSerializer(typeof(XMLAssembly));
-            //string name = JsonConvert.SerializeObject(assembly, Formatting.Indented,
-                //new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
-            //XNode node = JsonConvert.DeserializeXNode(name, "Root");           
-            using (FileStream fileStream = new FileStream(path, FileMode.Create))
-            {
-                dcs.WriteObject(fileStream, assembly);
-            }
-            //using (StreamWriter file = new StreamWriter(path, true))
+
+
+            XMLAssembly xmlMetadata = (XMLAssembly)obj;
+            string name = JsonConvert.SerializeObject(xmlMetadata, Newtonsoft.Json.Formatting.Indented,
+                new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
+
+            XNode node = JsonConvert.DeserializeXNode(name, "Root");
+            XDocument xDocument = node.Document;
+            xDocument.Save(path);
+
+            //using (StreamWriter file = new StreamWriter(pathjas, true))
             //{
             //    file.Write(name);
+
             //}
         }
 
+
         public BaseAssembly Deserialize(string path)
         {
-            XMLAssembly assembly;
-            DataContractSerializer dataContractSerializer = new DataContractSerializer(typeof(XMLAssembly));
-            using (FileStream fileStream = new FileStream(path, FileMode.Open))
+            using (StreamReader file = new StreamReader(path, true))
             {
-                assembly = (XMLAssembly)dataContractSerializer.ReadObject(fileStream);
+                string reader = file.ReadToEnd();
+                return JsonConvert.DeserializeObject<XMLAssembly>(reader,
+                    new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
             }
-            return assembly;
         }
     }
 }

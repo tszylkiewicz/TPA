@@ -1,4 +1,4 @@
-﻿using Composition.Logger;
+﻿
 using Model.Singleton;
 using System;
 using System.Collections.Generic;
@@ -10,40 +10,25 @@ using System.Runtime.Serialization;
 
 namespace Model.Model
 {
-    [DataContract(IsReference = true)]
     public class TypeMetadata
     {
         #region Properties
-        [DataMember]
         public string Name { get; set; }
-        [DataMember]
         public string NamespaceName { get; set; }
 
 
-        [DataMember]
         public TypeMetadata BaseType { get; set; }
-        [DataMember]
         public List<TypeMetadata> GenericArguments { get; set; }
-        [DataMember]
         public Tuple<AccessLevel, SealedEnum, AbstractEnum, StaticEnum> Modifiers { get; set; }
-        [DataMember]
         public TypeKind TypeKind { get; set; }
-        [DataMember]
         public List<TypeMetadata> ImplementedInterfaces { get; set; }
-        [DataMember]
         public List<TypeMetadata> NestedTypes { get; set; }
-        [DataMember]
         public List<PropertyMetadata> Properties { get; set; }
-        [DataMember]
         public TypeMetadata DeclaringType { get; set; }
-        [DataMember]
         public List<MethodMetadata> Methods { get; set; }
-        [DataMember]
         public List<MethodMetadata> Constructors { get; set; }
-        [DataMember]
         public List<ParameterMetadata> Attributes { get; set; }
 
-        private LogWriter logWriter;
         #endregion
 
         #region Constructors
@@ -53,11 +38,6 @@ namespace Model.Model
             if (!SingletonDictionary.Instance.ContainsKey(Name))
             {
                 SingletonDictionary.Instance.Add(Name, this);
-                logWriter = new LogWriter("Utworzono obiekt klasy TypeMetadata: " + Name);
-            }
-            else
-            {
-                logWriter = new LogWriter("Odwołano się do obiektu klasy TypeMetadata: " + Name);
             }
             this.DeclaringType = EmitDeclaringType(type.DeclaringType);
             this.Constructors = MethodMetadata.EmitConstructors(type);
