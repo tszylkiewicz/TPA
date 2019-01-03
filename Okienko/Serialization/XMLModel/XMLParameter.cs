@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace XMLSerializer.XMLModel
 {
     [DataContract(IsReference = true)]
-    public class XMLParameter : BaseParameter
+    public partial class XMLParameter : BaseParameter
     {
         [DataMember] public override string Name { get; set; }
         [DataMember] public new XMLType Type { get; set; }

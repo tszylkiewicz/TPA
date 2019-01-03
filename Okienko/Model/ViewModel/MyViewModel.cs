@@ -26,10 +26,10 @@ namespace Model.ViewModel
         public TreeViewAssembly treeViewAssembly;
         public string PathForSerialization { get; set; }
 
-        [Import(typeof(ILogWriter))]
+        //[Import(typeof(ILogWriter))]
         public ILogWriter logger;
-        //[ImportMany(typeof(Logic))]
-        public Logic LogicService { get; set; } = new Logic();
+        public Logic LogicService { get; set; }
+        private string _compositionPath = @"..\\..\\..\\Serialization\\bin\\Debug";
 
         public MyViewModel()
         {
@@ -38,6 +38,8 @@ namespace Model.ViewModel
             Click_Browse = new RelayCommand(Browse);
             Click_Save = new RelayCommand(Save);
             reflector = new Reflector();
+            Compose();
+            LogicService = new Logic();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -74,10 +76,8 @@ namespace Model.ViewModel
             }
             if (PathForSerialization != null)
             {
-                //Serializer.Serialize(PathForSerialization, reflector.AssemblyModel);
                 try
                 {
-                    Console.WriteLine("przed serializacją");
                     LogicService.Save(reflector.AssemblyModel, PathForSerialization);
                 }
                 catch(Exception)
@@ -95,6 +95,21 @@ namespace Model.ViewModel
             else
             {
                 //Serializer.Serialize(PathForSerialization, reflectorTemp.AssemblyModel);
+            }
+        }
+
+        private void Compose()
+        {
+            var catalog = new AggregateCatalog(new DirectoryCatalog(_compositionPath));
+            var _container = new CompositionContainer(catalog);
+            try
+            {
+                _container.ComposeParts(this);
+            }
+            catch (CompositionException compositionException)
+            {
+                //throw compositionException;
+                Console.WriteLine(compositionException);
             }
         }
     }

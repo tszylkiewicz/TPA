@@ -75,7 +75,7 @@ namespace Model.Mappers
 
             if (model.Attributes != null)
             {
-                PropertyInfo fieldsProperty = typeModelType.GetProperty("Fields",
+                PropertyInfo fieldsProperty = typeModelType.GetProperty("Attributes",
                     BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
                 fieldsProperty?.SetValue(typModel,
                     Converter.ConvertList(fieldsProperty.PropertyType.GetGenericArguments()[0],
@@ -165,7 +165,7 @@ namespace Model.Mappers
                     implementedInterfaces?.Select(i => EmitType(i)).ToList();
             }
 
-            PropertyInfo fieldsProperty = type.GetProperty("Fields",
+            PropertyInfo fieldsProperty = type.GetProperty("Attributes",
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
             if (fieldsProperty?.GetValue(model) != null)
             {
@@ -232,7 +232,7 @@ namespace Model.Mappers
             if (model == null)
                 return null;
             if (!BaseTypes.ContainsKey(model.Name))
-            {
+            {               
                 BaseTypes.Add(model.Name, (BaseType)typeModel);
                 FillBaseType(model, (BaseType)typeModel);
             }

@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 namespace XMLSerializer.XMLModel
 {
     [DataContract(IsReference = true)]
-    public class XMLMethod : BaseMethod
+    public partial class XMLMethod : BaseMethod
     {
         [DataMember] public override string Name { get; set; }
         [DataMember] public new List<XMLType> GenericArguments { get; set; }

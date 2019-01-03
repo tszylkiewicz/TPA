@@ -15,7 +15,7 @@ namespace Model.Mappers
         {
             object propertyModel = Activator.CreateInstance(propertyModelType);
             PropertyInfo nameProperty = propertyModelType.GetProperty("Name");
-            PropertyInfo typeProperty = propertyModelType.GetProperty("Type",
+            PropertyInfo typeProperty = propertyModelType.GetProperty("PropertyType",
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
             nameProperty?.SetValue(propertyModel, model.Name);
 
@@ -31,7 +31,7 @@ namespace Model.Mappers
             PropertyMetadata propertyModel = new PropertyMetadata();
             propertyModel.Name = model.Name;
             Type type = model.GetType();
-            PropertyInfo typeProperty = type.GetProperty("Type",
+            PropertyInfo typeProperty = type.GetProperty("PropertyType",
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
             BaseType typeModel = (BaseType)typeProperty?.GetValue(model);
 

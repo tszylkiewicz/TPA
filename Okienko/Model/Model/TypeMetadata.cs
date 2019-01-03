@@ -1,4 +1,4 @@
-﻿using Model.Logger;
+﻿using Composition.Logger;
 using Model.Singleton;
 using System;
 using System.Collections.Generic;

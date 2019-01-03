@@ -108,10 +108,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Composition\Composition.csproj">
-      <Project>{88a474d6-252c-4703-bebf-f80590027fe5}</Project>
-      <Name>Composition</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{3a717d5d-00f3-4f56-a6f3-8a58cc782e61}</Project>
       <Name>Model</Name>

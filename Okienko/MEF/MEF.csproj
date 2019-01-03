@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Compose.cs" />
     <Compile Include="ILogWriter.cs" />
     <Compile Include="Logger\LogWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

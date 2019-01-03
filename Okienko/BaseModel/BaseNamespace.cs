@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace BaseModel
 {
-    [DataContract (IsReference = true)]
     public abstract class BaseNamespace
     {
-        [DataMember] public virtual string Name { get; set; }
+        public virtual string Name { get; set; }
         public virtual List<BaseType> Types { get; set; }
     }
 }

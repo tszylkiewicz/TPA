@@ -4,23 +4,41 @@ using Model.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 
 namespace Model
 {
-    [Export(typeof(Logic))]
     public class Logic
     {
-        //[ImportMany(typeof(ISerializer))]
-        //public ISerializer Serializer { get; set; }
+        [Import(typeof(ISerializer))]
+        public ISerializer Serializer { get; set; }
 
         [Import(typeof(BaseAssembly))]
         public BaseAssembly baseAssembly { get; set; }
-        //public BaseAssembly baseAssembly = Composition.Compose.Instance._container.GetExportedValue<BaseAssembly>();
-        public ISerializer Serializer = Composition.Compose.Instance._container.GetExportedValue<ISerializer>();
+
+        private string _compositionPath = @"..\\..\\..\\Serialization\\bin\\Debug";
+
+        public Logic()
+        {
+            Compose();
+        }
+
+        private void Compose()
+        {
+            var catalog = new AggregateCatalog(new DirectoryCatalog(_compositionPath));
+            var _container = new CompositionContainer(catalog);
+            try
+            {
+                _container.ComposeParts(this);              
+            }
+            catch (CompositionException compositionException)
+            {             
+                throw compositionException;
+            }
+        }
 
         public void Save(AssemblyMetadata model, string path)
         {
-            Console.WriteLine("przed Save");
             Serializer.Serialize(path, MapperAssembly.MapDown(model, baseAssembly.GetType()));
         }
 

@@ -53,7 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Logger\LogWriter.cs" />
     <Compile Include="Logic.cs" />
     <Compile Include="Model\AbstractEnum.cs" />
     <Compile Include="Model\AccessLevel.cs" />
@@ -97,10 +96,6 @@
     <ProjectReference Include="..\BaseModel\BaseModel.csproj">
       <Project>{F724E543-577F-4996-AD08-C969F96AE22B}</Project>
       <Name>BaseModel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Composition\Composition.csproj">
-      <Project>{88a474d6-252c-4703-bebf-f80590027fe5}</Project>
-      <Name>Composition</Name>
     </ProjectReference>
     <ProjectReference Include="..\MEF\MEF.csproj">
       <Project>{78bb15b7-f83e-4ed1-9e14-09662042210b}</Project>

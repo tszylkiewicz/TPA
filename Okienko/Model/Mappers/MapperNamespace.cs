@@ -18,11 +18,10 @@ namespace Model.Mappers
             PropertyInfo nameProperty = namespaceModelType.GetProperty("Name");
             PropertyInfo namespaceModelsProperty = namespaceModelType.GetProperty("Types",
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-            nameProperty?.SetValue(namespaceModel, model.Name);
+            nameProperty?.SetValue(namespaceModel, model.Name);            
             namespaceModelsProperty?.SetValue(namespaceModel,
                 Converter.ConvertList(namespaceModelsProperty.PropertyType.GetGenericArguments()[0],
                     model.Types.Select(t => new MapperType().MapDown(t, namespaceModelsProperty.PropertyType.GetGenericArguments()[0])).ToList()));
-
             return (BaseNamespace)namespaceModel;
         }
 

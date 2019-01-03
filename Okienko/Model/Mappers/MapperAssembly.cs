@@ -13,10 +13,10 @@ namespace Model.Mappers
     {     
         public static BaseAssembly MapDown(AssemblyMetadata model, Type assemblyModelType)
         {
-            object assemblyModel = Activator.CreateInstance(assemblyModelType);
+            object assemblyModel = Activator.CreateInstance(assemblyModelType);       
             PropertyInfo nameProperty = assemblyModelType.GetProperty("Name");
-            PropertyInfo namespaceModelsProperty = assemblyModelType.GetProperty("NamespaceMetadatas",
-                BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+            PropertyInfo namespaceModelsProperty = assemblyModelType.GetProperty("Namespaces",
+                BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);       
             nameProperty?.SetValue(assemblyModel, model.Name);
             namespaceModelsProperty?.SetValue(
                 assemblyModel,

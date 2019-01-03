@@ -14,12 +14,10 @@ namespace WPF
         public MainWindow()
         {
             InitializeComponent();
-            MyViewModel vm = new MyViewModel()
+            DataContext  = new MyViewModel()
             {
                 BrowseFile = new Okienko.View.BrowseFile()
-            };
-            //Compose.Instance.ComposeParts(vm);           
-            DataContext = vm;
+            };          
         }
     }
 }
