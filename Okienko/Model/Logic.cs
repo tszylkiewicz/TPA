@@ -16,7 +16,7 @@ namespace Model
         [Import(typeof(BaseAssembly))]
         public BaseAssembly baseAssembly { get; set; }
 
-        private string _compositionPath = @"..\\..\\..\\Serialization\\bin\\Debug";
+        private string _compositionPath = @"..\\..\\..\\plugins";
 
         public Logic()
         {
@@ -29,10 +29,10 @@ namespace Model
             var _container = new CompositionContainer(catalog);
             try
             {
-                _container.ComposeParts(this);              
+                _container.ComposeParts(this);
             }
             catch (CompositionException compositionException)
-            {             
+            {
                 throw compositionException;
             }
         }

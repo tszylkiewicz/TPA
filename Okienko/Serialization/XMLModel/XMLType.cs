@@ -11,18 +11,18 @@ namespace XMLSerializer.XMLModel
 {
     public  class XMLType : BaseType
     {
-        [DataMember] public override string Name { get; set; }
-        [DataMember] public override string NamespaceName { get; set; }
-        [DataMember] public new XMLType BaseTyp { get; set; }
-        [DataMember] public new List<XMLType> GenericArguments { get; set; }
-        [DataMember] public override Tuple<BaseAccessLevel, BaseSealedEnum, BaseAbstractEnum, BaseStaticEnum> Modifiers { get; set; }
-        [DataMember] public override BaseTypeKind TypeKind { get; set; }
-        [DataMember] public new List<XMLType> ImplementedInterfaces { get; set; }
-        [DataMember] public new List<XMLType> NestedTypes { get; set; }
-        [DataMember] public new List<XMLProperty> Properties { get; set; }
-        [DataMember] public new XMLType DeclaringType { get; set; }
-        [DataMember] public new List<XMLMethod> Methods { get; set; }
-        [DataMember] public new List<XMLMethod> Constructors { get; set; }
-        [DataMember] public new List<XMLParameter> Attributes { get; set; }
+        public override string Name { get; set; }
+        public override string NamespaceName { get; set; }
+        public new XMLType BaseTyp { get; set; }
+        public new List<XMLType> GenericArguments { get; set; }
+        public override Tuple<BaseAccessLevel, BaseSealedEnum, BaseAbstractEnum, BaseStaticEnum> Modifiers { get; set; }
+        public override BaseTypeKind TypeKind { get; set; }
+        public new List<XMLType> ImplementedInterfaces { get; set; }
+        public new List<XMLType> NestedTypes { get; set; }
+        public new List<XMLProperty> Properties { get; set; }
+        public new XMLType DeclaringType { get; set; }
+        public new List<XMLMethod> Methods { get; set; }
+        public new List<XMLMethod> Constructors { get; set; }
+        public new List<XMLParameter> Attributes { get; set; }
     }
 }

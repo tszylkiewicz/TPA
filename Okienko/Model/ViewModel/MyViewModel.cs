@@ -28,7 +28,7 @@ namespace Model.ViewModel
         public string PathForSerialization { get; set; }
 
         public Logic LogicService { get; set; }
-        private string _compositionPath = @"..\\..\\..\\Serialization\\bin\\Debug";
+        private string _compositionPath = @"..\\..\\..\\plugins";
 
 
         [Import(typeof(ILogWriter))]
