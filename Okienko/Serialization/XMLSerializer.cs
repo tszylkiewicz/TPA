@@ -21,10 +21,6 @@ namespace XMLSerializer
     {
         public void Serialize(string path, BaseAssembly obj)
         {
-            //string pathjas = "C:\\Users\\Marcin\\Documents\\GitHub\\asd.json";
-            //if (File.Exists(path)) File.Delete(path);
-
-
             XMLAssembly xmlMetadata = (XMLAssembly)obj;
             string name = JsonConvert.SerializeObject(xmlMetadata, Newtonsoft.Json.Formatting.Indented,
                 new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
@@ -32,12 +28,6 @@ namespace XMLSerializer
             XNode node = JsonConvert.DeserializeXNode(name, "Root");
             XDocument xDocument = node.Document;
             xDocument.Save(path);
-
-            //using (StreamWriter file = new StreamWriter(pathjas, true))
-            //{
-            //    file.Write(name);
-
-            //}
         }
 
 

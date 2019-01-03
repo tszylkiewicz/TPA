@@ -107,8 +107,7 @@ namespace Model.ViewModel
             }
             catch (CompositionException compositionException)
             {
-                //throw compositionException;
-                Console.WriteLine(compositionException);
+                throw compositionException; 
             }
             Logger.LogIt(new LogWriter("Compose"));
         }

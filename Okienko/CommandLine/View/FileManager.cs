@@ -16,6 +16,11 @@ namespace CommandLine.View
             MyViewModel.PathVariable = path;
         }
 
+        public string getPath()
+        {
+            return MyViewModel.PathVariable;
+        }
+
         public bool OpenFile()
         {
             string chosenOne;

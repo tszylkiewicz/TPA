@@ -1,7 +1,11 @@
-﻿using BaseModel;
+﻿//using BaseModel;
+using BaseModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using Model.ViewModel;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
+using XMLSerializer.XMLModel;
 
 namespace UnitTest
 {
@@ -9,12 +13,14 @@ namespace UnitTest
     public class SerializationUnitTest
     {
         [TestMethod]
-        public void SerializationTest()
+        public void DeserializationTest()
         {
-            //ISerializer Serializer = new XMLSerializer.XMLSerializer();
-            //string path = @"..\\..\\..\\DataToTest\\bin\\Debug\\DataToTest.dll";
-            //Serializer.Serialize("test.xml", path);
-            //Assert.IsTrue(File.Exists("test.xml"));
+            MyViewModel myViewModel = new MyViewModel();
+            myViewModel.PathVariable = @"..\..\..\DataToTest\bin\Debug\DataToTest.dll";
+            myViewModel.LoadDLL();
+            myViewModel.PathForSerialization = "textSave.xml";
+            myViewModel.Save();
+            Assert.IsTrue(File.Exists("textSave.xml"));
         }
     }
 }
