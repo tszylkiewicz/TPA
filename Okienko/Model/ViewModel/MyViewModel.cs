@@ -27,8 +27,6 @@ namespace Model.ViewModel
         public TreeViewAssembly treeViewAssembly;
         public string PathForSerialization { get; set; }
 
-        //[Import(typeof(ILogWriter))]
-        //public ILogWriter logger { get; set; }
         public Logic LogicService { get; set; }
         private string _compositionPath = @"..\\..\\..\\Serialization\\bin\\Debug";
 
@@ -45,7 +43,6 @@ namespace Model.ViewModel
             reflector = new Reflector();
             Compose();
             LogicService = new Logic();
-            //Logger = new FileLogger();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
