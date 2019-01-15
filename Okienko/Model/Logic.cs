@@ -44,6 +44,7 @@ namespace Model
 
         public AssemblyMetadata Load(string path)
         {
+            Console.WriteLine("Logic Load");
             return MapperAssembly.MapUp(Serializer.Deserialize(path));
         }
     }

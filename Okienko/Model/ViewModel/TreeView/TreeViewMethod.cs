@@ -12,7 +12,7 @@ namespace Model.ViewModel.TreeView
     public class TreeViewMethod : TreeViewItem
     {
         public MethodMetadata Method { get; set; }
-        public TreeViewMethod(MethodMetadata method) : base(method.Name)
+        public TreeViewMethod(MethodMetadata method) : base(GetFullName(method))
         {
             this.Method = method;
         }
@@ -36,6 +36,10 @@ namespace Model.ViewModel.TreeView
             {                
                 children.Add(new TreeViewType(SingletonDictionary.Instance.Get(Method.ReturnType.Name)));
             }
+        }
+        public static string GetFullName(MethodMetadata model)
+        {
+            return model.GetFullName();
         }
     }
 }

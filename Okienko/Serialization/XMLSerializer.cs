@@ -1,18 +1,10 @@
 ﻿using BaseModel;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using XMLSerializer.XMLModel;
 using System.Xml.Linq;
-using System.Xml.Serialization;
-using System.Xml;
-using System.Xml.Schema;
+using XMLSerializer.XMLModel;
 
 namespace XMLSerializer
 {
@@ -33,6 +25,7 @@ namespace XMLSerializer
 
         public BaseAssembly Deserialize(string path)
         {
+            Console.WriteLine("XML Deserialize");
             using (StreamReader file = new StreamReader(path, true))
             {
                 string reader = file.ReadToEnd();

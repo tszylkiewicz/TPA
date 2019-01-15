@@ -165,5 +165,19 @@ namespace Model.Model
                    select EmitReference(currentInterface);
         }
         #endregion
+
+        public string GetFullName()
+        {
+            if (Modifiers == null) return null;
+
+            string fullname = "";
+            fullname += Modifiers.Item1.ToString().ToLower() + " ";
+            fullname += Modifiers.Item2 == SealedEnum.Sealed ? SealedEnum.Sealed.ToString().ToLower() + " " : "";
+            fullname += Modifiers.Item3 == AbstractEnum.Abstract ? AbstractEnum.Abstract.ToString().ToLower() + " " : "";
+            fullname += Modifiers.Item4 == StaticEnum.Static ? StaticEnum.Static.ToString().ToLower() + " " : "";
+            fullname += TypeKind.ToString().ToLower() + " ";
+            fullname += Name;
+            return fullname;
+        }
     }
 }

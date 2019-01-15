@@ -22,6 +22,7 @@ namespace Model.ViewModel
         public ICommand Click_Browse { get; }
         public ICommand Click_Button { get; }
         public ICommand Click_Save { get; }
+        public ICommand Click_Read { get; }
         public IBrowseFile BrowseFile { get; set; }
         public Reflector reflector { get; set; }
         public TreeViewAssembly treeViewAssembly;
@@ -40,6 +41,7 @@ namespace Model.ViewModel
             Click_Button = new RelayCommand(LoadDLL);
             Click_Browse = new RelayCommand(Browse);
             Click_Save = new RelayCommand(Save);
+            Click_Read = new RelayCommand(Read);
             reflector = new Reflector();
             Compose();
             LogicService = new Logic();
@@ -92,6 +94,28 @@ namespace Model.ViewModel
             }
         }
 
+        public void Read()
+        {
+            Logger.LogIt(new LogWriter("Reading"));
+            if (BrowseFile != null)
+            {
+                PathForSerialization = BrowseFile.ChooseFile();
+                Console.WriteLine(PathForSerialization);
+            }
+            if (PathForSerialization != null)
+            {
+                try
+                {
+                    AssemblyMetadata asm = LogicService.Load(PathForSerialization);
+                    treeViewAssembly = new TreeViewAssembly(asm);
+                    TreeViewLoaded();
+                }
+                catch(Exception)
+                {
+                    Logger.LogIt(new LogWriter("Error"));
+                }
+            }
+        }
 
         private void Compose()
         {

@@ -12,7 +12,7 @@ namespace Model.ViewModel.TreeView
     public class TreeViewType : TreeViewItem
     {
         public TypeMetadata Type { get; set; }
-        public TreeViewType(TypeMetadata type) : base(type.Name)
+        public TreeViewType(TypeMetadata type) : base(GetFullName(type))
         {
             this.Type = type;
         }
@@ -76,6 +76,10 @@ namespace Model.ViewModel.TreeView
                     children.Add(new TreeViewParameter(parameter));
                 }
             }
+        }
+        public static string GetFullName(TypeMetadata model)
+        {
+            return model.GetFullName();
         }
     }
 }
