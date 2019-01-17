@@ -1,16 +1,12 @@
 ﻿using Model.ViewModel.TreeView;
-using XMLSerializer;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
-using BaseModel;
 using System.ComponentModel.Composition;
 using Composition;
-using System.Collections.Generic;
 using System.ComponentModel.Composition.Hosting;
 using System;
 using Model.Model;
-using System.Linq;
 using MEF;
 
 namespace Model.ViewModel

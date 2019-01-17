@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataBaseModel
 {
+    [Table("TypeMetadata")]
     public class DataBaseType : BaseType
     {
         [Key]

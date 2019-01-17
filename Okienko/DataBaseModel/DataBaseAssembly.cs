@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.ComponentModel.DataAnnotations.Schema;
 using BaseModel;
 
 namespace DataBaseModel
 {
+    [Table ("AssemblyMetadata")]
     [Export(typeof(BaseAssembly))]
     public class DataBaseAssembly : BaseAssembly
     {

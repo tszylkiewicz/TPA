@@ -1,11 +1,7 @@
-﻿//using BaseModel;
-using BaseModel;
+﻿
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.ViewModel;
-using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.IO;
-using XMLSerializer.XMLModel;
 
 namespace UnitTest
 {

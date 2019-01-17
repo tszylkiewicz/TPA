@@ -2,9 +2,11 @@
 using BaseModel.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataBaseModel
 {
+    [Table("MethodMetadata")]
     public class DataBaseMethod : BaseMethod
     {
         public override string Name { get; set; }
