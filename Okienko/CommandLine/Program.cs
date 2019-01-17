@@ -16,10 +16,12 @@ namespace CommandLine
             string url = Console.ReadLine();
             FileManager fileManager;
             string path = @"..\\..\\..\\DataToTest\\bin\\Debug\\DataToTest.dll";
+            string path2 = @"..\\..\\..\\AADllFile\\TPA.ApplicationArchitecture.dll";
+
 
             if (url.Equals("21"))
             {
-                fileManager = new FileManager(path);
+                fileManager = new FileManager(path2);
             }
             else
             {

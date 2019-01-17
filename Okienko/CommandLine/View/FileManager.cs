@@ -53,7 +53,7 @@ namespace CommandLine.View
                 {
                     if (Int32.TryParse(chosenOne, out chosenOneInt))
                     {
-                        if ((chosenOneInt >= 0) && ((chosenOneInt <= 99)))
+                        if ((chosenOneInt >= 0) && ((chosenOneInt <= 999)))
                         {
                             tempTreeViewItem = FindTypeWithNumber(chosenOneInt);
 
@@ -117,7 +117,7 @@ namespace CommandLine.View
             {
                 if (Int32.TryParse(anotherChoice, out anotherChoiceInt))
                 {
-                    if (((Int32.Parse(anotherChoice)) >= 0) && ((Int32.Parse(anotherChoice)) <= 99))
+                    if (((Int32.Parse(anotherChoice)) >= 0) && ((Int32.Parse(anotherChoice)) <= 999))
                     {
                         if (type.GetType() != typeof(TreeViewMethod))
                         {
@@ -297,11 +297,12 @@ namespace CommandLine.View
             Console.WriteLine(MyViewModel.PathVariable);
             Console.WriteLine();
 
+            int i = 1;
+
             foreach (TreeViewNamespace treeViewNamespace in GetNamespaces())
             {
                 Console.WriteLine(treeViewNamespace.Name);
-
-                int i = 1;
+                
                 foreach (TreeViewType treeViewType in GetTypes(treeViewNamespace))
                 {
                     Console.WriteLine(i++ + ".\t" + treeViewType.Name);

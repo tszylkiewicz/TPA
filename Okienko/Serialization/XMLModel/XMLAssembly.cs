@@ -1,6 +1,5 @@
 ﻿using BaseModel;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.ComponentModel.Composition;
 
 namespace XMLSerializer.XMLModel
