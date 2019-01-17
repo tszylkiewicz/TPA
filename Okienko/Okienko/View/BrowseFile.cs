@@ -16,7 +16,7 @@ namespace Okienko.View
         {
             OpenFileDialog test = new OpenFileDialog()
             {
-                Filter = "Dynamic Library File(*.dll)| *.dll|XML Files (*.xml)|*.xml"
+                Filter = "Dynamic Library File(*.dll)| *.dll|XML Files (*.xml)|*.xml| All files (*.*)|*.*"
             };
             test.ShowDialog();
             if (test.FileName.Length == 0)

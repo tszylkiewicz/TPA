@@ -13,6 +13,7 @@ namespace DataBaseModel
         [Key]
         public override string Name { get; set; }
         public override string NamespaceName { get; set; }
+        public int? NamespaceId { get; set; }
         public new DataBaseType BaseTyp { get; set; }
         public new List<DataBaseType> GenericArguments { get; set; }
         public override Tuple<BaseAccessLevel, BaseSealedEnum, BaseAbstractEnum, BaseStaticEnum> Modifiers { get; set; }
@@ -24,17 +25,14 @@ namespace DataBaseModel
         public new List<DataBaseMethod> Methods { get; set; }
         public new List<DataBaseMethod> Constructors { get; set; }
         public new List<DataBaseParameter> Attributes { get; set; }
-        public int Id { get; set; }
 
 
         [InverseProperty("BaseTyp")]
         public virtual ICollection<DataBaseType> TypeBaseTypes { get; set; }
         [InverseProperty("DeclaringType")]
         public virtual ICollection<DataBaseType> TypeDeclaringTypes { get; set; }
-        [InverseProperty("GenericArguments")]
         public virtual ICollection<DataBaseMethod> MethodGenericArguments { get; set; }
         public virtual ICollection<DataBaseType> TypeGenericArguments { get; set; }
-        [InverseProperty("ImplementedInterfaces")]
         public virtual ICollection<DataBaseType> TypeImplementedInterfaces { get; set; }
         public virtual ICollection<DataBaseType> TypeNestedTypes { get; set; }
 

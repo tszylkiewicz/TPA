@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{87B60022-A44F-4F6E-ADD2-D6899C79452B}</ProjectGuid>
+    <ProjectGuid>{763815B9-EB7B-48AB-AA01-769BA165330A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DataBaseModel</RootNamespace>
-    <AssemblyName>DataBaseModel</AssemblyName>
+    <RootNamespace>DatabaseLogger</RootNamespace>
+    <AssemblyName>DatabaseLogger</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -49,21 +49,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataBaseAssembly.cs" />
-    <Compile Include="DataBaseContext.cs" />
-    <Compile Include="DataBaseData.cs" />
-    <Compile Include="DataBaseMethod.cs" />
-    <Compile Include="DataBaseNamespace.cs" />
-    <Compile Include="DataBaseParameter.cs" />
-    <Compile Include="DataBaseProperty.cs" />
-    <Compile Include="DataBaseType.cs" />
-    <Compile Include="LogModel.cs" />
+    <Compile Include="DatabaseLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BaseModel\BaseModel.csproj">
-      <Project>{f724e543-577f-4996-ad08-c969f96ae22b}</Project>
-      <Name>BaseModel</Name>
+    <ProjectReference Include="..\DataBaseModel\DataBaseModel.csproj">
+      <Project>{87b60022-a44f-4f6e-add2-d6899c79452b}</Project>
+      <Name>DataBaseModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\MEF\MEF.csproj">
       <Project>{78bb15b7-f83e-4ed1-9e14-09662042210b}</Project>

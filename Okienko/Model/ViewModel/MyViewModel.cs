@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using System.ComponentModel.Composition;
-using Composition;
 using System.ComponentModel.Composition.Hosting;
 using System;
 using Model.Model;
@@ -106,7 +105,7 @@ namespace Model.ViewModel
                     treeViewAssembly = new TreeViewAssembly(asm);
                     TreeViewLoaded();
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     Logger.LogIt(new LogWriter("Error"));
                 }

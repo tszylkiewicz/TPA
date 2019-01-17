@@ -30,9 +30,10 @@ namespace Model.Mappers
             AssemblyMetadata assemblyModel = new AssemblyMetadata();
             Type type = assembly.GetType();
             assemblyModel.Name = assembly.Name;
-            PropertyInfo namespaceModelsProperty = type.GetProperty("NamespaceMetadatas",
+            PropertyInfo namespaceModelsProperty = type.GetProperty("Namespaces",
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-            List<BaseNamespace> namespaceModels = (List<BaseNamespace>)Converter.ConvertList(typeof(BaseNamespace), (IList)namespaceModelsProperty?.GetValue(assembly));
+            Console.WriteLine("Dotarlem");
+            List<BaseNamespace> namespaceModels = (List<BaseNamespace>)Converter.ConvertList(typeof(BaseNamespace), (IList)namespaceModelsProperty?.GetValue(assembly));       
             if (namespaceModels != null)
                 assemblyModel.Namespaces = namespaceModels.Select(n => new MapperNamespace().MapUp(n)).ToList();
             return assemblyModel;

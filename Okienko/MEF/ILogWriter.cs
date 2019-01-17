@@ -1,6 +1,6 @@
 ﻿using MEF;
 
-namespace Composition
+namespace MEF
 {
     public interface ILogWriter
     {

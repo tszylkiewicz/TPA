@@ -18,30 +18,18 @@ namespace XMLData
             XMLAssembly xmlMetadata = (XMLAssembly)obj;
             string name = JsonConvert.SerializeObject(xmlMetadata, Newtonsoft.Json.Formatting.Indented,
                 new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
-
-            Console.WriteLine(name);
-            XNode node = JsonConvert.DeserializeXNode(name, "XMLAssembly");
-            XDocument xDocument = node.Document;
-            xDocument.Save(path);
+            XDocument node = JsonConvert.DeserializeXNode(name, "Root", true);
+            node.Save(path);
         }
 
 
         public BaseAssembly Read(string path)
         {
-            using (StreamReader file = new StreamReader(path, true))
-            {
-                string reader = file.ReadToEnd();
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(reader);
-                string json = JsonConvert.SerializeXmlNode(doc);
-                json = json.Remove(0, 61);
-                json = json.Remove(json.Length - 1);
-                Console.WriteLine(json);
-                XMLAssembly xmlAssembly = JsonConvert.DeserializeObject<XMLAssembly>(json,
+            XDocument doc = XDocument.Load(path);
+            string json = JsonConvert.SerializeXNode(doc, Newtonsoft.Json.Formatting.Indented, true);
+            json = json.Remove(0, 58);
+            return JsonConvert.DeserializeObject<XMLAssembly>(json,
                 new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
-                Console.WriteLine("asd" + xmlAssembly.Name);
-                return xmlAssembly;
-            }
         }
     }
 }

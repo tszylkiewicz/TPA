@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MEF;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -7,21 +8,25 @@ using System.Threading.Tasks;
 
 namespace DataBaseModel
 {
-    class DataBaseContext : DbContext
+    public class DataBaseContext : DbContext
     {
-        public DbSet<DataBaseAssembly> AssemblyMetadatas { get; set; }
-        public DbSet<DataBaseNamespace> NamespaceMetadatas { get; set; }
-        public DbSet<DataBaseType> TypeMetadatas { get; set; }
-        public DbSet<DataBaseProperty> PropertyMetadatas { get; set; }
-        public DbSet<DataBaseMethod> MethodMetadatas { get; set; }
-        public DbSet<DataBaseParameter> ParameterMetadatas { get; set; }
+        public virtual DbSet<DataBaseAssembly> AssemblyMetadatas { get; set; }
+        public virtual DbSet<DataBaseNamespace> NamespaceMetadatas { get; set; }
+        public virtual DbSet<DataBaseType> TypeMetadatas { get; set; }
+        public virtual DbSet<DataBaseProperty> PropertyMetadatas { get; set; }
+        public virtual DbSet<DataBaseMethod> MethodMetadatas { get; set; }
+        public virtual DbSet<DataBaseParameter> ParameterMetadatas { get; set; }
+        public virtual DbSet<LogModel> Log { get; set; }
 
-        private const string connectionString =
-          @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Okieneczko;Integrated Security=True;MultipleActiveResultSets=True;App=EntityFramework";
+        private static String GetString()
+        {
+            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string path = (System.IO.Path.GetDirectoryName(executable));
+            path = path.Remove(path.Length - 8);
+            return "data source=(LocalDb)\\MSSQLLocalDB;AttachDbFilename=" + path + "\\TPASerializationDB.mdf;integrated security = True; MultipleActiveResultSets=True;App=EntityFramework";
+        }
 
-
-        public DataBaseContext()
-            : base(connectionString)
+        public DataBaseContext() : base(GetString())
         {
         }
     }

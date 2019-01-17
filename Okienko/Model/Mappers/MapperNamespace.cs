@@ -29,7 +29,7 @@ namespace Model.Mappers
         {
             NamespaceMetadata namespaceModel = new NamespaceMetadata();
             namespaceModel.Name = model.Name;
-            Type type = model.GetType();
+            Type type = model.GetType();           
             PropertyInfo typesProperty = type.GetProperty("Types",
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
             List<BaseType> types = (List<BaseType>)Converter.ConvertList(typeof(BaseType), (IList)typesProperty?.GetValue(model));

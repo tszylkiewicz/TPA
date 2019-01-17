@@ -1,10 +1,6 @@
-﻿using Composition;
-using MEF;
-using System;
-using System.Collections.Generic;
+﻿using MEF;
 using System.ComponentModel.Composition;
 using System.IO;
-using System.Linq;
 
 namespace Logging
 {
