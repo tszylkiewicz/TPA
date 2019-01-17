@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace XMLSerializer.XMLModel
+namespace XMLData.XMLModel
 {
     public  class XMLMethod : BaseMethod
     {

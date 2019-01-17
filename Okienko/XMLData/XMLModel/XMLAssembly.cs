@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 
-namespace XMLSerializer.XMLModel
+namespace XMLData.XMLModel
 {
     [Export(typeof(BaseAssembly))]
     public class XMLAssembly : BaseAssembly

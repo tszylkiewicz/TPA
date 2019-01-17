@@ -16,7 +16,9 @@ namespace DataBaseModel
         public DbSet<DataBaseMethod> MethodMetadatas { get; set; }
         public DbSet<DataBaseParameter> ParameterMetadatas { get; set; }
 
-        private const string connectionString = "jakis";
+        private const string connectionString =
+          @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Okieneczko;Integrated Security=True;MultipleActiveResultSets=True;App=EntityFramework";
+
 
         public DataBaseContext()
             : base(connectionString)

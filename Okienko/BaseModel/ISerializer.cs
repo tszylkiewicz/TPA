@@ -8,7 +8,7 @@ namespace BaseModel
 {
     public interface ISerializer
     {
-        void Serialize(string path, BaseAssembly obj);
-        BaseAssembly Deserialize(string path);
+        void Save(string path, BaseAssembly obj);
+        BaseAssembly Read(string path);
     }
 }

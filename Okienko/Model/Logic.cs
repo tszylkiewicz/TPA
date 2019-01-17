@@ -39,13 +39,13 @@ namespace Model
 
         public void Save(AssemblyMetadata model, string path)
         {
-            Serializer.Serialize(path, MapperAssembly.MapDown(model, baseAssembly.GetType()));
+            Serializer.Save(path, MapperAssembly.MapDown(model, baseAssembly.GetType()));
         }
 
         public AssemblyMetadata Load(string path)
         {
             Console.WriteLine("Logic Load");
-            return MapperAssembly.MapUp(Serializer.Deserialize(path));
+            return MapperAssembly.MapUp(Serializer.Read(path));
         }
     }
 }

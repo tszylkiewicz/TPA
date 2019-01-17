@@ -27,12 +27,14 @@ namespace DataBaseModel
         public int Id { get; set; }
 
 
-        [InverseProperty("BaseType")]
+        [InverseProperty("BaseTyp")]
         public virtual ICollection<DataBaseType> TypeBaseTypes { get; set; }
         [InverseProperty("DeclaringType")]
         public virtual ICollection<DataBaseType> TypeDeclaringTypes { get; set; }
+        [InverseProperty("GenericArguments")]
         public virtual ICollection<DataBaseMethod> MethodGenericArguments { get; set; }
         public virtual ICollection<DataBaseType> TypeGenericArguments { get; set; }
+        [InverseProperty("ImplementedInterfaces")]
         public virtual ICollection<DataBaseType> TypeImplementedInterfaces { get; set; }
         public virtual ICollection<DataBaseType> TypeNestedTypes { get; set; }
 

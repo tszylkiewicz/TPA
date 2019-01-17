@@ -11,24 +11,20 @@ namespace DataBaseModel
     [Export(typeof(ISerializer))]
     public class DataBaseData : ISerializer
     {
-
-        private const string _connectionString =
-          @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Okienko;Integrated Security=True;MultipleActiveResultSets=True;App=EntityFramework";
-
-        public BaseAssembly Deserialize(string path)
+        public BaseAssembly Read(string path)
         {
             throw new NotImplementedException();
         }
 
-        public void Serialize(string path, BaseAssembly obj)
+        public void Save(string path, BaseAssembly obj)
         {
             //clearDataBase();
             using (DataBaseContext context = new DataBaseContext())
-           {
+            {
                 Console.WriteLine("Hello");
                 DataBaseAssembly assemblyMetadata = (DataBaseAssembly)obj;
                 context.AssemblyMetadatas.Add(assemblyMetadata);
-               // context.SaveChanges();
+                //context.SaveChanges();
             }
         }
 
