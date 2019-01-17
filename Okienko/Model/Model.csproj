@@ -101,10 +101,6 @@
       <Project>{78bb15b7-f83e-4ed1-9e14-09662042210b}</Project>
       <Name>MEF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Serialization\XMLSerializer.csproj">
-      <Project>{8b8e9f03-eeb2-4430-8f23-9760fbb4a8b1}</Project>
-      <Name>XMLSerializer</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
