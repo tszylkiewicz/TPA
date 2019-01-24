@@ -17,7 +17,7 @@ namespace Model.ViewModel
         public void Reflect(string assemblyFile)
         {
             // zmiana powoduje problemy w MethodMetadata, w EmitExtension()
-            Assembly assembly = Assembly.LoadFrom(assemblyFile);
+            Assembly assembly = Assembly.ReflectionOnlyLoadFrom(assemblyFile);
             AssemblyModel = new AssemblyMetadata(assembly);
             //logWriter = new LogWriter("Utworzono obiekt klasy Reflektor");
         }
