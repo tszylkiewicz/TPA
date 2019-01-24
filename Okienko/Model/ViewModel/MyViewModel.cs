@@ -80,7 +80,7 @@ namespace Model.ViewModel
             {
                 try
                 {
-                    LogicService.Save(reflector.AssemblyModel, PathForSerialization);
+                    reflector.AssemblyModel.Save(PathForSerialization, LogicService);
                 }
                 catch(Exception)
                 {
@@ -101,7 +101,8 @@ namespace Model.ViewModel
             {
                 try
                 {
-                    AssemblyMetadata asm = LogicService.Load(PathForSerialization);
+                    // AssemblyMetadata asm = LogicService.Load(PathForSerialization);
+                    AssemblyMetadata asm = reflector.AssemblyModel.Load(PathForSerialization, LogicService);
                     treeViewAssembly = new TreeViewAssembly(asm);
                     TreeViewLoaded();
                 }

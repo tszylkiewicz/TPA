@@ -37,16 +37,5 @@ namespace Model
                 throw compositionException;
             }
         }
-
-        public void Save(AssemblyMetadata model, string path)
-        {
-            Serializer.Save(path, MapperAssembly.MapDown(model, baseAssembly.GetType()));
-        }
-
-        public AssemblyMetadata Load(string path)
-        {
-            Console.WriteLine("Logic Load");
-            return MapperAssembly.MapUp(Serializer.Read(path));
-        }
     }
 }

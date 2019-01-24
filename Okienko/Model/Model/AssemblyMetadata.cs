@@ -1,5 +1,8 @@
-﻿using System;
+﻿using BaseModel;
+using Model.Mappers;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -14,7 +17,7 @@ namespace Model.Model
     public class AssemblyMetadata
     {
         public string Name { get; set; }
-        public List<NamespaceMetadata> Namespaces { get; set; }
+        public List<NamespaceMetadata> Namespaces { get; set; }       
 
         public AssemblyMetadata(Assembly assembly)
         {
@@ -26,5 +29,17 @@ namespace Model.Model
         }
 
         public AssemblyMetadata() { }
+
+
+        public void Save(string path, Logic logic)
+        {
+            logic.Serializer.Save(path, MapperAssembly.MapDown(this, logic.baseAssembly.GetType()));
+        }
+
+        public AssemblyMetadata Load(string path, Logic logic)
+        {
+            Console.WriteLine("Load");
+            return MapperAssembly.MapUp(logic.Serializer.Read(path));
+        }
     }
 }

@@ -37,6 +37,8 @@ namespace Model.Model
         }
         private static bool EmitExtension(MethodBase method)
         {
+            // moze to wywalic w cholere, potrzebne to to jest?
+
             return method.IsDefined(typeof(ExtensionAttribute), true);
         }
         public static List<MethodMetadata> EmitConstructors(Type type)
