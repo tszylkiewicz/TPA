@@ -1,6 +1,6 @@
-﻿using MEF;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -20,9 +20,8 @@ namespace DataBaseModel
 
         private static String GetString()
         {
-            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string path = (System.IO.Path.GetDirectoryName(executable));
-            path = path.Remove(path.Length - 8);
+            string path = AppDomain.CurrentDomain.BaseDirectory;
+            
             return "data source=(LocalDb)\\MSSQLLocalDB;AttachDbFilename=" + path + "\\TPASerializationDB.mdf;integrated security = True; MultipleActiveResultSets=True;App=EntityFramework";
         }
 
