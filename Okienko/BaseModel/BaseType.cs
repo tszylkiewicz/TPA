@@ -11,8 +11,8 @@ namespace BaseModel
         public virtual string NamespaceName { get; set; }
         public virtual BaseType BaseTyp { get; set; }
         public virtual List<BaseType> GenericArguments { get; set; }
-        public virtual Tuple<BaseAccessLevel, BaseSealedEnum, BaseAbstractEnum, BaseStaticEnum> Modifiers { get; set; }
-        public virtual BaseTypeKind TypeKind { get; set; }
+        public virtual TypeModifiers Modifiers { get; set; }
+        public virtual TypeKind TypeKind { get; set; }
         public virtual List<BaseType> ImplementedInterfaces { get; set; }
         public virtual List<BaseType> NestedTypes { get; set; }
         public virtual List<BaseProperty> Properties { get; set; }

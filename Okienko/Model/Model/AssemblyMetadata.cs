@@ -38,7 +38,6 @@ namespace Model.Model
 
         public AssemblyMetadata Load(string path, Logic logic)
         {
-            Console.WriteLine("Load");
             return MapperAssembly.MapUp(logic.Serializer.Read(path));
         }
     }

@@ -11,7 +11,7 @@ namespace DataBaseModel
     {
         public override string Name { get; set; }
         public new List<DataBaseType> GenericArguments { get; set; }
-        public override Tuple<BaseAccessLevel, BaseAbstractEnum, BaseStaticEnum, BaseVirtualEnum> Modifiers { get; set; }
+        public override MethodModifiers Modifiers { get; set; }
         public new DataBaseType ReturnType { get; set; }
         public override bool Extension { get; set; }
         public new List<DataBaseParameter> Parameters { get; set; }

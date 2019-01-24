@@ -16,8 +16,8 @@ namespace DataBaseModel
         public int? NamespaceId { get; set; }
         public new DataBaseType BaseTyp { get; set; }
         public new List<DataBaseType> GenericArguments { get; set; }
-        public override Tuple<BaseAccessLevel, BaseSealedEnum, BaseAbstractEnum, BaseStaticEnum> Modifiers { get; set; }
-        public override BaseTypeKind TypeKind { get; set; }
+        public override TypeModifiers Modifiers { get; set; }
+        public override TypeKind TypeKind { get; set; }
         public new List<DataBaseType> ImplementedInterfaces { get; set; }
         public new List<DataBaseType> NestedTypes { get; set; }
         public new List<DataBaseProperty> Properties { get; set; }

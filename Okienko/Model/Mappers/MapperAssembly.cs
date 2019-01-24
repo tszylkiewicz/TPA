@@ -16,7 +16,7 @@ namespace Model.Mappers
             object assemblyModel = Activator.CreateInstance(assemblyModelType);       
             PropertyInfo nameProperty = assemblyModelType.GetProperty("Name");
             PropertyInfo namespaceModelsProperty = assemblyModelType.GetProperty("Namespaces",
-                BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);       
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);       
             nameProperty?.SetValue(assemblyModel, model.Name);
             namespaceModelsProperty?.SetValue(
                 assemblyModel,
@@ -32,7 +32,6 @@ namespace Model.Mappers
             assemblyModel.Name = assembly.Name;
             PropertyInfo namespaceModelsProperty = type.GetProperty("Namespaces",
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-            Console.WriteLine("Dotarlem");
             List<BaseNamespace> namespaceModels = (List<BaseNamespace>)Converter.ConvertList(typeof(BaseNamespace), (IList)namespaceModelsProperty?.GetValue(assembly));       
             if (namespaceModels != null)
                 assemblyModel.Namespaces = namespaceModels.Select(n => new MapperNamespace().MapUp(n)).ToList();

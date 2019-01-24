@@ -1,4 +1,6 @@
 ﻿
+using BaseModel;
+using BaseModel.Enums;
 using Model.Singleton;
 using System;
 using System.Collections.Generic;
@@ -17,9 +19,9 @@ namespace Model.Model
         public string NamespaceName { get; set; }
 
 
-        public TypeMetadata BaseType { get; set; }
+        public TypeMetadata BaseTyp { get; set; }
         public List<TypeMetadata> GenericArguments { get; set; }
-        public Tuple<AccessLevel, SealedEnum, AbstractEnum, StaticEnum> Modifiers { get; set; }
+        public TypeModifiers Modifiers { get; set; }
         public TypeKind TypeKind { get; set; }
         public List<TypeMetadata> ImplementedInterfaces { get; set; }
         public List<TypeMetadata> NestedTypes { get; set; }
@@ -46,7 +48,7 @@ namespace Model.Model
             this.ImplementedInterfaces = EmitImplements(type.GetInterfaces()).ToList();
             this.GenericArguments = !type.IsGenericTypeDefinition ? null : EmitGenericArguments(type);
             this.Modifiers = EmitModifiers(type);
-            this.BaseType = EmitExtends(type.BaseType);
+            this.BaseTyp = EmitExtends(type.BaseType);
             this.Properties = PropertyMetadata.EmitProperties(type);
             this.TypeKind = GetTypeKind(type);
             this.Attributes = EmitAttributes(type);
@@ -113,7 +115,7 @@ namespace Model.Model
             StoreType(baseType);
             return EmitReference(baseType);
         }
-        static Tuple<AccessLevel, SealedEnum, AbstractEnum, StaticEnum> EmitModifiers(Type type)
+        private TypeModifiers EmitModifiers(Type type)
         {
             AccessLevel _access = type.IsPublic || type.IsNestedPublic ? AccessLevel.Public :
                 type.IsNestedFamily ? AccessLevel.Protected :
@@ -128,7 +130,13 @@ namespace Model.Model
                 _abstract = type.IsAbstract ? AbstractEnum.Abstract : AbstractEnum.NotAbstract;
             }
 
-            return new Tuple<AccessLevel, SealedEnum, AbstractEnum, StaticEnum>(_access, _sealed, _abstract, _static);
+            return new TypeModifiers()
+            {
+                AbstractEnum = _abstract,
+                AccessLevel = _access,
+                SealedEnum = _sealed,
+                StaticEnum = _static
+            };
         }
         public static TypeMetadata EmitReference(Type type)
         {
@@ -171,10 +179,10 @@ namespace Model.Model
             if (Modifiers == null) return null;
 
             string fullname = "";
-            fullname += Modifiers.Item1.ToString().ToLower() + " ";
-            fullname += Modifiers.Item2 == SealedEnum.Sealed ? SealedEnum.Sealed.ToString().ToLower() + " " : "";
-            fullname += Modifiers.Item3 == AbstractEnum.Abstract ? AbstractEnum.Abstract.ToString().ToLower() + " " : "";
-            fullname += Modifiers.Item4 == StaticEnum.Static ? StaticEnum.Static.ToString().ToLower() + " " : "";
+            fullname += Modifiers.AccessLevel.ToString().ToLower() + " ";
+            fullname += Modifiers.SealedEnum == SealedEnum.Sealed ? SealedEnum.Sealed.ToString().ToLower() + " " : "";
+            fullname += Modifiers.AbstractEnum == AbstractEnum.Abstract ? AbstractEnum.Abstract.ToString().ToLower() + " " : "";
+            fullname += Modifiers.StaticEnum == StaticEnum.Static ? StaticEnum.Static.ToString().ToLower() + " " : "";
             fullname += TypeKind.ToString().ToLower() + " ";
             fullname += Name;
             return fullname;

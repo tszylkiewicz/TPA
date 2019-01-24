@@ -24,7 +24,7 @@ namespace Model.ViewModel.TreeView
             {
                 foreach (TypeMetadata type in Types)
                 {
-                    children.Add(new TreeViewType(SingletonDictionary.Instance.Get(type.Name)));
+                    children.Add(new TreeViewType(type));
                 }
             }
         }

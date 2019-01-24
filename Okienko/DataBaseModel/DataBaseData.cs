@@ -51,10 +51,10 @@ namespace DataBaseModel
                     .Include(p => p.TypeProperties)
                     .Load();
 
-
                 DataBaseAssembly dbAssemblyMetadata = context.AssemblyMetadatas
                     .Include(a => a.Namespaces)
                     .ToList().FirstOrDefault();
+                Console.WriteLine(dbAssemblyMetadata.Name);
                 if (dbAssemblyMetadata == null)
                     throw new ArgumentException("Database is empty");
                 return dbAssemblyMetadata;
@@ -65,11 +65,11 @@ namespace DataBaseModel
         {
             clearDataBase();
             using (DataBaseContext context = new DataBaseContext())
-            {
-                Console.WriteLine("Hello");
+            {               
                 DataBaseAssembly assemblyMetadata = (DataBaseAssembly)obj;
                 context.AssemblyMetadatas.Add(assemblyMetadata);
                 context.SaveChanges();
+                Console.WriteLine("Hello");
             }
         }
 

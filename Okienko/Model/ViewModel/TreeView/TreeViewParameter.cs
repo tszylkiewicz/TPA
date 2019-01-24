@@ -21,7 +21,7 @@ namespace Model.ViewModel.TreeView
         {
             if(Parameter.Type != null)
             {
-                children.Add(new TreeViewType(SingletonDictionary.Instance.Get(Parameter.Type.Name)));
+                children.Add(new TreeViewType(Parameter.Type));
             }
         }
     }

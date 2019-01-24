@@ -31,7 +31,7 @@ namespace Model.Mappers
                 genericArgumentsProperty?.SetValue(methodModel,
                     Converter.ConvertList(genericArgumentsProperty.PropertyType.GetGenericArguments()[0],
                         model.GenericArguments.Select(t => MapperType.EmitBaseType(t, genericArgumentsProperty.PropertyType.GetGenericArguments()[0])).ToList()));
-            //modifiersProperty?.SetValue(methodModel, model.Modifiers);
+            modifiersProperty?.SetValue(methodModel, model.Modifiers);
             if (model.Parameters != null)
                 parametersProperty?.SetValue(methodModel,
                     Converter.ConvertList(parametersProperty.PropertyType.GetGenericArguments()[0],
@@ -60,6 +60,7 @@ namespace Model.Mappers
                     genericArguments.Select(g => MapperType.EmitType(g)).ToList();
             }
 
+            methodModel.Modifiers = model.Modifiers;
 
             PropertyInfo parametersProperty = type.GetProperty("Parameters",
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);

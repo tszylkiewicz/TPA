@@ -101,8 +101,14 @@ namespace Model.ViewModel
             {
                 try
                 {
-                    // AssemblyMetadata asm = LogicService.Load(PathForSerialization);
-                    AssemblyMetadata asm = reflector.AssemblyModel.Load(PathForSerialization, LogicService);
+                    AssemblyMetadata asm = new AssemblyMetadata();
+                    asm = asm.Load(PathForSerialization, LogicService);
+                    Console.WriteLine(asm.Namespaces[0].Types.Count);
+                    Console.WriteLine(asm.Namespaces[1].Types.Count);
+                    Console.WriteLine(asm.Namespaces[2].Types.Count);
+                    Console.WriteLine(asm.Namespaces[3].Types.Count);
+                    Console.WriteLine(asm.Namespaces[1].Name);
+                    Console.WriteLine(asm.Namespaces[1].Types[0].Name);
                     treeViewAssembly = new TreeViewAssembly(asm);
                     TreeViewLoaded();
                 }

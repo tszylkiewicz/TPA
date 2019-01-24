@@ -1,4 +1,5 @@
 ﻿using BaseModel;
+using BaseModel.Enums;
 using Model.Model;
 using System;
 using System.Collections;
@@ -30,13 +31,15 @@ namespace Model.Mappers
             Type typeModelType = typModel.GetType();
 
             typeModelType.GetProperty("Name")?.SetValue(typModel, model.Name);
-            typeModelType.GetProperty("Type")?.SetValue(typModel, model.TypeKind);
+            typeModelType.GetProperty("TypeKind")?.SetValue(typModel, model.TypeKind);
+            typeModelType.GetProperty("NamespaceName")?.SetValue(typModel, model.NamespaceName);
+            typeModelType.GetProperty("Modifiers")?.SetValue(typModel, model.Modifiers ?? new TypeModifiers());
 
-            if (model.BaseType != null)
+            if (model.BaseTyp != null)
             {
-                typeModelType.GetProperty("BaseType",
+                typeModelType.GetProperty("BaseTyp",
                     BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
-                    ?.SetValue(typModel, typeModelType.Cast(EmitBaseType(model.BaseType, typeModelType)));
+                    ?.SetValue(typModel, typeModelType.Cast(EmitBaseType(model.BaseTyp, typeModelType)));
             }
 
             if (model.DeclaringType != null)
@@ -122,13 +125,15 @@ namespace Model.Mappers
         private void FillType(BaseType model, TypeMetadata typeModel)
         {
             typeModel.Name = model.Name;
-            typeModel.TypeKind = (TypeKind)model.TypeKind;
+            typeModel.TypeKind = model.TypeKind;
+            typeModel.NamespaceName = model.NamespaceName;
+            typeModel.Modifiers = model.Modifiers ?? new TypeModifiers();
 
             Type type = model.GetType();
-            PropertyInfo baseTypeProperty = type.GetProperty("BaseType",
+            PropertyInfo baseTypeProperty = type.GetProperty("BaseTyp",
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
             BaseType baseType = (BaseType)baseTypeProperty?.GetValue(model);
-            typeModel.BaseType = EmitType(baseType);
+            typeModel.BaseTyp = EmitType(baseType);
 
             PropertyInfo declaringTypeProperty = type.GetProperty("DeclaringType",
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
@@ -207,8 +212,6 @@ namespace Model.Mappers
                     .ToList();
             }
         }
-
-
 
         public TypeMetadata MapUp(BaseType model)
         {

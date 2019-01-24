@@ -55,8 +55,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logic.cs" />
-    <Compile Include="Model\AbstractEnum.cs" />
-    <Compile Include="Model\AccessLevel.cs" />
     <Compile Include="Model\AssemblyMetadata.cs" />
     <Compile Include="Model\ExtentionMethods.cs" />
     <Compile Include="Mappers\Converter.cs" />
@@ -70,10 +68,6 @@
     <Compile Include="Model\NamespaceMetadata.cs" />
     <Compile Include="Model\ParameterMetadata.cs" />
     <Compile Include="Model\PropertyMetadata.cs" />
-    <Compile Include="Model\SealedEnum.cs" />
-    <Compile Include="Model\StaticEnum.cs" />
-    <Compile Include="Model\TypeKind.cs" />
-    <Compile Include="Model\VirtualEnum.cs" />
     <Compile Include="ViewModel\IBrowseFile.cs" />
     <Compile Include="ViewModel\MyViewModel.cs" />
     <Compile Include="ViewModel\Reflector.cs" />

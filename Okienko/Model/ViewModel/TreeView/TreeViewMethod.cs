@@ -20,21 +20,23 @@ namespace Model.ViewModel.TreeView
         {
             if (Method.GenericArguments != null)
             {
-                foreach (TypeMetadata argument in Method.GenericArguments)
+                foreach (TypeMetadata genericArgument in Method.GenericArguments)
                 {
-                    children.Add(new TreeViewType(SingletonDictionary.Instance.Get(argument.Name)));
+                    children.Add(new TreeViewType(genericArgument));
                 }
             }
+
             if (Method.Parameters != null)
             {
-                foreach(ParameterMetadata parameter in Method.Parameters)
+                foreach (ParameterMetadata parameter in Method.Parameters)
                 {
                     children.Add(new TreeViewParameter(parameter));
                 }
             }
+
             if (Method.ReturnType != null)
-            {                
-                children.Add(new TreeViewType(SingletonDictionary.Instance.Get(Method.ReturnType.Name)));
+            {
+                children.Add(new TreeViewType(Method.ReturnType));
             }
         }
         public static string GetFullName(MethodMetadata model)

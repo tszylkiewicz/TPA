@@ -19,64 +19,65 @@ namespace Model.ViewModel.TreeView
 
         public override void Build(ObservableCollection<TreeViewItem> children)
         {
-            if (Type.Properties != null)
+            if (Type.BaseTyp != null)
             {
-                foreach (PropertyMetadata property in Type.Properties)
-                {
-                    children.Add(new TreeViewProperty(property));
-                }
-            }
-            if (Type.Methods != null)
-            {
-                foreach (MethodMetadata method in Type.Methods)
-                {
-                    children.Add(new TreeViewMethod(method));
-                }
-            }
-            if (Type.Constructors != null)
-            {
-                foreach (MethodMetadata constructor in Type.Constructors)
-                {
-                    children.Add(new TreeViewMethod(constructor));
-                }
-            }
-            if (Type.BaseType != null)
-            {
-                children.Add(new TreeViewType(SingletonDictionary.Instance.Get(Type.BaseType.Name)));
+                children.Add(new TreeViewType(Type.BaseTyp));
             }
             if (Type.DeclaringType != null)
             {
-                children.Add(new TreeViewType(SingletonDictionary.Instance.Get(Type.DeclaringType.Name)));
+                children.Add(new TreeViewType(Type.DeclaringType));
             }
-            if (Type.GenericArguments != null)
+            if (Type.Properties != null)
             {
-                foreach (TypeMetadata typ in Type.GenericArguments)
+                foreach (PropertyMetadata PropertyMetadata in Type.Properties)
                 {
-                    children.Add(new TreeViewType(SingletonDictionary.Instance.Get(typ.Name)));
-                }
-            }
-            if (Type.ImplementedInterfaces != null)
-            {
-                foreach (TypeMetadata typ in Type.ImplementedInterfaces)
-                {
-                    children.Add(new TreeViewType(SingletonDictionary.Instance.Get(typ.Name)));
-                }
-            }
-            if (Type.NestedTypes != null)
-            {
-                foreach (TypeMetadata typ in Type.NestedTypes)
-                {
-                    children.Add(new TreeViewType(SingletonDictionary.Instance.Get(typ.Name)));
+                    children.Add(new TreeViewProperty(PropertyMetadata));
                 }
             }
             if (Type.Attributes != null)
             {
-                foreach (ParameterMetadata parameter in Type.Attributes)
+                foreach (ParameterMetadata ParameterMetadata in Type.Attributes)
                 {
-                    children.Add(new TreeViewParameter(parameter));
+                    children.Add(new TreeViewParameter(ParameterMetadata));
+                }
+            }
+            if (Type.GenericArguments != null)
+            {
+                foreach (TypeMetadata TypeMetadata in Type.GenericArguments)
+                {
+                    children.Add(new TreeViewType(TypeMetadata));
+                }
+            }
+            if (Type.ImplementedInterfaces != null)
+            {
+                foreach (TypeMetadata TypeMetadata in Type.ImplementedInterfaces)
+                {
+                    children.Add(new TreeViewType(TypeMetadata));
+                }
+            }
+            if (Type.NestedTypes != null)
+            {
+                foreach (TypeMetadata TypeMetadata in Type.NestedTypes)
+                {
+                    children.Add(new TreeViewType(TypeMetadata));
+                }
+            }
+            if (Type.Methods != null)
+            {
+                foreach (MethodMetadata MethodMetadata in Type.Methods)
+                {
+                    children.Add(new TreeViewMethod(MethodMetadata));
+                }
+            }
+            if (Type.Constructors != null)
+            {
+                foreach (MethodMetadata MethodMetadata in Type.Constructors)
+                {
+                    children.Add(new TreeViewMethod(MethodMetadata));
                 }
             }
         }
+
         public static string GetFullName(TypeMetadata model)
         {
             return model.GetFullName();

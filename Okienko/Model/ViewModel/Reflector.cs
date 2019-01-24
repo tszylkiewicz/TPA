@@ -11,21 +11,17 @@ namespace Model.ViewModel
 {
     public class Reflector
     {
-        //LogWriter logWriter;
-        public AssemblyMetadata AssemblyModel { get; private set; }
+        public AssemblyMetadata AssemblyModel { get; set; }
 
         public void Reflect(string assemblyFile)
         {
-            // zmiana powoduje problemy w MethodMetadata, w EmitExtension()
             Assembly assembly = Assembly.ReflectionOnlyLoadFrom(assemblyFile);
             AssemblyModel = new AssemblyMetadata(assembly);
-            //logWriter = new LogWriter("Utworzono obiekt klasy Reflektor");
         }
 
         public void Reflect(Assembly assembly)
         {
             AssemblyModel = new AssemblyMetadata(assembly);
-            //logWriter = new LogWriter("Utworzono obiekt klasy Reflektor");
         }
     }
 }
