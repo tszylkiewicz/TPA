@@ -72,17 +72,15 @@ namespace Model.ViewModel
         {
             Logger.LogIt(new LogWriter("SavingToFile"));
 
-            if (BrowseFile != null)
-            {
-                PathForSerialization = BrowseFile.SavePath();
-            }
+            PathForSerialization = ConfigurationManager.AppSettings["saveXMLPath"];
+
             if (PathForSerialization != null)
             {
                 try
                 {
                     reflector.AssemblyModel.Save(PathForSerialization, LogicService);
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     Logger.LogIt(new LogWriter("Error"));
                 }
@@ -92,23 +90,15 @@ namespace Model.ViewModel
         public void Read()
         {
             Logger.LogIt(new LogWriter("Reading"));
-            if (BrowseFile != null)
-            {
-                PathForSerialization = BrowseFile.ChooseFile();
-                Console.WriteLine(PathForSerialization);
-            }
+
+            PathForSerialization = ConfigurationManager.AppSettings["readXMLPath"];
+
             if (PathForSerialization != null)
             {
                 try
                 {
                     AssemblyMetadata asm = new AssemblyMetadata();
                     asm = asm.Load(PathForSerialization, LogicService);
-                    Console.WriteLine(asm.Namespaces[0].Types.Count);
-                    Console.WriteLine(asm.Namespaces[1].Types.Count);
-                    Console.WriteLine(asm.Namespaces[2].Types.Count);
-                    Console.WriteLine(asm.Namespaces[3].Types.Count);
-                    Console.WriteLine(asm.Namespaces[1].Name);
-                    Console.WriteLine(asm.Namespaces[1].Types[0].Name);
                     treeViewAssembly = new TreeViewAssembly(asm);
                     TreeViewLoaded();
                 }
@@ -120,7 +110,7 @@ namespace Model.ViewModel
         }
 
         private void Compose()
-        {        
+        {
             var catalog = new AggregateCatalog(new DirectoryCatalog(_compositionPath));
             var _container = new CompositionContainer(catalog);
             try
@@ -129,7 +119,7 @@ namespace Model.ViewModel
             }
             catch (CompositionException compositionException)
             {
-                throw compositionException; 
+                throw compositionException;
             }
             Logger.LogIt(new LogWriter("Compose"));
         }
