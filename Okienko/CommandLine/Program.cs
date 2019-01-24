@@ -1,6 +1,7 @@
 ﻿using CommandLine.View;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -15,13 +16,13 @@ namespace CommandLine
             Console.WriteLine("Path:");
             string url = Console.ReadLine();
             FileManager fileManager;
-            string path = @"..\\..\\..\\DataToTest\\bin\\Debug\\DataToTest.dll";
-            string path2 = @"..\\..\\..\\AADllFile\\TPA.ApplicationArchitecture.dll";
-
+           // string path = @"..\\..\\..\\DataToTest\\bin\\Debug\\DataToTest.dll";
+            //string path2 = @"..\\..\\..\\AADllFile\\TPA.ApplicationArchitecture.dll";
+            string path = ConfigurationManager.AppSettings["AADllPath"];
 
             if (url.Equals("21"))
             {
-                fileManager = new FileManager(path2);
+                fileManager = new FileManager(path);
             }
             else
             {
@@ -29,10 +30,8 @@ namespace CommandLine
             }
             fileManager.OpenFile();
 
-           // fileManager.SaveToDB();
             Console.WriteLine("END");
             Console.ReadLine();
-
         }
 
     }

@@ -19,7 +19,6 @@ namespace Model.ViewModel
             Assembly assembly = Assembly.LoadFrom(assemblyFile);
             AssemblyModel = new AssemblyMetadata(assembly);
             //logWriter = new LogWriter("Utworzono obiekt klasy Reflektor");
-
         }
 
         public void Reflect(Assembly assembly)

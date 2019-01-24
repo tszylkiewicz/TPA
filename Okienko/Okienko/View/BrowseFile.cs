@@ -2,6 +2,7 @@
 using Model.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,19 +34,19 @@ namespace Okienko.View
 
         public string SavePath()
         {
-            SaveFileDialog file = new SaveFileDialog
-            {
-                Filter = "XML File(*.xml) | *.xml",
-                RestoreDirectory = true
-            };
-            file.ShowDialog();
-            if (file.FileName.Length == 0)
-            {
-                MessageBox.Show("File has not been saved.", "Warning", MessageBoxButton.OK, MessageBoxImage.Error);
-                return null;
-            }
+            //SaveFileDialog file = new SaveFileDialog
+            //{
+            //    Filter = "XML File(*.xml) | *.xml",
+            //    RestoreDirectory = true
+            //};
+            //file.ShowDialog();
+            //if (file.FileName.Length == 0)
+            //{
+            //    MessageBox.Show("File has not been saved.", "Warning", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return null;
+            //}
 
-            return file.FileName;
+            return ConfigurationManager.AppSettings["saveXMLPath"];
         }
     }
 }

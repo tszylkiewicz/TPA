@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Configuration;
 
 namespace Model
 {
@@ -16,7 +17,7 @@ namespace Model
         [Import(typeof(BaseAssembly))]
         public BaseAssembly baseAssembly { get; set; }
 
-        private string _compositionPath = @"..\\..\\..\\plugins";
+        private string _compositionPath = ConfigurationManager.AppSettings["pluginsPath"];
 
         public Logic()
         {

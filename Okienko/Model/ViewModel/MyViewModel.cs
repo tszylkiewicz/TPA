@@ -7,6 +7,7 @@ using System.ComponentModel.Composition.Hosting;
 using System;
 using Model.Model;
 using MEF;
+using System.Configuration;
 
 namespace Model.ViewModel
 {
@@ -24,8 +25,7 @@ namespace Model.ViewModel
         public string PathForSerialization { get; set; }
 
         public Logic LogicService { get; set; }
-        private string _compositionPath = @"..\\..\\..\\plugins";
-
+        private string _compositionPath = ConfigurationManager.AppSettings["pluginsPath"];
 
         [Import(typeof(ILogWriter))]
         public ILogWriter Logger { get; set; }
@@ -113,8 +113,7 @@ namespace Model.ViewModel
         }
 
         private void Compose()
-        {
-            
+        {        
             var catalog = new AggregateCatalog(new DirectoryCatalog(_compositionPath));
             var _container = new CompositionContainer(catalog);
             try

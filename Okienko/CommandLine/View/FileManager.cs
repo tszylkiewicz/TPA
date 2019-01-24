@@ -3,6 +3,7 @@ using Model.ViewModel.TreeView;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.IO;
 
 namespace CommandLine.View
@@ -12,7 +13,7 @@ namespace CommandLine.View
         public MyViewModel MyViewModel = new MyViewModel();
 
         public FileManager(string path)
-        {
+        {           
             MyViewModel.PathVariable = path;
         }
 
@@ -153,14 +154,14 @@ namespace CommandLine.View
                 }
                 else if (anotherChoice.Equals("S") || anotherChoice.Equals("s"))
                 {
-                    Console.WriteLine("\n\n\nInsert path to save file: ");
-                    MyViewModel.PathForSerialization = Console.ReadLine();
+                    //Console.WriteLine("\n\n\nInsert path to save file: ");
+                    MyViewModel.PathForSerialization = ConfigurationManager.AppSettings["saveXMLPath"];
                     if (MyViewModel.PathForSerialization != "")
                     {
-                        MyViewModel.PathForSerialization += ".xml";
+                        //MyViewModel.PathForSerialization += ".xml";
                         MyViewModel.Save();
 
-                        Console.WriteLine("XML file has been saved\n\n\n");
+                        Console.WriteLine("Save Completed\n\n\n");
                     }
                     else
                     {

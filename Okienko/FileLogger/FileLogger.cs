@@ -7,11 +7,11 @@ namespace Logging
     [Export(typeof(ILogWriter))]
     public class FileLogger : ILogWriter
     {
-        public void LogIt(LogWriter logW)
+        public async void LogIt(LogWriter logW)
         {
             using (TextWriter fileStream = new StreamWriter(File.Open("Logs.txt", FileMode.Append)))
             {
-                fileStream.WriteLineAsync(logW.Text);
+                await fileStream.WriteLineAsync(logW.Text);
             }
         }
     }

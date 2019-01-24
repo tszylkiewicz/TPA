@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CommandLine.View;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Configuration;
 
 namespace UnitTest
 {
@@ -13,7 +14,7 @@ namespace UnitTest
         public void OpenFileTest()
         {
             FileManager fileManager;
-            string path = "file";
+            string path = "fileNiedobry";
             fileManager = new FileManager(path);
             Assert.IsFalse(fileManager.OpenFile());
         }
@@ -22,7 +23,7 @@ namespace UnitTest
         public void FileManagerTest()
         {
             FileManager fileManager;
-            string path = @"..\..\..\DataToTest\bin\Debug\DataToTest.dll";
+            string path = ConfigurationManager.AppSettings["AADllPath"];
             fileManager = new FileManager(path);
             Assert.AreEqual(fileManager.getPath(), path);
         }

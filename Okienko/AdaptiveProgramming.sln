@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMLData", "XMLData\XMLData.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseLogger", "DatabaseLogger\DatabaseLogger.csproj", "{763815B9-EB7B-48AB-AA01-769BA165330A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBaseUnitTest", "DataBaseUnitTest\DataBaseUnitTest.csproj", "{B4BFF57D-402D-4422-90DE-79BFC3993190}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{763815B9-EB7B-48AB-AA01-769BA165330A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{763815B9-EB7B-48AB-AA01-769BA165330A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{763815B9-EB7B-48AB-AA01-769BA165330A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4BFF57D-402D-4422-90DE-79BFC3993190}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4BFF57D-402D-4422-90DE-79BFC3993190}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4BFF57D-402D-4422-90DE-79BFC3993190}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4BFF57D-402D-4422-90DE-79BFC3993190}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
